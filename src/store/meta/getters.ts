@@ -1,5 +1,5 @@
 export default {
-    getLocale: state => state.locale,
+    getLocale: (state: any) => state.locale,
 
-    getPageTitle: state => state.pageTitle
+    getPageTitle: (state: any) => state.pageTitle
 }

@@ -1,5 +1,5 @@
 export default {
-    setLocale: (state, locale) => state.locale = locale,
+    setLocale: (state: any, locale: string) => state.locale = locale,
 
-    setPageTitle: (state, title) => state.pageTitle = title
+    setPageTitle: (state: any, title: string) => state.pageTitle = title
 }

@@ -1,11 +1,11 @@
 import {createApp} from 'vue'
 
-import routes from "./routes";
-import store from "./store";
+import routes from "@/routes";
+import store from "@/store";
 
-import App from './App.vue'
+import App from '@/pages/app.vue'
 
 createApp(App)
-    .use(routes)
     .use(store)
+    .use(routes)
     .mount('#app')
