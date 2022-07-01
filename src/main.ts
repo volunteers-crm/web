@@ -1,3 +1,5 @@
+import '@/styles/app.css'
+
 import {createApp} from 'vue'
 
 import routes from "@/routes";

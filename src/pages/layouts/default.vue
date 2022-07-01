@@ -1,9 +1,11 @@
 <template>
-    <h1>Default Layout</h1>
+    <div class="container mx-auto">
+        <h1>Default Layout</h1>
 
-    <slot />
+        <slot />
 
-    <v-footer />
+        <v-footer />
+    </div>
 </template>
 
 <script setup lang="ts">
