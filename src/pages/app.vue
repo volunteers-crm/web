@@ -6,7 +6,7 @@
     </v-app>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {computed, defineAsyncComponent} from "vue";
 import {useRoute} from "vue-router";
 

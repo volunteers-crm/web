@@ -4,7 +4,7 @@
     </v-page>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import VPage from '@/components/pages/basic.vue'
 import {ref} from "vue";
 

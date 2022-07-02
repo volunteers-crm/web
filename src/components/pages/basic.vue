@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <h1 class="text-h4 mb-4" v-text="title" />
+        <h1 class="text-h4 mb-4" v-text="props.title" />
 
         <v-layout>
             <slot />
@@ -8,10 +8,17 @@
     </v-container>
 </template>
 
-<script setup lang="ts">
-import {defineProps} from "vue";
+<script lang="ts" setup>
+import {defineProps, onMounted} from "vue";
+import {useStore} from "vuex";
 
-defineProps<{
+const {commit} = useStore()
+
+const props = defineProps<{
     title: string
 }>()
+
+onMounted(() => {
+    commit('meta/setPageTitle', props.title)
+})
 </script>
