@@ -6,7 +6,7 @@ import {useToast} from "vue-toastification";
 const toast = useToast()
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-// axios.defaults.headers.common['X-Localization'] = store.getters['meta/getLocale']
+axios.defaults.headers.common['X-Localization'] = localStorage.getItem('locale') || 'en'
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
