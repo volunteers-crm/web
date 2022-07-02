@@ -6,9 +6,20 @@
 
 <script lang="ts" setup>
 import VPage from '@/components/pages/basic.vue'
-import {ref} from "vue";
 
-const title = ref('About Us')
+import {API_URL_PAGE} from "@/constants/api_routes";
 
-const content = ref('Coming soon...')
+import {onMounted, ref} from "vue";
+
+import api from '@/plugins/axios'
+
+const title = ref('...')
+
+const content = ref('Loading...')
+
+onMounted(() => {
+    api
+        .get(API_URL_PAGE.replace(':page', 'about'))
+        .then((response: any) => console.log('SUCCESS', response))
+})
 </script>
