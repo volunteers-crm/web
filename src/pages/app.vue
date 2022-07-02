@@ -1,22 +1,24 @@
 <template>
-    <div class="container">
+    <v-app>
         <component :is="layout">
             <router-view />
         </component>
-    </div>
+    </v-app>
 </template>
 
 <script setup lang="ts">
 import {computed, defineAsyncComponent} from "vue";
 import {useRoute} from "vue-router";
 
-import {LAYOUT_DEFAULT} from "@/constants/layouts";
+import {LAYOUT_ADMIN, LAYOUT_DEFAULT} from "@/constants/layouts";
 
 const layout = computed(() => {
     const {meta} = useRoute()
 
     const template = meta?.layout ?? LAYOUT_DEFAULT
 
-    return defineAsyncComponent(() => import(`./layouts/${template}.vue`))
+    return template === LAYOUT_ADMIN
+        ? defineAsyncComponent(() => import('@/pages/layouts/admin.vue'))
+        : defineAsyncComponent(() => import('@/pages/layouts/default.vue'))
 })
 </script>

@@ -1,14 +1,11 @@
 <template>
-    <v-text-box
-        header="The CRM"
-        subheader="for volunteers"
-    />
+    <v-container fluid>
+        AAAAAAA AAAAAAA
+    </v-container>
 
     <div>
-        <v-btn-telegram-sign-in />
+        Telegram Sign In
     </div>
 </template>
 
-<script setup lang="ts">
-import VTextBox from '@/components/boxes/text.vue'
-import VBtnTelegramSignIn from '@/components/buttons/telegram/sign-in.vue'</script>
+<script setup lang="ts"></script>
