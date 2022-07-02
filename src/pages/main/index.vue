@@ -1,11 +1,14 @@
 <template>
-    <h1 class="text-center text-6xl">The CRM</h1>
-    <h2 class="text-center text-4xl">for volunteers</h2>
+    <v-text-box
+        header="The CRM"
+        subheader="for volunteers"
+    />
 
     <div>
-        <v-btn>Sign In</v-btn>
+        <v-btn-telegram-sign-in />
     </div>
 </template>
 
 <script setup lang="ts">
-import VBtn from '@/components/buttons/default.vue'</script>
+import VTextBox from '@/components/boxes/text.vue'
+import VBtnTelegramSignIn from '@/components/buttons/telegram/sign-in.vue'</script>
