@@ -5,3 +5,7 @@ export function setLocale() {
         localStorage.setItem(APPLICATION_LOCALE, 'en')
     }
 }
+
+export function getLocale() {
+    return localStorage.getItem(APPLICATION_LOCALE)
+}
