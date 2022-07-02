@@ -10,7 +10,7 @@
 import {computed, defineAsyncComponent} from "vue";
 import {useRoute} from "vue-router";
 
-import {LAYOUT_DEFAULT} from "../constants/layouts";
+import {LAYOUT_DEFAULT} from "@/constants/layouts";
 
 const layout = computed(() => {
     const {meta} = useRoute()
