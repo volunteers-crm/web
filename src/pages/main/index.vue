@@ -1,11 +1,20 @@
 <template>
-    <v-container fluid>
-        AAAAAAA AAAAAAA
-    </v-container>
+    <div class="d-flex justify-center align-center flex-column fill-height">
+        <div class="d-flex justify-center text-center pa-16">
+            <h1 class="text-h1">
+                volunteers
+            </h1>
 
-    <div>
-        Telegram Sign In
+            <h2 class="text-h4">
+                CRM
+            </h2>
+        </div>
+
+        <div>
+            <telegram-sign-in-btn />
+        </div>
     </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import TelegramSignInBtn from '@/components/buttons/telegram/sign-in.vue'</script>

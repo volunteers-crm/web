@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+@import '@mdi/font/css/materialdesignicons.css';
+@import '~vuetify/lib/styles';
+
+$container-max-widths: (
+        'lg': 748px,
+        'xl': 840px
+);
