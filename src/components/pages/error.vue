@@ -9,12 +9,12 @@
                 {{ $t('go back') }}
             </v-btn>
 
-            <v-btn v-if="goHome" class="mx-2" color="primary" @click="goHomeAction">
-                {{ $t('home') }}
-            </v-btn>
-
             <v-btn v-if="reload" class="mx-2" color="primary" @click="reloadAction">
                 {{ $t('reload') }}
+            </v-btn>
+
+            <v-btn class="mx-2" color="primary" @click="goHomeAction">
+                {{ $t('home') }}
             </v-btn>
         </div>
     </v-container>
@@ -32,7 +32,6 @@ const router = useRouter()
 const props = defineProps<{
     title: string,
     goBack?: boolean,
-    goHome?: boolean,
     reload?: boolean
 }>()
 
