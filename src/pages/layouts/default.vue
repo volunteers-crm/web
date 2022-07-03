@@ -1,6 +1,6 @@
 <template>
     <v-layout>
-        <v-app-bar app prominent>
+        <v-app-bar app elevation="0" prominent>
             <v-container>
                 <v-app-bar-title>
                     {{ appName }}
