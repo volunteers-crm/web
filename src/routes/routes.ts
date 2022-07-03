@@ -1,4 +1,4 @@
-import {ROUTE_ABOUT, ROUTE_MAIN, ROUTE_SIGN_IN} from "./names";
+import {ROUTE_ABOUT, ROUTE_ADMIN_DASHBOARD, ROUTE_MAIN, ROUTE_SIGN_IN} from "./names";
 
 import {LAYOUT_DEFAULT} from "@/constants/layouts";
 
@@ -31,6 +31,14 @@ export default [
         component: () => import('@/pages/auth/sign-in.vue'),
         meta: {
             title: trans('Sign In'),
+        }
+    },
+    {
+        path: '/manager',
+        name: ROUTE_ADMIN_DASHBOARD,
+        component: () => import('@/pages/auth/sign-in.vue'),
+        meta: {
+            title: trans('Dashboard'),
         }
     },
     {

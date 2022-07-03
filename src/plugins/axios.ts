@@ -2,6 +2,7 @@ import axios from "axios";
 import _ from "lodash";
 
 import {getLocale} from "@/plugins/locale";
+import {getToken} from '@/plugins/auth'
 
 import {useToast} from "vue-toastification";
 
@@ -9,6 +10,7 @@ const toast = useToast()
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['X-Localization'] = getLocale()
+axios.defaults.headers.common['X-Authorization'] = getToken()
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
