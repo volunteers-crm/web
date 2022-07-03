@@ -4,7 +4,7 @@
             {{ $t(props.title) }}
         </h1>
 
-        <v-btn color="primary">
+        <v-btn v-if="goBack" color="primary" @click="goBackAction">
             {{ $t('go back') }}
         </v-btn>
     </v-container>
@@ -13,12 +13,19 @@
 <script lang="ts" setup>
 import {defineProps, onMounted} from "vue";
 import {useStore} from "vuex";
+import {useRouter} from "vue-router";
 
 const {commit} = useStore()
+const router = useRouter()
 
-const props = defineProps<{
-    title: string
-}>()
+const props = withDefaults(defineProps<{
+    title: string,
+    goBack: boolean
+}>(), {
+    goBack: false
+})
+
+const goBackAction = () => router.back()
 
 onMounted(() => {
     commit('meta/setPageTitle', props.title)
