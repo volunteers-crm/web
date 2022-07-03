@@ -26,6 +26,14 @@ export default [
         }
     },
     {
+        path: '/sign-in',
+        name: ROUTE_SIGN_IN,
+        component: () => import('@/pages/auth/sign-in.vue'),
+        meta: {
+            title: trans('Sign In')
+        }
+    },
+    {
         path: '/:catchAll(.*)',
         component: () => import('@/pages/errors/404.vue')
     }
