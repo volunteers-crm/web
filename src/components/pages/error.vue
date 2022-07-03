@@ -7,6 +7,10 @@
         <v-btn v-if="goBack" color="primary" @click="goBackAction">
             {{ $t('go back') }}
         </v-btn>
+
+        <v-btn v-if="reload" color="primary" @click="reloadAction">
+            {{ $t('reload') }}
+        </v-btn>
     </v-container>
 </template>
 
@@ -18,14 +22,14 @@ import {useRouter} from "vue-router";
 const {commit} = useStore()
 const router = useRouter()
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
     title: string,
-    goBack: boolean
-}>(), {
-    goBack: false
-})
+    goBack?: boolean,
+    reload?: boolean
+}>()
 
 const goBackAction = () => router.back()
+const reloadAction = () => window.location.reload()
 
 onMounted(() => {
     commit('meta/setPageTitle', props.title)

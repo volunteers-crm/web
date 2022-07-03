@@ -8,5 +8,4 @@ import VPage from '@/components/pages/error.vue'
 import {ref} from "vue";
 
 const title = ref('Page Not Found')
-
 </script>

@@ -7,5 +7,11 @@ export default {
         const response = await api.get(API_URL_PAGE.replace(':page', slug));
 
         commit('setPage', slug, response.data.title, response.data.content)
+    },
+
+    loadMissing: async ({commit, getters, dispatch}: any, slug: string) => {
+        if (!getters['hasPage'](slug)) {
+            await dispatch('load', slug)
+        }
     }
 }

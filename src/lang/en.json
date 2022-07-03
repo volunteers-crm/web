@@ -1,5 +1,8 @@
 {
     "go back": "go back",
+    "Loading...": "Loading...",
+    "Network Error": "Network Error",
     "Page Not Found": "Page Not Found",
+    "reload": "reload",
     "Whoops!": "Whoops!"
 }
