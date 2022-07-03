@@ -1,16 +1,18 @@
+import Storage from "@/plugins/storage";
+
 const key = 'locale'
 const fallback = 'en'
 
-export function setLocale(locale: string = fallback) {
-    localStorage.setItem(key, locale)
+export function setLocale(locale: string) {
+    Storage.set(key, locale)
 }
 
 export function getLocale() {
-    return localStorage.getItem(key)
+    return Storage.get(key)
 }
 
 export function setFallbackLocale() {
-    if (getLocale() === null) {
-        setLocale(fallback)
+    if (Storage.doesntExist(key)) {
+        Storage.set(key, fallback)
     }
 }
