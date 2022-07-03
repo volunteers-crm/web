@@ -26,9 +26,10 @@ export default defineConfig({
             styles: 'sass'
         })
     ],
-    server: {
-        hmr: {
-            clientPort: 443
-        }
-    }
+    // maybe need to ngrok
+    // server: {
+    //     hmr: {
+    //         clientPort: 443
+    //     }
+    // }
 })
