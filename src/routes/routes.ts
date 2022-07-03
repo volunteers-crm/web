@@ -1,6 +1,6 @@
 import {ROUTE_ABOUT, ROUTE_ADMIN_DASHBOARD, ROUTE_MAIN, ROUTE_SIGN_IN} from "./names";
 
-import {LAYOUT_DEFAULT} from "@/constants/layouts";
+import {LAYOUT_ADMIN, LAYOUT_DEFAULT} from "@/constants/layouts";
 
 import {trans} from "laravel-vue-i18n";
 
@@ -34,10 +34,11 @@ export default [
         }
     },
     {
-        path: '/manager',
+        path: '/manage',
         name: ROUTE_ADMIN_DASHBOARD,
-        component: () => import('@/pages/auth/sign-in.vue'),
+        component: () => import('@/pages/manage/dashboard.vue'),
         meta: {
+            layout: LAYOUT_ADMIN,
             title: trans('Dashboard'),
         }
     },

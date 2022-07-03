@@ -13,7 +13,6 @@
                         <span class="text-body-1" v-text="pageName" />
                     </div>
                 </v-app-bar-title>
-
             </v-container>
         </v-app-bar>
 
@@ -21,40 +20,21 @@
             <slot />
         </v-main>
 
-        <v-footer app class="bg-grey-lighten-1" color="primary">
-            <v-row justify="center" no-gutters>
-                <v-btn
-                    v-for="route in routes"
-                    :key="route.name"
-                    :to="{ name: route.name }"
-                    class="mx-2"
-                    variant="text"
-                    v-text="route.title"
-                />
-
-                <v-col
-                    class="text-center text-white mt-4"
-                    cols="12"
-                >
-                    {{ year }} — {{ appName }}
-                </v-col>
-            </v-row>
-        </v-footer>
+        <v-footer-box />
     </v-layout>
 </template>
 
 <script lang="ts" setup>
+import VFooterBox from '@/components/footer.vue'
+
 import {computed, ref} from "vue";
 import {useStore} from "vuex";
 
 import {APPLICATION_TITLE} from "@/constants/meta";
-import routes from '@/plugins/menu'
 
 const {getters} = useStore()
 
 const appName = ref(APPLICATION_TITLE)
-
-const year = ref(new Date().getFullYear())
 
 const pageName = computed(() => getters['meta/getPageTitle'])
 
