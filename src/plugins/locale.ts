@@ -1,11 +1,16 @@
-import {APPLICATION_LOCALE} from "@/constants/meta";
+const key = 'locale'
+const fallback = 'en'
 
-export function setLocale() {
-    if (localStorage.getItem(APPLICATION_LOCALE) === null) {
-        localStorage.setItem(APPLICATION_LOCALE, 'en')
-    }
+export function setLocale(locale: string = fallback) {
+    localStorage.setItem(key, locale)
 }
 
 export function getLocale() {
-    return localStorage.getItem(APPLICATION_LOCALE)
+    return localStorage.getItem(key)
+}
+
+export function setFallbackLocale() {
+    if (getLocale() === null) {
+        setLocale(fallback)
+    }
 }
