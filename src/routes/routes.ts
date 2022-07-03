@@ -22,5 +22,9 @@ export default [
             title: 'About Us',
             show: true
         }
+    },
+    {
+        path: '/:catchAll(.*)',
+        component: () => import('@/pages/errors/404.vue')
     }
 ]
