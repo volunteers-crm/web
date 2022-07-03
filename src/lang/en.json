@@ -1,8 +1,11 @@
 {
+    "About Us": "About Us",
     "go back": "go back",
+    "Home": "Home",
     "Loading...": "Loading...",
     "Network Error": "Network Error",
     "Page Not Found": "Page Not Found",
     "reload": "reload",
+    "Sign In": "Sign In",
     "Whoops!": "Whoops!"
 }

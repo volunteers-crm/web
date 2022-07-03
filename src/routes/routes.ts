@@ -1,6 +1,8 @@
-import {ROUTE_ABOUT, ROUTE_MAIN} from "./names";
+import {ROUTE_ABOUT, ROUTE_MAIN, ROUTE_SIGN_IN} from "./names";
 
 import {LAYOUT_DEFAULT} from "@/constants/layouts";
+
+import {trans} from "laravel-vue-i18n";
 
 export default [
     {
@@ -9,7 +11,7 @@ export default [
         component: () => import('@/pages/main/index.vue'),
         meta: {
             layout: LAYOUT_DEFAULT,
-            title: 'Home',
+            title: trans('Home'),
             show: true
         }
     },
@@ -19,7 +21,7 @@ export default [
         component: () => import('@/pages/about/index.vue'),
         meta: {
             layout: LAYOUT_DEFAULT,
-            title: 'About Us',
+            title: trans('About Us'),
             show: true
         }
     },

@@ -23,18 +23,14 @@
 
         <v-footer app class="bg-grey-lighten-1" color="primary">
             <v-row justify="center" no-gutters>
-                <router-link
+                <v-btn
                     v-for="route in routes"
                     :key="route.name"
-                    :to="{ name: route.name}"
-                >
-                    <v-btn
-                        class="mx-2"
-                        color="white"
-                        variant="text"
-                        v-text="route.title"
-                    />
-                </router-link>
+                    :to="{ name: route.name }"
+                    class="mx-2"
+                    variant="text"
+                    v-text="route.title"
+                />
 
                 <v-col
                     class="text-center text-white mt-4"

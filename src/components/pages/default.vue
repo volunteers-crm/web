@@ -1,8 +1,6 @@
 <template>
     <v-container v-if="!state.hasError">
-        <h1 class="text-h4 mb-4">
-            {{ $t(state.title) }}
-        </h1>
+        <h1 class="text-h4 mb-4" v-text="state.title" />
 
         <v-layout v-html="state.content" />
     </v-container>
