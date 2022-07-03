@@ -1,5 +1,5 @@
 <template>
     <v-btn color="primary">
-        Sign In
+        {{ $t('Sign In') }}
     </v-btn>
 </template>

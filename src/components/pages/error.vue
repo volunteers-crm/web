@@ -1,9 +1,11 @@
 <template>
     <v-container class="fill-height d-flex flex-column align-center justify-center">
-        <h1 class="text-h4 mb-4" v-text="props.title" />
+        <h1 class="text-h4 mb-4">
+            {{ $t(props.title) }}
+        </h1>
 
         <v-btn color="primary">
-            go back
+            {{ $t('go back') }}
         </v-btn>
     </v-container>
 </template>

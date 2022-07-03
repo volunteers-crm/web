@@ -1,6 +1,8 @@
 <template>
     <v-container>
-        <h1 class="text-h4 mb-4" v-text="props.title" />
+        <h1 class="text-h4 mb-4">
+            {{ $t(props.title) }}
+        </h1>
 
         <v-layout>
             <slot />
