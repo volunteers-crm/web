@@ -25,5 +25,10 @@ export default defineConfig({
             autoImport: true,
             styles: 'sass'
         })
-    ]
+    ],
+    server: {
+        hmr: {
+            clientPort: 443
+        }
+    }
 })

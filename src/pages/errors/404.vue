@@ -1,5 +1,5 @@
 <template>
-    <v-page :title="title" go-back />
+    <v-page :title="title" go-back go-home />
 </template>
 
 <script lang="ts" setup>

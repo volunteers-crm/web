@@ -12,6 +12,8 @@ import i18nOptions from '@/plugins/lang'
 import {loadFonts} from '@/plugins/webfontloader'
 import {setFallbackLocale} from "@/plugins/locale";
 
+import {telegramLoginTemp} from 'vue3-telegram-login'
+
 import App from '@/pages/app.vue'
 
 loadFonts()
@@ -23,4 +25,5 @@ createApp(App)
     .use(vuetify)
     .use(Toast, ToastOptions)
     .use(i18nVue, i18nOptions)
+    .component('TelegramLogin', telegramLoginTemp)
     .mount('#app')

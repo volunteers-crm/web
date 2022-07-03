@@ -1,15 +1,15 @@
 <template>
-    <v-btn :to="signIn" color="primary">
-        {{ $t('Sign In') }}
-    </v-btn>
+    <telegram-login
+        :redirect-url="redirectUrl"
+        :telegram-login="username"
+        mode="redirect"
+    />
 </template>
 
 <script lang="ts" setup>
-import {ROUTE_SIGN_IN} from "@/routes/names";
-
 import {ref} from "vue";
 
-const signIn = ref({
-    name: ROUTE_SIGN_IN
-})
+const redirectUrl = ref(import.meta.env.VITE_TELERAM_API_CONFIRM)
+
+const username = ref(import.meta.env.VITE_TELEGRAM_BOT)
 </script>
