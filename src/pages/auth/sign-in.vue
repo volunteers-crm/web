@@ -38,12 +38,14 @@ import {ROUTE_ADMIN_DASHBOARD} from "@/routes/names";
 
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
+import {useStore} from "vuex";
 
 import url from '@/plugins/url'
 import api from '@/plugins/axios'
 
 import {setToken} from "@/plugins/auth";
 
+const store = useStore()
 const router = useRouter()
 
 const firstName = ref(url.getParam('first_name'))
