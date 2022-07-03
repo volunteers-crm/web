@@ -1,5 +1,5 @@
 <template>
-    <v-page :title="title">
+    <v-page title="Sign In">
         <div class="w-100">
             <div class="mb-4">
                 <v-avatar :image="avatar" size="256" />
@@ -45,8 +45,6 @@ import api from '@/plugins/axios'
 import {setToken} from "@/plugins/auth";
 
 const router = useRouter()
-
-const title = 'Sign In'
 
 const firstName = ref(url.getParam('first_name'))
 const avatar = ref(url.getParam('photo_url'))

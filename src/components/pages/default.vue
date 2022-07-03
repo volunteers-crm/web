@@ -1,11 +1,11 @@
 <template>
     <v-container v-if="!state.hasError">
-        <h1 class="text-h4 mb-4" v-text="state.title" />
+        <h1 class="text-h4 mb-4" v-text="$t(state.title)" />
 
         <v-layout v-html="state.content" />
     </v-container>
 
-    <v-error-page v-if="state.hasError" :title="state.title" reload />
+    <v-error-page v-if="state.hasError" :title="$t(state.title)" reload />
 </template>
 
 <script lang="ts" setup>
@@ -38,7 +38,7 @@ onBeforeMount(async () => {
 
         commit('meta/setPageTitle', item.title)
     } catch (e) {
-        state.title = trans(e.message)
+        state.title = e.message
         state.content = ''
 
         switch (e.code) {

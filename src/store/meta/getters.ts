@@ -1,3 +1,5 @@
+import {trans} from "laravel-vue-i18n";
+
 export default {
-    getPageTitle: (state: any) => state.pageTitle
+    getPageTitle: (state: any) => trans(state.pageTitle)
 }
