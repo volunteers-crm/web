@@ -5,6 +5,7 @@ import {getLocale} from "@/plugins/locale";
 import {getToken} from '@/plugins/auth'
 
 import {useToast} from "vue-toastification";
+import {trans} from "laravel-vue-i18n";
 
 const toast = useToast()
 
@@ -17,8 +18,6 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL
 axios.interceptors.response.use(
     response => response,
     error => {
-        console.log(error)
-
         if (error?.status === 422) {
             let errors: string[] = [];
 
@@ -31,7 +30,7 @@ axios.interceptors.response.use(
             return
         }
 
-        toast.error(error?.data?.message || 'Whoops! Something wrong!')
+        toast.error(trans(error?.data?.message || 'Whoops! Something wrong!'))
 
         throw error
     }

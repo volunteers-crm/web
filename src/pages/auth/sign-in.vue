@@ -1,25 +1,30 @@
 <template>
     <v-page :title="title">
-        <div>
+        <div class="w-100">
             <div class="mb-4">
-                <v-avatar :image="avatar" :size="256" />
+                <v-avatar :image="avatar" size="256" />
             </div>
 
-            <h1 class="font-weight-light text-h4">
-                {{ firstName }} {{ lastName }}
+            <h1 class="font-weight-light text-h4 text-no-wrap">
+                {{ $t('Hello') }}, {{ firstName.trim() || 'guest' }}!
             </h1>
 
-            <v-progress-linear
-                v-if="isLoading"
-                class="mt-6"
-                color="primary"
-                height="6"
-                indeterminate
-                rounded
-            />
+            <div v-if="loading">
+                <v-progress-linear
+                    class="mt-6"
+                    color="primary"
+                    height="6"
+                    indeterminate
+                    rounded
+                />
 
-            <div v-if="hasError">
-                Whoops!
+                <div v-text="$t('Please wait, authorization in progress...')" />
+            </div>
+
+            <div v-if="errorMessage" class="mt-4">
+                <v-alert class="text-left text-no-wrap" type="error">
+                    {{ $t(errorMessage) }}
+                </v-alert>
             </div>
         </div>
     </v-page>
@@ -31,7 +36,7 @@ import VPage from '@/components/pages/info.vue'
 import {API_URL_AUTH} from "@/constants/api_routes";
 import {ROUTE_ADMIN_DASHBOARD} from "@/routes/names";
 
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
 
 import url from '@/plugins/url'
@@ -44,14 +49,10 @@ const router = useRouter()
 const title = 'Sign In'
 
 const firstName = ref(url.getParam('first_name'))
-const lastName = ref(url.getParam('last_name'))
 const avatar = ref(url.getParam('photo_url'))
 
-let loading = true
-let loadingError = false
-
-const isLoading = computed(() => loading)
-const hasError = computed(() => loadingError)
+const loading = ref(true)
+const errorMessage = ref()
 
 onMounted(() => {
     api
@@ -66,8 +67,8 @@ onMounted(() => {
             })
         })
         .catch((error: any) => {
-            loadingError = true
+            errorMessage.value = error?.message
         })
-        .finally(() => loading = false)
+        .finally(() => loading.value = false)
 })
 </script>

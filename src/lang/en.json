@@ -1,12 +1,16 @@
 {
     "About Us": "About Us",
     "go back": "go back",
+    "guest": "guest",
+    "Hello": "Hello",
     "Home": "Home",
     "home": "home",
     "Loading...": "Loading...",
     "Network Error": "Network Error",
     "Page Not Found": "Page Not Found",
+    "Please wait, authorization in progress...": "Please wait, authorization in progress...",
     "reload": "reload",
     "Sign In": "Sign In",
-    "Whoops!": "Whoops!"
+    "Whoops!": "Whoops!",
+    "Whoops! Something wrong!": "Whoops! Something wrong!"
 }

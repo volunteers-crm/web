@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-center align-center flex-column fill-height">
-        <div class="d-flex justify-center text-center">
+        <div class="d-flex justify-center text-center box__info">
             <slot />
         </div>
     </div>
@@ -18,3 +18,10 @@ const props = defineProps<{
 
 onBeforeMount(() => commit('meta/setPageTitle', props.title))
 </script>
+
+<style lang="scss">
+.box__info {
+    width: 100%;
+    max-width: 480px;
+}
+</style>
