@@ -1,6 +1,6 @@
-import {ROUTE_ABOUT, ROUTE_ADMIN_DASHBOARD, ROUTE_MAIN, ROUTE_SIGN_IN} from "./names";
+import {ROUTE_ABOUT, ROUTE_MAIN, ROUTE_SIGN_IN} from "@/routes/names";
 
-import {LAYOUT_ADMIN, LAYOUT_DEFAULT} from "@/constants/layouts";
+import {LAYOUT_DEFAULT} from "@/constants/layouts";
 
 export default [
     {
@@ -30,18 +30,5 @@ export default [
         meta: {
             title: 'Sign In',
         }
-    },
-    {
-        path: '/manage',
-        name: ROUTE_ADMIN_DASHBOARD,
-        component: () => import('@/pages/manage/dashboard.vue'),
-        meta: {
-            layout: LAYOUT_ADMIN,
-            title: 'Dashboard',
-        }
-    },
-    {
-        path: '/:catchAll(.*)',
-        component: () => import('@/pages/errors/404.vue')
     }
 ]

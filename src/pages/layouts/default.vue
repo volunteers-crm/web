@@ -1,27 +1,25 @@
 <template>
-    <v-layout>
-        <v-app-bar app elevation="0" prominent>
-            <v-container>
-                <v-app-bar-title>
-                    {{ appName }}
+    <v-app-bar app elevation="0" prominent>
+        <v-container>
+            <v-app-bar-title>
+                {{ appName }}
 
-                    <div
-                        v-if="hasShowPageTitle"
-                        class="text-grey-darken-3 font-weight-light d-inline"
-                    >
-                        <span class="mx-3">|</span>
-                        <span class="text-body-1" v-text="pageName" />
-                    </div>
-                </v-app-bar-title>
-            </v-container>
-        </v-app-bar>
+                <div
+                    v-if="hasShowPageTitle"
+                    class="text-grey-darken-3 font-weight-light d-inline"
+                >
+                    <span class="mx-3">|</span>
+                    <span class="text-body-1" v-text="pageName" />
+                </div>
+            </v-app-bar-title>
+        </v-container>
+    </v-app-bar>
 
-        <v-main>
-            <slot />
-        </v-main>
+    <v-main>
+        <slot />
+    </v-main>
 
-        <v-footer-box />
-    </v-layout>
+    <v-footer-box />
 </template>
 
 <script lang="ts" setup>

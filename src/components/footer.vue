@@ -2,7 +2,7 @@
     <v-footer app class="bg-grey-lighten-1" color="primary">
         <v-row justify="center" no-gutters>
             <v-btn
-                v-for="route in routes"
+                v-for="route in users"
                 :key="route.name"
                 :to="{ name: route.name }"
                 class="mx-2"
@@ -23,7 +23,7 @@
 <script lang="ts" setup>
 import {APPLICATION_TITLE} from "@/constants/meta";
 
-import routes from '@/plugins/menu'
+import {users} from '@/plugins/menu'
 
 import {ref} from "vue";
 

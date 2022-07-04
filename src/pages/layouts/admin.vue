@@ -1,36 +1,63 @@
 <template>
-    <v-layout>
-        <v-app-bar app prominent>
-            <v-container>
-                <v-app-bar-title>
-                    {{ appName }}
+    <v-navigation-drawer v-model="navigation" app permanent>
+        <v-list>
+            <v-list-item
+                :prepend-avatar="logo"
+                :title="appName"
+                subtitle="work in progress"
+            />
+        </v-list>
 
-                    <div
-                        v-if="hasShowPageTitle"
-                        class="text-grey-darken-3 font-weight-light d-inline"
-                    >
-                        <span class="mx-3">|</span>
-                        <span class="text-body-1" v-text="pageName" />
-                    </div>
-                </v-app-bar-title>
-            </v-container>
-        </v-app-bar>
+        <v-divider />
 
-        <v-main>
-            <slot />
-        </v-main>
+        <v-list nav>
+            <v-list-item
+                v-for="route in manages"
+                :key="route.name"
+                :prepend-icon="route.meta.icon"
+                :title="route.meta.title"
+                :to="{ name: route.name }"
+            />
+        </v-list>
+    </v-navigation-drawer>
 
-        <v-footer-box />
-    </v-layout>
+    <v-app-bar app elevation="1" prominent>
+        <v-app-bar-nav-icon variant="text" @click.stop="navigation = !navigation" />
+
+        <v-app-bar-title>
+            {{ appName }}
+
+            <div
+                v-if="hasShowPageTitle"
+                class="text-grey-darken-3 font-weight-light d-inline"
+            >
+                <span class="mx-3">|</span>
+                <span class="text-body-1" v-text="pageName" />
+            </div>
+        </v-app-bar-title>
+
+        <v-spacer />
+
+        <v-btn icon="mdi-magnify" variant="text"></v-btn>
+    </v-app-bar>
+
+    <v-main>
+        <slot />
+    </v-main>
+
+    <v-footer-box />
 </template>
 
 <script lang="ts" setup>
 import VFooterBox from '@/components/footer.vue'
 
+import logo from '@/assets/logotype.svg'
+
 import {computed, ref} from "vue";
 import {useStore} from "vuex";
 
 import {APPLICATION_TITLE} from "@/constants/meta";
+import {manages} from "@/plugins/menu";
 
 const {getters} = useStore()
 
@@ -43,4 +70,6 @@ const hasShowPageTitle = computed(() => {
 
     return title !== null && title !== appName
 })
+
+const navigation = ref(true)
 </script>

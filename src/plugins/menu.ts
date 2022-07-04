@@ -1,9 +1,13 @@
-import _ from 'lodash'
-
-import routes from '@/routes/routes'
 import {Route} from '@/models/route'
+import {collect} from "@/models/collection";
 
-const filtered = _.filter(routes, (route: any): boolean => route?.meta?.show && route?.meta?.title)
-const mapped = _.map(filtered, (route: any): Route => new Route(route.name, route.meta.title))
+import userRoutes from '@/routes/routes/user'
+import manageRoutes from '@/routes/routes/manage'
 
-export default mapped
+export const users = collect(userRoutes)
+    .filter((route: any): boolean => route?.meta?.show && route?.meta?.title)
+    .map((route: any): Route => new Route(route.name, route.meta.title))
+    .get()
+
+export const manages = collect(manageRoutes[0]?.children || [])
+    .get()
