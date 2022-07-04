@@ -1,4 +1,4 @@
-import {ROUTE_ADMIN_DASHBOARD} from "@/routes/names";
+import {ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_SETTINGS} from "@/routes/names";
 
 import {LAYOUT_ADMIN} from "@/constants/layouts";
 
@@ -20,6 +20,16 @@ export default [
                     icon: 'mdi-view-dashboard'
                 },
             },
+            {
+                path: 'settings',
+                name: ROUTE_ADMIN_SETTINGS,
+                component: () => import('@/pages/manage/settings.vue'),
+                meta: {
+                    layout: LAYOUT_ADMIN,
+                    title: 'Settings',
+                    icon: 'mdi-cog'
+                }
+            }
         ]
     }
 ]
