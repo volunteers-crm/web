@@ -7,6 +7,10 @@ export default new class {
         this.#query = url.parse(location.search)
     }
 
+    hasParam(key: string): boolean {
+        return this.#query[key] !== undefined
+    }
+
     getParam(key: string): any {
         return this.#query[key]
     }
