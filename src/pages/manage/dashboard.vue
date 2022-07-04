@@ -4,9 +4,8 @@
 
 <script lang="ts" setup>
 import {onBeforeMount} from "vue";
-import {useStore} from "vuex";
 
-const {commit} = useStore()
+import store from "@/store";
 
-onBeforeMount(() => commit('meta/setPageTitle', 'Dashboard'))
+onBeforeMount(() => store.commit('meta/setPageTitle', 'Dashboard'))
 </script>

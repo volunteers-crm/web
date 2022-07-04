@@ -13,7 +13,8 @@ import {useRoute} from "vue-router";
 import {LAYOUT_ADMIN, LAYOUT_DEFAULT} from "@/constants/layouts";
 
 import {setToken} from "@/plugins/auth";
-import {useStore} from "vuex";
+
+import store from "@/store";
 
 const layout = computed(() => {
     const {meta} = useRoute()
@@ -27,11 +28,9 @@ const layout = computed(() => {
 
 // Push fake user data
 onBeforeMount(() => {
-    const {commit} = useStore()
-
     setToken('Bearer qwerty12345')
 
-    commit('user/setUser', {
+    store.commit('user/setUser', {
         id: 1,
         name: 'Sandra Adams',
         username: '@sandra_adams',

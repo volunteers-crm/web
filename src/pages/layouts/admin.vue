@@ -1,11 +1,22 @@
 <template>
-    <v-navigation-drawer v-model="navigation" app permanent>
+    <v-navigation-drawer :rail="navigation" app permanent>
         <v-list>
             <v-list-item
                 :prepend-avatar="user.avatar"
                 :subtitle="user.username"
                 :title="user.name"
-            />
+            >
+                <template v-if="!navigation" v-slot:append>
+                    <v-list-item-avatar end>
+                        <v-btn
+                            icon="mdi-exit-to-app"
+                            size="small"
+                            variant="text"
+                            @click="logout"
+                        />
+                    </v-list-item-avatar>
+                </template>
+            </v-list-item>
         </v-list>
 
         <v-divider />
@@ -44,18 +55,19 @@
 import VFooterBox from '@/components/footer.vue'
 
 import {computed, ref} from "vue";
-import {useStore} from "vuex";
+
+import store from "@/store";
 
 import {APPLICATION_TITLE} from "@/constants/meta";
-import {manages} from "@/plugins/menu";
 
-const {getters} = useStore()
+import {manages} from "@/plugins/menu";
+import {logout} from "@/plugins/user";
 
 const appName = ref(APPLICATION_TITLE)
 
-const pageName = computed(() => getters['meta/getPageTitle'])
+const pageName = computed(() => store.getters['meta/getPageTitle'])
 
-const user = computed(() => getters['user/getUser'])
+const user = computed(() => store.getters['user/getUser'])
 
-const navigation = ref(true)
+const navigation = ref(false)
 </script>

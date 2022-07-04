@@ -3,7 +3,7 @@ export default new class Storage {
         return localStorage.getItem(key) !== null
     }
 
-    doesntExist(key: string) {
+    doesntExist(key: string): boolean {
         return !this.has(key)
     }
 
@@ -11,7 +11,11 @@ export default new class Storage {
         return localStorage.getItem(key)
     }
 
-    set(key: string, value: string) {
+    set(key: string, value: string): void {
         localStorage.setItem(key, value)
+    }
+
+    forget(key: string): void {
+        localStorage.removeItem(key)
     }
 }

@@ -13,9 +13,8 @@ import VErrorPage from '@/components/pages/error.vue'
 
 import {defineProps, onBeforeMount, reactive} from "vue";
 import {trans} from "laravel-vue-i18n";
-import {useStore} from "vuex";
 
-const {commit, getters, dispatch} = useStore()
+import store from "@/store";
 
 const props = defineProps<{
     slug: string
@@ -29,14 +28,14 @@ const state = reactive({
 
 onBeforeMount(async () => {
     try {
-        await dispatch('pages/loadMissing', props.slug)
+        await store.dispatch('pages/loadMissing', props.slug)
 
-        let item = await getters['pages/getPage'](props.slug)
+        let item = await store.getters['pages/getPage'](props.slug)
 
         state.title = item.title;
         state.content = item.content;
 
-        commit('meta/setPageTitle', item.title)
+        store.commit('meta/setPageTitle', item.title)
     } catch (e) {
         state.title = e.message
         state.content = ''

@@ -13,3 +13,7 @@ export function getToken() {
 export function hasToken(): boolean {
     return getToken() !== null
 }
+
+export function forgetToken(): void {
+    Storage.forget(key)
+}

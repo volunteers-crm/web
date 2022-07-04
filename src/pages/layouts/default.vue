@@ -26,18 +26,18 @@
 import VFooterBox from '@/components/footer.vue'
 
 import {computed, ref} from "vue";
-import {useStore} from "vuex";
+
+import store from "@/store";
 
 import {APPLICATION_TITLE} from "@/constants/meta";
 
-const {getters} = useStore()
 
 const appName = ref(APPLICATION_TITLE)
 
-const pageName = computed(() => getters['meta/getPageTitle'])
+const pageName = computed(() => store.getters['meta/getPageTitle'])
 
 const hasShowPageTitle = computed(() => {
-    const title = getters['meta/getPageTitle']
+    const title = store.getters['meta/getPageTitle']
 
     return title !== null && title !== appName
 })

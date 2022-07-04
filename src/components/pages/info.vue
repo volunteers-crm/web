@@ -8,15 +8,14 @@
 
 <script lang="ts" setup>
 import {defineProps, onBeforeMount} from "vue";
-import {useStore} from "vuex";
 
-const {commit} = useStore()
+import store from "@/store";
 
 const props = defineProps<{
     title: string
 }>()
 
-onBeforeMount(() => commit('meta/setPageTitle', props.title))
+onBeforeMount(() => store.commit('meta/setPageTitle', props.title))
 </script>
 
 <style lang="scss">
