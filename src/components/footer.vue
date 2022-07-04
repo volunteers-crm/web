@@ -7,7 +7,7 @@
                 :to="{ name: route.name }"
                 class="mx-2"
                 variant="text"
-                v-text="route.title"
+                v-text="$t(route.title)"
             />
 
             <v-col

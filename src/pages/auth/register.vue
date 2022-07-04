@@ -21,10 +21,12 @@
                 <div v-text="$t('Please wait, authorization in progress...')" />
             </div>
 
-            <div v-if="errorMessage" class="mt-4">
+            <div v-if="errorMessage" class="mt-4 align-center">
                 <v-alert class="text-left text-no-wrap" type="error">
                     {{ $t(errorMessage) }}
                 </v-alert>
+
+                <telegram-sign-in-btn class="mt-4" />
             </div>
         </div>
     </v-page>
@@ -32,6 +34,7 @@
 
 <script lang="ts" setup>
 import VPage from '@/components/pages/info.vue'
+import TelegramSignInBtn from '@/components/buttons/telegram/sign-in.vue'
 
 import {API_URL_AUTH} from "@/constants/api_routes";
 import {ROUTE_ADMIN_DASHBOARD} from "@/routes/names";

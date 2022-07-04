@@ -2,8 +2,6 @@ import {ROUTE_ABOUT, ROUTE_ADMIN_DASHBOARD, ROUTE_MAIN, ROUTE_SIGN_IN} from "./n
 
 import {LAYOUT_ADMIN, LAYOUT_DEFAULT} from "@/constants/layouts";
 
-import {trans} from "laravel-vue-i18n";
-
 export default [
     {
         path: '/',
@@ -11,7 +9,7 @@ export default [
         component: () => import('@/pages/main/index.vue'),
         meta: {
             layout: LAYOUT_DEFAULT,
-            title: trans('Home'),
+            title: 'Home',
             show: true
         }
     },
@@ -21,7 +19,7 @@ export default [
         component: () => import('@/pages/about/index.vue'),
         meta: {
             layout: LAYOUT_DEFAULT,
-            title: trans('About Us'),
+            title: 'About Us',
             show: true
         }
     },
@@ -30,7 +28,7 @@ export default [
         name: ROUTE_SIGN_IN,
         component: () => import('@/pages/auth/sign-in.vue'),
         meta: {
-            title: trans('Sign In'),
+            title: 'Sign In',
         }
     },
     {
@@ -39,7 +37,7 @@ export default [
         component: () => import('@/pages/manage/dashboard.vue'),
         meta: {
             layout: LAYOUT_ADMIN,
-            title: trans('Dashboard'),
+            title: 'Dashboard',
         }
     },
     {
