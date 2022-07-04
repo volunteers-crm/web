@@ -14,13 +14,13 @@ export const users = collect(userRoutes)
 export const manages = collect(manageRoutes[0]?.children || [])
     .get()
 
-export function loadMenuToggle(): boolean {
+export function loadMenuToggle(): void {
     const value = Storage.get('navigation_rail') === 'true'
 
     store.commit('meta/menuRailToggle', value)
 }
 
-export function saveMenuToggle() {
+export function saveMenuToggle(): void {
     const value = store.getters['meta/getMenuRail']
 
     Storage.set('navigation_rail', value)
