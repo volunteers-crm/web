@@ -11,12 +11,14 @@ import i18nOptions from '@/plugins/lang'
 
 import {loadFonts} from '@/plugins/webfontloader'
 import {setFallbackLocale} from "@/plugins/locale";
+import {loadMenuToggle} from "@/plugins/menu";
 
 import {telegramLoginTemp} from 'vue3-telegram-login'
 
 import App from '@/pages/app.vue'
 
 loadFonts()
+loadMenuToggle()
 setFallbackLocale()
 
 createApp(App)

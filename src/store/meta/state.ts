@@ -1,3 +1,7 @@
 export default {
-    pageTitle: null
+    pageTitle: null,
+
+    menu: {
+        rail: false
+    }
 }

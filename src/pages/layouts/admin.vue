@@ -33,7 +33,7 @@
     </v-navigation-drawer>
 
     <v-app-bar app elevation="1" prominent>
-        <v-app-bar-nav-icon variant="text" @click.stop="navigation = !navigation" />
+        <v-app-bar-nav-icon variant="text" @click.stop="navigationToggle" />
 
         <v-app-bar-title>
             {{ pageName || appName }}
@@ -69,5 +69,7 @@ const pageName = computed(() => store.getters['meta/getPageTitle'])
 
 const user = computed(() => store.getters['user/getUser'])
 
-const navigation = ref(false)
+const navigation = computed(() => store.getters['meta/getMenuRail'])
+
+const navigationToggle = () => store.dispatch('meta/menuRailToggle')
 </script>
