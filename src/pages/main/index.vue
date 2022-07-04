@@ -17,11 +17,4 @@
 </template>
 
 <script lang="ts" setup>
-import TelegramSignInBtn from '@/components/buttons/telegram/sign-in.vue'
-
-import {onMounted} from "vue";
-
-import store from "@/store";
-
-onMounted(() => store.commit('meta/setPageTitle'))
-</script>
+import TelegramSignInBtn from '@/components/buttons/telegram/sign-in.vue'</script>
