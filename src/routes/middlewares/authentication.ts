@@ -1,18 +1,14 @@
 import {API_URL_ME} from "@/constants/api_routes";
-import {ROUTE_MAIN} from "@/routes/names";
+import {ROUTE_SIGN_IN} from "@/routes/names";
 
-import {useRouter} from "vue-router";
+import api from '@/plugins/axios'
 
 import {getToken} from "@/plugins/auth";
 
-import api from '@/plugins/axios'
-import {useStore} from "vuex";
-
-const router = useRouter()
-const store = useStore()
+import store from "@/store";
 
 const authentication = async (to: any, from: any, next: any) => {
-    if (store.getters['user/hasUser']) {
+    if (store.getters['user/isLogged']) {
         return next()
     }
 
@@ -24,14 +20,10 @@ const authentication = async (to: any, from: any, next: any) => {
 
                 return next()
             })
-            .catch(() => {
-                router.push({
-                    name: ROUTE_MAIN
-                })
-            })
+            .catch(() => next({name: ROUTE_SIGN_IN}))
     }
 
-    return false
+    return next({name: ROUTE_SIGN_IN})
 }
 
 export default authentication

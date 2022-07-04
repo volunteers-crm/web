@@ -6,6 +6,9 @@ export default [
     {
         path: '/manage',
         component: () => import('@/components/pages/empty.vue'),
+        meta: {
+            requiresAuth: true
+        },
         children: [
             {
                 path: '',

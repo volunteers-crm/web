@@ -1,4 +1,4 @@
 export default {
-    hasUser: (state: any) => !!state?.user?.id,
+    isLogged: (state: any) => state.isLogged,
     getUser: (state: any) => state.user
 }
