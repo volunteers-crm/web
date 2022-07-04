@@ -7,10 +7,13 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, defineAsyncComponent} from "vue";
+import {computed, defineAsyncComponent, onBeforeMount} from "vue";
 import {useRoute} from "vue-router";
 
 import {LAYOUT_ADMIN, LAYOUT_DEFAULT} from "@/constants/layouts";
+
+import {setToken} from "@/plugins/auth";
+import {useStore} from "vuex";
 
 const layout = computed(() => {
     const {meta} = useRoute()
@@ -20,5 +23,19 @@ const layout = computed(() => {
     return template === LAYOUT_ADMIN
         ? defineAsyncComponent(() => import('@/pages/layouts/admin.vue'))
         : defineAsyncComponent(() => import('@/pages/layouts/default.vue'))
+})
+
+// Push fake user data
+onBeforeMount(() => {
+    const {commit} = useStore()
+
+    setToken('Bearer qwerty12345')
+
+    commit('user/setUser', {
+        id: 1,
+        name: 'Sandra Adams',
+        username: '@sandra_adams',
+        avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
+    })
 })
 </script>

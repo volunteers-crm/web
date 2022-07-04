@@ -2,9 +2,9 @@
     <v-navigation-drawer v-model="navigation" app permanent>
         <v-list>
             <v-list-item
-                :prepend-avatar="logo"
-                :title="appName"
-                subtitle="work in progress"
+                :prepend-avatar="user.avatar"
+                :subtitle="user.username"
+                :title="user.name"
             />
         </v-list>
 
@@ -25,15 +25,7 @@
         <v-app-bar-nav-icon variant="text" @click.stop="navigation = !navigation" />
 
         <v-app-bar-title>
-            {{ appName }}
-
-            <div
-                v-if="hasShowPageTitle"
-                class="text-grey-darken-3 font-weight-light d-inline"
-            >
-                <span class="mx-3">|</span>
-                <span class="text-body-1" v-text="pageName" />
-            </div>
+            {{ pageName || appName }}
         </v-app-bar-title>
 
         <v-spacer />
@@ -51,8 +43,6 @@
 <script lang="ts" setup>
 import VFooterBox from '@/components/footer.vue'
 
-import logo from '@/assets/logotype.svg'
-
 import {computed, ref} from "vue";
 import {useStore} from "vuex";
 
@@ -65,11 +55,7 @@ const appName = ref(APPLICATION_TITLE)
 
 const pageName = computed(() => getters['meta/getPageTitle'])
 
-const hasShowPageTitle = computed(() => {
-    const title = getters['meta/getPageTitle']
-
-    return title !== null && title !== appName
-})
+const user = computed(() => getters['user/getUser'])
 
 const navigation = ref(true)
 </script>

@@ -9,3 +9,7 @@ export function setToken(token: string) {
 export function getToken() {
     return Storage.get(key)
 }
+
+export function hasToken(): boolean {
+    return getToken() !== null
+}
