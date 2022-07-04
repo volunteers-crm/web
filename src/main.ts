@@ -1,5 +1,6 @@
 import {createApp} from 'vue'
 import {i18nVue} from 'laravel-vue-i18n'
+import VueApexCharts from "vue3-apexcharts";
 
 import Toast from "vue-toastification";
 import ToastOptions from '@/plugins/toast'
@@ -27,5 +28,6 @@ createApp(App)
     .use(vuetify)
     .use(Toast, ToastOptions)
     .use(i18nVue, i18nOptions)
+    .use(VueApexCharts)
     .component('TelegramLogin', telegramLoginTemp)
     .mount('#app')

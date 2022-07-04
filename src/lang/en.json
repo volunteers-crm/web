@@ -5,12 +5,15 @@
     "Hello": "Hello",
     "Home": "Home",
     "home": "home",
+    "Issues": "Issues",
     "Loading...": "Loading...",
     "Network Error": "Network Error",
+    "opened": "opened",
     "Page Not Found": "Page Not Found",
     "Please wait, authorization in progress...": "Please wait, authorization in progress...",
     "reload": "reload",
     "Sign In": "Sign In",
-    "Whoops!": "Whoops!",
-    "Whoops! Something wrong!": "Whoops! Something wrong!"
+    "solved": "solved",
+    "Whoops! Something wrong!": "Whoops! Something wrong!",
+    "Whoops!": "Whoops!"
 }
