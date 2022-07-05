@@ -75,6 +75,10 @@ const issues = ref({
         {
             name: trans('cancelled'),
             data: randomData(),
+        },
+        {
+            name: trans('unassigned'),
+            data: randomData(),
         }
     ]
 })
