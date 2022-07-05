@@ -12,15 +12,14 @@
                 type="bar"
             />
 
-            <div
-                class="text-right text-grey-darken-1"
-                v-text="$t('Updated every 15 minutes.')"
-            />
+            <v-updated-info />
         </v-card-text>
     </v-card>
 </template>
 
 <script lang="ts" setup>
+import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
+
 import {ref} from "vue";
 import {trans} from "laravel-vue-i18n";
 

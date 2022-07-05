@@ -3,5 +3,11 @@ export default {
 
     menu: {
         rail: false
+    },
+
+    times: {
+        update: {
+            every: 10
+        }
     }
 }
