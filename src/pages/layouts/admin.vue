@@ -38,10 +38,6 @@
         <v-app-bar-title>
             {{ pageName || appName }}
         </v-app-bar-title>
-
-        <v-spacer />
-
-        <v-btn icon="mdi-magnify" variant="text"></v-btn>
     </v-app-bar>
 
     <v-main>
