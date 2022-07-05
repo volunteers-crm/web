@@ -28,7 +28,7 @@ const count = 5;
 
 const randomData = () => {
     const min = 0
-    const max = 30
+    const max = 10
 
     let values = [];
 
