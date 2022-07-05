@@ -2,7 +2,9 @@
     <v-app-bar app elevation="0" prominent>
         <v-container>
             <v-app-bar-title>
-                {{ appName }}
+                <span class="link-cursor" @click="goToMain">
+                    {{ appName }}
+                </span>
 
                 <div
                     v-if="hasShowPageTitle"
@@ -26,11 +28,15 @@
 import VFooterBox from '@/components/footer.vue'
 
 import {computed, ref} from "vue";
+import {useRouter} from "vue-router";
+import {useStore} from "vuex";
 
-import store from "@/store";
 
 import {APPLICATION_TITLE} from "@/constants/meta";
+import {ROUTE_MAIN} from "@/routes/names";
 
+const router = useRouter()
+const store = useStore()
 
 const appName = ref(APPLICATION_TITLE)
 
@@ -41,4 +47,12 @@ const hasShowPageTitle = computed(() => {
 
     return title !== null && title !== appName
 })
+
+const goToMain = () => router.push({name: ROUTE_MAIN})
 </script>
+
+<style lang="scss" scoped>
+.link-cursor {
+    cursor: pointer;
+}
+</style>

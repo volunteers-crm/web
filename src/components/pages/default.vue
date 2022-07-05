@@ -5,7 +5,7 @@
         <v-layout v-html="state.content" />
     </v-container>
 
-    <v-error-page v-if="state.hasError" :title="$t(state.title)" reload />
+    <v-error-page v-if="state.hasError" :title="$t(state.content)" reload />
 </template>
 
 <script lang="ts" setup>
@@ -38,8 +38,7 @@ onBeforeMount(async () => {
 
         store.commit('meta/setPageTitle', item.title)
     } catch (e) {
-        state.title = e.message
-        state.content = ''
+        state.content = e.message
 
         switch (e.code) {
             case 'ERR_NETWORK':
