@@ -1,5 +1,6 @@
 {
     "About Us": "About Us",
+    "cancelled": "cancelled",
     "go back": "go back",
     "guest": "guest",
     "Hello": "Hello",
@@ -15,6 +16,7 @@
     "Settings": "Settings",
     "Sign In": "Sign In",
     "solved": "solved",
+    "Updated every 15 minutes.": "Updated every 15 minutes.",
     "Whoops! Something wrong!": "Whoops! Something wrong!",
     "Whoops!": "Whoops!"
 }

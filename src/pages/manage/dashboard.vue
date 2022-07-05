@@ -13,6 +13,11 @@
                         height="200"
                         type="area"
                     />
+
+                    <div
+                        class="text-right text-grey-darken-1"
+                        v-text="$t('Updated every 15 minutes.')"
+                    />
                 </v-card-text>
             </v-card>
         </v-col>
@@ -65,6 +70,10 @@ const issues = ref({
         },
         {
             name: trans('solved'),
+            data: randomData(),
+        },
+        {
+            name: trans('cancelled'),
             data: randomData(),
         }
     ]
