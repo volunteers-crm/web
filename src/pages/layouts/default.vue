@@ -15,6 +15,12 @@
         </v-app-bar-title>
 
         <template v-slot:append>
+            <v-btn
+                :to="{name: ROUTE_ADMIN_DASHBOARD}"
+                variant="text"
+                v-text="$t('Admin')"
+            />
+
             <v-locale />
         </template>
     </v-app-bar>
@@ -36,7 +42,7 @@ import {useStore} from "vuex";
 
 
 import {APPLICATION_TITLE} from "@/constants/meta";
-import {ROUTE_MAIN} from "@/routes/names";
+import {ROUTE_ADMIN_DASHBOARD, ROUTE_MAIN} from "@/routes/names";
 
 const router = useRouter()
 const store = useStore()
