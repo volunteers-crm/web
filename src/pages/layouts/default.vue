@@ -1,20 +1,22 @@
 <template>
     <v-app-bar app elevation="0" prominent>
-        <v-container>
-            <v-app-bar-title>
+        <v-app-bar-title>
                 <span class="link-cursor" @click="goToMain">
                     {{ appName }}
                 </span>
 
-                <div
-                    v-if="hasShowPageTitle"
-                    class="text-grey-darken-3 font-weight-light d-inline"
-                >
-                    <span class="mx-3">|</span>
-                    <span class="text-body-1" v-text="pageName" />
-                </div>
-            </v-app-bar-title>
-        </v-container>
+            <div
+                v-if="hasShowPageTitle"
+                class="text-grey-darken-3 font-weight-light d-inline"
+            >
+                <span class="mx-3">|</span>
+                <span class="text-body-1" v-text="pageName" />
+            </div>
+        </v-app-bar-title>
+
+        <template v-slot:append>
+            <v-locale />
+        </template>
     </v-app-bar>
 
     <v-main>
@@ -26,6 +28,7 @@
 
 <script lang="ts" setup>
 import VFooterBox from '@/components/footer.vue'
+import VLocale from '@/components/locale.vue'
 
 import {computed, ref} from "vue";
 import {useRouter} from "vue-router";

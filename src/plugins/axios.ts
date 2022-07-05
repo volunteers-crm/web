@@ -30,7 +30,7 @@ axios.interceptors.response.use(
             return
         }
 
-        toast.error(trans(error?.data?.message || 'Whoops! Something wrong!'))
+        toast.error(trans(error?.data?.message || 'Whoops! Something went wrong.'))
 
         throw error
     }

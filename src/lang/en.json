@@ -2,6 +2,7 @@
     "About Us": "About Us",
     "cancelled": "cancelled",
     "Curators": "Curators",
+    "Dashboard": "Dashboard",
     "go back": "go back",
     "guest": "guest",
     "Hello": "Hello",
@@ -20,6 +21,6 @@
     "Storage": "Storage",
     "unassigned": "unassigned",
     "Updated every 15 minutes.": "Updated every 15 minutes.",
-    "Whoops! Something wrong!": "Whoops! Something wrong!",
+    "Whoops! Something went wrong.": "Whoops! Something went wrong.",
     "Whoops!": "Whoops!"
 }

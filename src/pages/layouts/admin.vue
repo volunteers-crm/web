@@ -26,7 +26,7 @@
                 v-for="route in manages"
                 :key="route.name"
                 :prepend-icon="route.meta.icon"
-                :title="route.meta.title"
+                :title="$t(route.meta.title)"
                 :to="{ name: route.name }"
             />
         </v-list>
@@ -38,6 +38,10 @@
         <v-app-bar-title>
             {{ pageName || appName }}
         </v-app-bar-title>
+
+        <template v-slot:append>
+            <v-locale />
+        </template>
     </v-app-bar>
 
     <v-main>
@@ -49,6 +53,7 @@
 
 <script lang="ts" setup>
 import VFooterBox from '@/components/footer.vue'
+import VLocale from '@/components/locale.vue'
 
 import {computed, ref} from "vue";
 import {useStore} from "vuex";
