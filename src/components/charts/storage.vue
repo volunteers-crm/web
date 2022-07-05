@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            {{ $t('Curators') }}
+            {{ $t('Storage') }}
         </v-card-title>
 
         <v-card-text>
@@ -22,14 +22,13 @@
 
 <script lang="ts" setup>
 import {ref} from "vue";
-import {trans} from "laravel-vue-i18n";
 
 // TODO: remove fake generator
-const count = 8;
+const count = 5;
 
 const randomData = () => {
-    const min = 10
-    const max = 90
+    const min = 0
+    const max = 30
 
     let values = [];
 
@@ -45,34 +44,31 @@ const randomData = () => {
 const issues = ref({
     options: {
         chart: {
-            id: "chart-curators",
+            id: "chart-storage",
             stacked: true
         },
         xaxis: {
             categories: [
-                '@emma',
-                '@liam',
-                '@charlotte',
-                '@oliver',
-                '@amelia',
-                '@noah',
-                '@olivia',
-                '@elijah'
+                'suitcases',
+                'men\'s clothing',
+                'women\'s clothing',
+                'kid\'s clothing',
+                'food to go',
             ],
         },
     },
 
     series: [
         {
-            name: trans('opened'),
+            name: '@emma',
             data: randomData(),
         },
         {
-            name: trans('solved'),
+            name: '@liam',
             data: randomData(),
         },
         {
-            name: trans('cancelled'),
+            name: '@charlotte',
             data: randomData(),
         },
     ]
