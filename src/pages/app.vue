@@ -9,12 +9,13 @@
 <script lang="ts" setup>
 import {computed, defineAsyncComponent, onBeforeMount} from "vue";
 import {useRoute} from "vue-router";
+import {useStore} from "vuex";
 
 import {LAYOUT_ADMIN, LAYOUT_DEFAULT} from "@/constants/layouts";
 
 import {setToken} from "@/plugins/auth";
 
-import store from "@/store";
+const store = useStore()
 
 const layout = computed(() => {
     const {meta} = useRoute()

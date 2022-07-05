@@ -55,13 +55,14 @@
 import VFooterBox from '@/components/footer.vue'
 
 import {computed, ref} from "vue";
-
-import store from "@/store";
+import {useStore} from "vuex";
 
 import {APPLICATION_TITLE} from "@/constants/meta";
 
 import {manages} from "@/plugins/menu";
 import {logout} from "@/plugins/user";
+
+const store = useStore()
 
 const appName = ref(APPLICATION_TITLE)
 
