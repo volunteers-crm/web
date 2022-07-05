@@ -13,12 +13,13 @@ import VErrorPage from '@/components/pages/error.vue'
 
 import {defineProps, onBeforeMount, reactive} from "vue";
 import {trans} from "laravel-vue-i18n";
-
-import store from "@/store";
+import {useStore} from "vuex";
 
 const props = defineProps<{
     slug: string
 }>()
+
+const store = useStore()
 
 const state = reactive({
     hasError: false,

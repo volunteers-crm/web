@@ -23,11 +23,11 @@
 <script lang="ts" setup>
 import {defineProps, onMounted} from "vue";
 import {useRouter} from "vue-router";
+import {useStore} from "vuex";
 
 import {ROUTE_MAIN} from "@/routes/names";
 
-import store from "@/store";
-
+const store = useStore()
 const router = useRouter()
 
 const props = defineProps<{
@@ -40,7 +40,5 @@ const goBackAction = () => router.back()
 const goHomeAction = () => router.push({name: ROUTE_MAIN})
 const reloadAction = () => window.location.reload()
 
-onMounted(() => {
-    store.commit('meta/setPageTitle', props.title)
-})
+onMounted(() => store.commit('meta/setPageTitle', props.title))
 </script>
