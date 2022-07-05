@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            {{ $t('Curators') }}
+            {{ $t('Curators & Coordinators') }}
         </v-card-title>
 
         <v-card-text>
@@ -45,7 +45,7 @@ const randomData = () => {
 const issues = ref({
     options: {
         chart: {
-            id: "chart-curators",
+            id: "chart-coordinators",
             stacked: true
         },
         xaxis: {

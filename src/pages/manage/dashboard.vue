@@ -4,7 +4,7 @@
             <issues-chart />
         </v-col>
         <v-col>
-            <curators-chart />
+            <coordinators-chart />
         </v-col>
     </v-row>
 
@@ -17,5 +17,5 @@
 
 <script lang="ts" setup>
 import IssuesChart from '@/components/charts/issues.vue'
-import CuratorsChart from '@/components/charts/curators.vue'
+import CoordinatorsChart from '@/components/charts/coordinators.vue'
 import StorageChart from '@/components/charts/storage.vue'</script>
