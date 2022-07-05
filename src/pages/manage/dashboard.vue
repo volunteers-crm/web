@@ -12,9 +12,6 @@
         <v-col>
             <storage-chart />
         </v-col>
-        <v-col>
-1
-        </v-col>
     </v-row>
 </template>
 
