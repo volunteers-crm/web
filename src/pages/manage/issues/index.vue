@@ -56,7 +56,7 @@
             <td class="text-center">{{ item.source }}</td>
 
             <td class="text-center text-lowercase">
-                <v-chip :color="statusColor(item.status)" label>
+                <v-chip :color="color(item.status)" label>
                     {{ $t(item.status) }}
                 </v-chip>
             </td>
@@ -72,7 +72,7 @@
 <script lang="ts" setup>
 import VTelegramLink from '@/components/links/telegram.vue'
 
-import {STATUS_CANCELLED, STATUS_IN_PROGRESS, STATUS_NEW} from "@/constants/statuses";
+import {color} from '@/helpers/status-colors'
 
 import moment from "moment";
 
@@ -147,19 +147,6 @@ const dateFormat = (date: string) => {
     const value = moment(date)
 
     return `${value.format('YYYY-MM-DD')}<br>${value.format('HH:mm')}`
-}
-
-const statusColor = (status: string) => {
-    switch (status) {
-        case STATUS_NEW:
-            return 'info'
-        case STATUS_IN_PROGRESS:
-            return 'green'
-        case STATUS_CANCELLED:
-            return 'red'
-        default:
-            return 'grey'
-    }
 }
 </script>
 
