@@ -11,10 +11,9 @@
 </template>
 
 <script lang="ts" setup>
-import {manages} from "@/plugins/menu";
-
 import {ROUTE_ADMIN_DASHBOARD} from "@/routes/names";
 
+import {manages} from "@/plugins/menu";
 import {collect} from "@/helpers/collection";
 
 const getName = (route: any) => {
@@ -27,6 +26,5 @@ const getName = (route: any) => {
     }
 
     return ROUTE_ADMIN_DASHBOARD
-
 }
 </script>
