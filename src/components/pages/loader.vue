@@ -14,7 +14,7 @@
         :title="errorMessage"
     />
 
-    <slot v-if="!isLoading && !isError" v-bind="content" />
+    <slot v-if="!isLoading && !isError" />
 </template>
 
 <script lang="ts" setup>
@@ -40,15 +40,20 @@ const errorMessage = ref('')
 
 const content = ref({})
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     title: string
     url: string,
     params?: object,
     btnGoBack?: boolean,
     btnGoMain?: boolean,
     btnReload?: boolean,
-    noCache?: boolean
-}>()
+    noCache?: boolean,
+    fake: any,
+    fakeTimeout?: number
+}>(), {
+    fake: {},
+    fakeTimeout: 1500
+})
 
 const requestUrl = computed(() => {
     let url = props.url;
@@ -61,6 +66,18 @@ const requestUrl = computed(() => {
 })
 
 onBeforeMount(async () => {
+    if (props.fake) {
+        await setTimeout(() => {
+            content.value = props.fake
+
+            setPageTitle(route, props.title)
+
+            isLoading.value = false
+        }, props.fakeTimeout)
+
+        return;
+    }
+
     if (!props.noCache && store.getters['pages/hasPage'](requestUrl.value)) {
         content.value = store.getters['pages/getPage'](requestUrl.value)
 

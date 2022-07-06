@@ -1,14 +1,15 @@
 <template>
     <v-loader-page
+        :fake="fake"
         :params="params"
         :title="title"
         :url="url"
         no-cache
     >
-        Show Issue ID {{ route.params.id }}
+        Show Issue ID
     </v-loader-page>
 
-    {{ route }}
+    {{ route || 'aaa' }}
 </template>
 
 <script lang="ts" setup>
@@ -26,4 +27,8 @@ const url = ref(API_ISSUES_SHOW)
 const params = ref(route.params)
 
 const title = ref(route.meta.title)
+
+const fake = ref({
+    a: 'A'
+})
 </script>
