@@ -3,7 +3,10 @@
     <span v-else v-text="name" />
 
     <div class="telegram__link">
-        ( <span v-html="telegram(username)" /> )
+        (
+        <span v-if="text" v-text="`@${username}`" />
+        <span v-else v-html="telegram(username)" />
+        )
     </div>
 </template>
 
@@ -19,7 +22,8 @@ const props = defineProps<{
     id: number,
     username?: string | number | null,
     name: string,
-    me?: boolean
+    me?: boolean,
+    text?: boolean
 }>()
 
 const currentUserId = ref(store.getters['user/getUser'].id)

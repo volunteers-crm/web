@@ -17,6 +17,7 @@
         <tr
             v-for="item in items"
             :key="item.id"
+            class="table__row"
         >
             <td>{{ item.id }}</td>
 
@@ -25,6 +26,7 @@
                     :id="item.chat.id"
                     :name="item.chat.name"
                     :username="item.chat.username"
+                    text
                 />
             </td>
 
@@ -34,6 +36,7 @@
                     :name="item.client.name"
                     :username="item.client.username || item.client.id"
                     me
+                    text
                 />
             </td>
 
@@ -44,6 +47,7 @@
                     :name="item.curator.name"
                     :username="item.curator.username || item.curator.id"
                     me
+                    text
                 />
 
                 <span v-else class="text-red" v-text="$t('No')" />
@@ -68,6 +72,8 @@
 <script lang="ts" setup>
 import VTelegramLink from '@/components/links/telegram.vue'
 
+import {STATUS_CANCELLED, STATUS_IN_PROGRESS, STATUS_NEW} from "@/constants/statuses";
+
 import moment from "moment";
 
 import {ref} from "vue";
@@ -87,7 +93,7 @@ const items = ref([
         },
         curator: null,
         source: "help_bot",
-        status: "in progress",
+        status: "in_progress",
         created_at: "2022-07-05 23:48",
         updated_at: "2022-07-06 01:59"
     },
@@ -145,12 +151,29 @@ const dateFormat = (date: string) => {
 
 const statusColor = (status: string) => {
     switch (status) {
-        case 'new':
+        case STATUS_NEW:
             return 'info'
-        case 'in progress':
+        case STATUS_IN_PROGRESS:
             return 'green'
+        case STATUS_CANCELLED:
+            return 'red'
         default:
             return 'grey'
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.table__row {
+    cursor: pointer;
+    transition: background-color .2s ease;
+
+    &:nth-child(even) {
+        background-color: #F2F3FA;
+    }
+
+    &:hover {
+        background-color: #E8EAF6 !important;
+    }
+}
+</style>
