@@ -169,7 +169,7 @@ const statusColor = (status: string) => {
     transition: background-color .2s ease;
 
     &:nth-child(even) {
-        background-color: #F2F3FA;
+        background-color: rgba(242, 243, 250, 0.4);
     }
 
     &:hover {
