@@ -21,15 +21,7 @@
 
         <v-divider />
 
-        <v-list nav>
-            <v-list-item
-                v-for="route in manages"
-                :key="route.name"
-                :prepend-icon="route.meta.icon"
-                :title="$t(route.meta.title)"
-                :to="{ name: route.name }"
-            />
-        </v-list>
+        <v-admin-menu />
     </v-navigation-drawer>
 
     <v-app-bar app elevation="1" prominent>
@@ -54,13 +46,12 @@
 <script lang="ts" setup>
 import VFooterBox from '@/components/footer.vue'
 import VLocale from '@/components/locale.vue'
+import VAdminMenu from '@/components/menu/admin.vue'
 
 import {computed, ref} from "vue";
 import {useStore} from "vuex";
 
 import {APPLICATION_TITLE} from "@/constants/meta";
-
-import {manages} from "@/plugins/menu";
 import {logout} from "@/plugins/user";
 
 const store = useStore()

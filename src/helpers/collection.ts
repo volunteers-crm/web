@@ -7,15 +7,19 @@ export class Collection {
         this.#items = items
     }
 
-    filter(callback: any) {
+    filter(callback: any): Collection {
         return new Collection(_.filter(this.#items, callback))
     }
 
-    map(callback: any) {
+    map(callback: any): Collection {
         return new Collection(_.map(this.#items, callback))
     }
 
-    get() {
+    find(callback: any): any {
+        return _.find(this.#items, callback)
+    }
+
+    get(): any {
         return this.#items
     }
 }

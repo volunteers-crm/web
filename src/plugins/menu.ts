@@ -1,5 +1,5 @@
 import {Route} from '@/models/route'
-import {collect} from "@/models/collection";
+import {collect} from "@/helpers/collection";
 
 import userRoutes from '@/routes/routes/user'
 import manageRoutes from '@/routes/routes/manage'
