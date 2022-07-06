@@ -17,7 +17,9 @@ import VLoaderPage from '@/components/pages/loader.vue'
 
 import {API_ISSUES_SHOW} from "@/constants/api_routes";
 
-import {ref} from "vue";
+import {findIssue} from '@/fakes/issues'
+
+import {computed, ref} from "vue";
 import {useRoute} from "vue-router";
 
 const route = useRoute()
@@ -28,7 +30,5 @@ const params = ref(route.params)
 
 const title = ref(route.meta.title)
 
-const fake = ref({
-    a: 'A'
-})
+const fake = computed(() => findIssue(route.params.id))
 </script>
