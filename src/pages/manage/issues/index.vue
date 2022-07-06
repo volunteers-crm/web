@@ -55,9 +55,9 @@
 
             <td class="text-center">{{ item.source }}</td>
 
-            <td class="text-center">
+            <td class="text-center text-lowercase">
                 <v-chip :color="statusColor(item.status)" label>
-                    {{ item.status }}
+                    {{ $t(item.status) }}
                 </v-chip>
             </td>
 

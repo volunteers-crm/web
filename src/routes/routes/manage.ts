@@ -1,4 +1,4 @@
-import {ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_ISSUES} from "@/routes/names";
+import {ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_ISSUES_INDEX, ROUTE_ADMIN_ISSUES_SHOW} from "@/routes/names";
 
 import {LAYOUT_ADMIN} from "@/constants/layouts";
 
@@ -17,18 +17,41 @@ export default [
                 meta: {
                     layout: LAYOUT_ADMIN,
                     title: 'Dashboard',
-                    icon: 'mdi-view-dashboard'
+                    icon: 'mdi-view-dashboard',
+                    requiresAuth: true
                 },
             },
             {
                 path: 'issues',
-                name: ROUTE_ADMIN_ISSUES,
-                component: () => import('@/pages/manage/issues.vue'),
+                component: () => import('@/components/pages/empty.vue'),
                 meta: {
                     layout: LAYOUT_ADMIN,
                     title: 'Issues',
-                    icon: 'mdi-card-account-details'
-                }
+                    icon: 'mdi-card-account-details',
+                    requiresAuth: true
+                },
+                children: [
+                    {
+                        path: '',
+                        name: ROUTE_ADMIN_ISSUES_INDEX,
+                        component: () => import('@/pages/manage/issues/index.vue'),
+                        meta: {
+                            layout: LAYOUT_ADMIN,
+                            title: 'Issues',
+                            requiresAuth: true
+                        },
+                    },
+                    {
+                        path: ':id',
+                        name: ROUTE_ADMIN_ISSUES_SHOW,
+                        component: () => import('@/pages/manage/issues/show.vue'),
+                        meta: {
+                            layout: LAYOUT_ADMIN,
+                            title: 'Issue #:id',
+                            requiresAuth: true
+                        }
+                    }
+                ]
             }
         ]
     }
