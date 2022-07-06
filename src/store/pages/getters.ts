@@ -1,4 +1,4 @@
 export default {
-    hasPage: (state: any) => (slug: string) => state.items[slug] !== undefined,
-    getPage: (state: any) => (slug: string) => state.items[slug]
+    hasPage: (state: any) => (url: string) => state.items[url] !== undefined,
+    getPage: (state: any) => (url: string) => state.items[url]
 }

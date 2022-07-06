@@ -27,7 +27,7 @@ const layout = computed(() => {
         : defineAsyncComponent(() => import('@/pages/layouts/default.vue'))
 })
 
-// Push fake user data
+// TODO: Push fake user data
 onBeforeMount(() => {
     setToken('Bearer qwerty12345')
 

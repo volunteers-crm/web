@@ -1,13 +1,18 @@
 <template>
-    <v-loading-page :title="title" :url="url">
+    <v-loader-page
+        :params="params"
+        :title="title"
+        :url="url"
+        no-cache
+    >
         Show Issue ID {{ route.params.id }}
-    </v-loading-page>
+    </v-loader-page>
 
     {{ route }}
 </template>
 
 <script lang="ts" setup>
-import VLoadingPage from '@/components/pages/loading.vue'
+import VLoaderPage from '@/components/pages/loader.vue'
 
 import {API_ISSUES_SHOW} from "@/constants/api_routes";
 
@@ -16,7 +21,9 @@ import {useRoute} from "vue-router";
 
 const route = useRoute()
 
-const url = ref(API_ISSUES_SHOW.replace(':id', route.params.id))
+const url = ref(API_ISSUES_SHOW)
 
-const title = ref(route.meta.title.replace(':id', route.params.id))
+const params = ref(route.params)
+
+const title = ref(route.meta.title)
 </script>

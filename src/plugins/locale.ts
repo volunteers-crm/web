@@ -34,6 +34,6 @@ export function setPageTitle(route: any, title: string): void {
     if (document.title !== APPLICATION_TITLE) {
         document.title += ` - ${APPLICATION_TITLE}`
     }
-console.log('set page title', title)
+
     store.commit('meta/setPageTitle', title)
 }
