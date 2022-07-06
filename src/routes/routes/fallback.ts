@@ -1,6 +1,9 @@
+import {ROUTE_404} from "@/routes/names";
+
 export default [
     {
-        path: '/:catchAll(.*)',
+        path: '/:pathMatch(.*)*',
+        name: ROUTE_404,
         component: () => import('@/pages/errors/404.vue')
     }
 ]
