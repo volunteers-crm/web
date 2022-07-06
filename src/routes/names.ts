@@ -3,4 +3,4 @@ export const ROUTE_ABOUT = 'about'
 export const ROUTE_SIGN_IN = 'sign-in'
 
 export const ROUTE_ADMIN_DASHBOARD = 'admin.dashboard'
-export const ROUTE_ADMIN_SETTINGS = 'admin.settings'
+export const ROUTE_ADMIN_ISSUES = 'admin.issues'

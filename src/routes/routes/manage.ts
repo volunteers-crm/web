@@ -1,4 +1,4 @@
-import {ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_SETTINGS} from "@/routes/names";
+import {ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_ISSUES} from "@/routes/names";
 
 import {LAYOUT_ADMIN} from "@/constants/layouts";
 
@@ -21,13 +21,13 @@ export default [
                 },
             },
             {
-                path: 'settings',
-                name: ROUTE_ADMIN_SETTINGS,
-                component: () => import('@/pages/manage/settings.vue'),
+                path: 'issues',
+                name: ROUTE_ADMIN_ISSUES,
+                component: () => import('@/pages/manage/issues.vue'),
                 meta: {
                     layout: LAYOUT_ADMIN,
-                    title: 'Settings',
-                    icon: 'mdi-cog'
+                    title: 'Issues',
+                    icon: 'mdi-card-account-details'
                 }
             }
         ]
