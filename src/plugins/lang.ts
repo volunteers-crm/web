@@ -1,6 +1,6 @@
-import Storage from "@/plugins/storage";
+import {getLocale} from "@/plugins/locale";
 
-const lang = Storage.get('locale')
+const lang = getLocale()
 
 const resolve = (lang: string) => import(`../lang/${lang}.json`);
 

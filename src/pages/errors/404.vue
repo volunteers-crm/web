@@ -1,9 +1,9 @@
 <template>
-    <v-page :title="title" go-back />
+    <v-error-page :title="title" go-back go-main />
 </template>
 
 <script lang="ts" setup>
-import VPage from '@/components/pages/error.vue'
+import VErrorPage from '@/components/pages/error.vue'
 
 import {ref} from "vue";
 

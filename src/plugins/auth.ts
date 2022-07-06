@@ -6,8 +6,8 @@ export function setToken(token: string) {
     Storage.set(key, token)
 }
 
-export function getToken() {
-    return Storage.get(key)
+export function getToken(): string {
+    return Storage.get(key) ?? 'undefined'
 }
 
 export function hasToken(): boolean {

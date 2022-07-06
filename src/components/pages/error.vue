@@ -1,5 +1,5 @@
 <template>
-    <v-container class="fill-height d-flex flex-column align-center justify-center">
+    <v-container class="fill-height d-flex flex-column align-center justify-center" fluid>
         <h1 class="text-h4 mb-6">
             {{ $t(props.title) }}
         </h1>
@@ -13,7 +13,7 @@
                 {{ $t('reload') }}
             </v-btn>
 
-            <v-btn class="mx-2" color="primary" @click="goHomeAction">
+            <v-btn v-if="goMain" class="mx-2" color="primary" @click="goHomeAction">
                 {{ $t('home') }}
             </v-btn>
         </div>
@@ -33,6 +33,7 @@ const router = useRouter()
 const props = defineProps<{
     title: string,
     goBack?: boolean,
+    goMain?: boolean,
     reload?: boolean
 }>()
 

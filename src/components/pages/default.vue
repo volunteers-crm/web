@@ -5,7 +5,7 @@
         <v-layout v-html="state.content" />
     </v-container>
 
-    <v-error-page v-if="state.hasError" :title="$t(state.content)" reload />
+    <v-error-page v-if="state.hasError" :title="$t(state.content)" reload go-main />
 </template>
 
 <script lang="ts" setup>
