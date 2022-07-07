@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts" setup>
-import {ROUTE_ADMIN_DASHBOARD} from "@/routes/names";
+import { ROUTE_ADMIN_DASHBOARD } from '@/routes/names'
 
-import {manages} from "@/plugins/menu";
-import {collect} from "@/helpers/collection";
+import { manages } from '@/plugins/menu'
+import { collect } from '@/helpers/collection'
 
 const getName = (route: any) => {
     if (route?.name) {

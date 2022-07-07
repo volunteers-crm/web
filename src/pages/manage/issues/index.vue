@@ -73,15 +73,15 @@
 <script lang="ts" setup>
 import VTelegramLink from '@/components/links/telegram.vue'
 
-import {ROUTE_ADMIN_ISSUES_SHOW} from "@/routes/names";
+import { ROUTE_ADMIN_ISSUES_SHOW } from '@/routes/names'
 
-import {color} from '@/helpers/status-colors'
-import {issues} from "@/fakes/issues";
+import { color } from '@/helpers/status-colors'
+import { issues } from '@/fakes/issues'
 
-import moment from "moment";
+import moment from 'moment'
 
-import {useRouter} from "vue-router";
-import {ref} from "vue";
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 const router = useRouter()
 
@@ -90,12 +90,12 @@ const items = ref(issues)
 const dateFormat = (date: string) => {
     const value = moment(date)
 
-    return `${value.format('YYYY-MM-DD')}<br>${value.format('HH:mm')}`
+    return `${ value.format('YYYY-MM-DD') }<br>${ value.format('HH:mm') }`
 }
 
 const goTo = (id: number) => router.push({
     name: ROUTE_ADMIN_ISSUES_SHOW,
-    params: {id}
+    params: { id }
 })
 </script>
 

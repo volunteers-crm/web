@@ -24,26 +24,20 @@
 </template>
 
 <script lang="ts" setup>
-import {ref} from "vue";
+import { ref } from 'vue'
 
-import {getLocale, setLocale} from "@/plugins/locale";
-import {useRouter} from "vue-router";
+import locales from '@/constants/locales'
+import { useSettingsStore } from '@/store'
 
-const router = useRouter()
+const settingsStore = useSettingsStore()
 
-const locales = ref({
-    en: 'English',
-    de: 'Deutsch',
-    ru: 'Русский'
-})
+const current = ref(settingsStore.locale)
 
 const setSelectedLocale = (locale: string) => {
-    if (locale === getLocale()) {
-        return
+    if (locale !== current.value) {
+        settingsStore.setLocale(locale)
+
+        window.location.reload()
     }
-
-    setLocale(locale, true)
 }
-
-const current = ref(getLocale())
 </script>

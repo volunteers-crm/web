@@ -7,20 +7,19 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, defineAsyncComponent, onBeforeMount} from "vue";
-import {useRoute} from "vue-router";
-import {useStore} from "vuex";
+import { computed, defineAsyncComponent, onBeforeMount } from 'vue'
+import { useRoute } from 'vue-router'
 
-import {LAYOUT_ADMIN, LAYOUT_DEFAULT} from "@/constants/layouts";
+import { LAYOUT_ADMIN, LAYOUT_DEFAULT } from '@/constants/layouts'
 
-import {setToken} from "@/plugins/auth";
+import { useAuthStore, useUserStore } from '@/store'
 
-const store = useStore()
+import fakeUser from '@/fakes/user'
 
 const layout = computed(() => {
-    const {meta} = useRoute()
+    const { meta } = useRoute()
 
-    const template = meta?.layout ?? LAYOUT_DEFAULT
+    const template = meta?.layout || LAYOUT_DEFAULT
 
     return template === LAYOUT_ADMIN
         ? defineAsyncComponent(() => import('@/pages/layouts/admin.vue'))
@@ -29,13 +28,8 @@ const layout = computed(() => {
 
 // TODO: Push fake user data
 onBeforeMount(() => {
-    setToken('Bearer qwerty12345')
+    useAuthStore().set('Bearer qwerty12345')
 
-    store.commit('user/setUser', {
-        id: 1,
-        name: 'Sandra Adams',
-        username: '@sandra_adams',
-        avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
-    })
+    useUserStore().set(fakeUser)
 })
 </script>

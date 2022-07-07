@@ -21,17 +21,15 @@
 import VErrorPage from '@/components/pages/error.vue'
 import VInfoPage from '@/components/pages/info.vue'
 
-import {computed, onBeforeMount, ref} from "vue";
-import {useRoute} from "vue-router";
-import {useStore} from "vuex";
+import { computed, onBeforeMount, ref } from 'vue'
+import { useMetaStore, usePageStore } from '@/store'
 
 import _ from 'lodash'
 
-import {setPageTitle} from "@/plugins/locale";
 import api from '@/plugins/axios'
 
-const route = useRoute()
-const store = useStore()
+const metaStore = useMetaStore()
+const pageStore = usePageStore()
 
 const isLoading = ref(true)
 const isError = ref(false)
@@ -56,10 +54,10 @@ const props = withDefaults(defineProps<{
 })
 
 const requestUrl = computed(() => {
-    let url = props.url;
+    let url = props.url
 
     _.each(props?.params || {}, (value: any, key: any) => {
-        url = url.replace(`:${key}`, value)
+        url = url.replace(`:${ key }`, value)
     })
 
     return url
@@ -70,36 +68,32 @@ onBeforeMount(async () => {
         await setTimeout(() => {
             content.value = props.fake
 
-            setPageTitle(route, props.title)
+            metaStore.setPageTitle(props.title)
 
             isLoading.value = false
         }, props.fakeTimeout)
 
-        return;
+        return
     }
 
-    if (!props.noCache && store.getters['pages/hasPage'](requestUrl.value)) {
-        content.value = store.getters['pages/getPage'](requestUrl.value)
+    if (! props.noCache && pageStore.has(requestUrl.value)) {
+        content.value = pageStore.get(requestUrl.value)
 
         isLoading.value = false
 
-        return;
+        return
     }
 
     await api
         .get(requestUrl.value)
-        .then(response => {
-            content.value = response?.data
-
-            setPageTitle(route, props.title)
-        })
+        .then(response => content.value = response?.data)
         .catch(error => {
             errorMessage.value = error?.response?.data || error?.message
 
             isError.value = true
         })
         .finally(() => {
-            setPageTitle(route, props.title)
+            metaStore.setPageTitle(props.title)
 
             isLoading.value = false
         })

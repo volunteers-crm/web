@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _ from 'lodash'
 
 export const issues = [
     {
@@ -14,10 +14,10 @@ export const issues = [
             name: 'John Doe'
         },
         curator: null,
-        source: "help_bot",
-        status: "in_progress",
-        created_at: "2022-07-05 23:48",
-        updated_at: "2022-07-06 01:59"
+        source: 'help_bot',
+        status: 'in_progress',
+        created_at: '2022-07-05 23:48',
+        updated_at: '2022-07-06 01:59'
     },
     {
         id: 2,
@@ -36,10 +36,10 @@ export const issues = [
             username: 'john',
             name: 'John Doe'
         },
-        source: "crm",
-        status: "new",
-        created_at: "2022-07-06 20:48",
-        updated_at: "2022-07-06 21:59"
+        source: 'crm',
+        status: 'new',
+        created_at: '2022-07-06 20:48',
+        updated_at: '2022-07-06 21:59'
     },
     {
         id: 3,
@@ -58,13 +58,14 @@ export const issues = [
             username: 'sandra_adams',
             name: 'Sandra Adams'
         },
-        source: "crm",
-        status: "new",
-        created_at: "2022-07-06 20:48",
-        updated_at: "2022-07-06 21:59"
+        source: 'crm',
+        status: 'new',
+        created_at: '2022-07-06 20:48',
+        updated_at: '2022-07-06 21:59'
     }
 ]
 
-export function findIssue(id: number): any {
+export function findIssue(id: number): any
+{
     return _.find(issues, issue => issue.id === id)
 }

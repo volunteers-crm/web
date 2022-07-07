@@ -20,19 +20,19 @@
 <script lang="ts" setup>
 import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
 
-import {ref} from "vue";
-import {trans} from "laravel-vue-i18n";
+import { ref } from 'vue'
+import { trans } from 'laravel-vue-i18n'
 
-import moment from "moment";
+import moment from 'moment'
 
 // TODO: remove fake generator
-const count = 5;
+const count = 5
 
 const randomData = () => {
     const min = 10
     const max = 90
 
-    let values = [];
+    let values = []
 
     for (let i = 0; i < count; i++) {
         const value = Math.floor(Math.random() * (max - min + 1) + min)
@@ -44,7 +44,7 @@ const randomData = () => {
 }
 
 const randomDates = () => {
-    let values = [];
+    let values = []
 
     for (let i = count; i > 0; i--) {
         const date = moment().day(i * -1).format('MMMM, Do')
@@ -52,35 +52,35 @@ const randomDates = () => {
         values.push(date)
     }
 
-    return values;
+    return values
 }
 
 const issues = ref({
     options: {
         chart: {
-            id: "chart-issues",
+            id: 'chart-issues'
         },
         xaxis: {
-            categories: randomDates(),
-        },
+            categories: randomDates()
+        }
     },
 
     series: [
         {
             name: trans('opened'),
-            data: randomData(),
+            data: randomData()
         },
         {
             name: trans('solved'),
-            data: randomData(),
+            data: randomData()
         },
         {
             name: trans('cancelled'),
-            data: randomData(),
+            data: randomData()
         },
         {
             name: trans('unassigned'),
-            data: randomData(),
+            data: randomData()
         }
     ]
 })

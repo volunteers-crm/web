@@ -36,28 +36,23 @@
 import VFooterBox from '@/components/footer.vue'
 import VLocale from '@/components/locale.vue'
 
-import {computed, ref} from "vue";
-import {useRouter} from "vue-router";
-import {useStore} from "vuex";
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-
-import {APPLICATION_TITLE} from "@/constants/meta";
-import {ROUTE_ADMIN_DASHBOARD, ROUTE_MAIN} from "@/routes/names";
+import { APPLICATION_TITLE } from '@/constants/meta'
+import { ROUTE_MAIN } from '@/routes/names'
+import { useMetaStore } from '@/store'
 
 const router = useRouter()
-const store = useStore()
+const metaStore = useMetaStore()
 
 const appName = ref(APPLICATION_TITLE)
 
-const pageName = computed(() => store.getters['meta/getPageTitle'])
+const pageName = computed(() => metaStore.pageTitle)
 
-const hasShowPageTitle = computed(() => {
-    const title = store.getters['meta/getPageTitle']
+const hasShowPageTitle = computed(() => pageName.value !== appName.value)
 
-    return title !== null && title !== appName
-})
-
-const goToMain = () => router.push({name: ROUTE_MAIN})
+const goToMain = () => router.push({ name: ROUTE_MAIN })
 </script>
 
 <style lang="scss" scoped>

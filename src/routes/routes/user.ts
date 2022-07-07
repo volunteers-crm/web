@@ -1,6 +1,6 @@
-import {ROUTE_ABOUT, ROUTE_MAIN, ROUTE_SIGN_IN} from "@/routes/names";
+import { ROUTE_ABOUT, ROUTE_MAIN, ROUTE_SIGN_IN } from '@/routes/names'
 
-import {LAYOUT_DEFAULT} from "@/constants/layouts";
+import { LAYOUT_DEFAULT } from '@/constants/layouts'
 
 export default [
     {
@@ -28,7 +28,7 @@ export default [
         name: ROUTE_SIGN_IN,
         component: () => import('@/pages/auth/sign-in.vue'),
         meta: {
-            title: 'Sign In',
+            title: 'Sign In'
         }
     }
 ]

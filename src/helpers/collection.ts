@@ -1,29 +1,36 @@
 import _ from 'lodash'
 
-export class Collection {
+export class Collection
+{
     #items: any
 
-    constructor(items: any) {
+    constructor(items: any)
+    {
         this.#items = items
     }
 
-    filter(callback: any): Collection {
+    filter(callback: any): Collection
+    {
         return new Collection(_.filter(this.#items, callback))
     }
 
-    map(callback: any): Collection {
+    map(callback: any): Collection
+    {
         return new Collection(_.map(this.#items, callback))
     }
 
-    find(callback: any): any {
+    find(callback: any): any
+    {
         return _.find(this.#items, callback)
     }
 
-    get(): any {
+    get(): any
+    {
         return this.#items
     }
 }
 
-export function collect(items: any) {
+export function collect(items: any)
+{
     return new Collection(items)
 }

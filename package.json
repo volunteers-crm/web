@@ -16,6 +16,8 @@
         "moment": "^2.29.3",
         "moment-duration-format": "^2.3.2",
         "moment-timezone": "^0.5.34",
+        "pinia": "^2.0.14",
+        "pinia-plugin-persistedstate": "^1.6.1",
         "query-string": "^7.1.1",
         "roboto-fontface": "*",
         "vue": "^3.2.25",
@@ -25,7 +27,6 @@
         "vue3-apexcharts": "^1.4.1",
         "vue3-telegram-login": "^0.0.4",
         "vuetify": "^3.0.0-beta.5",
-        "vuex": "^4.0.2",
         "webfontloader": "^1.0.0"
     },
     "devDependencies": {
@@ -51,7 +52,7 @@
         "vue-tsc": "^0.34.7"
     },
     "engines": {
-        "node": ">= 18.4.0",
-        "npm": ">= 8.12.1"
+        "node": ">= 18.5.0",
+        "npm": ">= 8.13.2"
     }
 }

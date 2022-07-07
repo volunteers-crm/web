@@ -1,12 +1,13 @@
-import {ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_ISSUES_INDEX, ROUTE_ADMIN_ISSUES_SHOW} from "@/routes/names";
+import { ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_ISSUES_INDEX, ROUTE_ADMIN_ISSUES_SHOW } from '@/routes/names'
 
-import {LAYOUT_ADMIN} from "@/constants/layouts";
+import { LAYOUT_ADMIN } from '@/constants/layouts'
 
 export default [
     {
         path: '/manage',
         component: () => import('@/components/pages/empty.vue'),
         meta: {
+            title: 'Dashboard',
             requiresAuth: true
         },
         children: [
@@ -19,7 +20,7 @@ export default [
                     title: 'Dashboard',
                     icon: 'mdi-view-dashboard',
                     requiresAuth: true
-                },
+                }
             },
             {
                 path: 'issues',
@@ -39,7 +40,7 @@ export default [
                             layout: LAYOUT_ADMIN,
                             title: 'Issues',
                             requiresAuth: true
-                        },
+                        }
                     },
                     {
                         path: ':id',

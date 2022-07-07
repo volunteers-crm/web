@@ -21,13 +21,11 @@
 </template>
 
 <script lang="ts" setup>
-import {defineProps} from "vue";
-import {useRouter} from "vue-router";
-import {useStore} from "vuex";
+import { defineProps } from 'vue'
+import { useRouter } from 'vue-router'
 
-import {ROUTE_MAIN} from "@/routes/names";
+import { ROUTE_MAIN } from '@/routes/names'
 
-const store = useStore()
 const router = useRouter()
 
 const props = defineProps<{
@@ -38,6 +36,6 @@ const props = defineProps<{
 }>()
 
 const goBackAction = () => router.back()
-const goHomeAction = () => router.push({name: ROUTE_MAIN})
+const goHomeAction = () => router.push({ name: ROUTE_MAIN })
 const reloadAction = () => window.location.reload()
 </script>

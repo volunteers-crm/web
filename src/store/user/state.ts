@@ -1,5 +1,12 @@
-export default {
+import { UserStore } from '@/contracts/store/User'
+
+export default (): UserStore => ({
     isLogged: false,
 
-    user: {}
-}
+    user: {
+        id: null,
+        username: null,
+        name: null,
+        avatar: null
+    }
+})

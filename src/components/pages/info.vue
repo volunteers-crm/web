@@ -7,21 +7,21 @@
 </template>
 
 <script lang="ts" setup>
-import {defineProps, onBeforeMount} from "vue";
-import {useStore} from "vuex";
+import { defineProps, onBeforeMount } from 'vue'
+import { useMetaStore } from '@/store'
 
 const props = defineProps<{
     title: string
 }>()
 
-const store = useStore()
+const metaStore = useMetaStore()
 
-onBeforeMount(() => store.commit('meta/setPageTitle', props.title))
+onBeforeMount(() => metaStore.setPageTitle(props.title))
 </script>
 
 <style lang="scss">
 .box__info {
-    width: 100%;
     max-width: 480px;
+    width: 100%;
 }
 </style>

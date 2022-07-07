@@ -1,4 +1,6 @@
+import { User, UserStore } from '@/contracts/store/User'
+
 export default {
-    isLogged: (state: any) => state.isLogged,
-    getUser: (state: any) => state.user
+    isLogged: (state: UserStore): boolean => state.isLogged,
+    get: (state: UserStore): User => state.user
 }

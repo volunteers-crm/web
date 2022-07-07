@@ -1,21 +1,26 @@
 import url from 'query-string'
 
-export default new class {
+export default new class
+{
     readonly #query: any
 
-    constructor() {
+    constructor()
+    {
         this.#query = url.parse(location.search)
     }
 
-    hasParam(key: string): boolean {
+    hasParam(key: string): boolean
+    {
         return this.#query[key] !== undefined
     }
 
-    getParam(key: string): any {
+    getParam(key: string): any
+    {
         return this.#query[key]
     }
 
-    getParams(): [] {
+    getParams(): []
+    {
         return this.#query
     }
 }

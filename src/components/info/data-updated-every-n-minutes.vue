@@ -6,10 +6,10 @@
 </template>
 
 <script lang="ts" setup>
-import {useStore} from "vuex";
-import {ref} from "vue";
+import { ref } from 'vue'
+import { useSettingsStore } from '@/store'
 
-const store = useStore()
+const settingsStore = useSettingsStore()
 
-const minutes = ref(store.getters['meta/getTimesUpdateEvery'])
+const minutes = ref(settingsStore.timeoutAdminDashboard)
 </script>

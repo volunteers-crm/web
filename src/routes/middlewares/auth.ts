@@ -1,20 +1,18 @@
-import {ROUTE_SIGN_IN} from "@/routes/names";
+import { ROUTE_SIGN_IN } from '@/routes/names'
 
-import {getToken} from "@/plugins/auth";
-import {login} from "@/plugins/user";
-
-import store from "@/store";
+import { login } from '@/plugins/user'
+import { useAuthStore, useUserStore } from '@/store'
 
 const auth = async (to: any, from: any, next: any) => {
-    if (store.getters['user/isLogged']) {
+    if (useUserStore().isLogged) {
         return next()
     }
 
-    if (getToken()) {
+    if (useAuthStore().token) {
         return await login()
     }
 
-    return next({name: ROUTE_SIGN_IN})
+    return next({ name: ROUTE_SIGN_IN })
 }
 
 export default auth

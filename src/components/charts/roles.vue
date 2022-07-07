@@ -20,16 +20,16 @@
 <script lang="ts" setup>
 import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
 
-import {ref} from "vue";
+import { ref } from 'vue'
 
 // TODO: remove fake generator
-const count = 7;
+const count = 7
 
 const randomData = () => {
     const min = 0
     const max = 10
 
-    let values = [];
+    let values = []
 
     for (let i = 0; i < count; i++) {
         const value = Math.floor(Math.random() * (max - min + 1) + min)
@@ -43,7 +43,7 @@ const randomData = () => {
 const issues = ref({
     options: {
         chart: {
-            id: "chart-roles",
+            id: 'chart-roles',
             stacked: true
         },
         xaxis: {
@@ -54,15 +54,15 @@ const issues = ref({
                 'clothes',
                 'excursions',
                 'medics',
-                'psychologists',
-            ],
-        },
+                'psychologists'
+            ]
+        }
     },
 
     series: [
         {
-            data: randomData(),
-        },
+            data: randomData()
+        }
     ]
 })
 </script>

@@ -1,28 +1,29 @@
-import {ROUTE_ADMIN_DASHBOARD, ROUTE_MAIN, ROUTE_SIGN_IN} from "@/routes/names";
-import {API_URL_ME} from "@/constants/api_routes";
+import { ROUTE_ADMIN_DASHBOARD, ROUTE_MAIN, ROUTE_SIGN_IN } from '@/routes/names'
+import { API_URL_ME } from '@/constants/api_routes'
 
-import {forgetToken} from "@/plugins/auth";
-
-import store from "@/store";
 import router from '@/routes'
+import api from '@/plugins/axios'
 
-import api from "@/plugins/axios";
+import { useAuthStore, useUserStore } from '@/store'
 
-export function login() {
+export function login()
+{
     return api
         .get(API_URL_ME)
         .then((response: any) => {
-            store.commit('user/setUser', response?.data)
+            const userStore = useUserStore()
 
-            router.push({name: ROUTE_ADMIN_DASHBOARD})
+            userStore.set(response?.data)
+
+            router.push({ name: ROUTE_ADMIN_DASHBOARD })
         })
-        .catch(() => router.push({name: ROUTE_SIGN_IN}))
+        .catch(() => router.push({ name: ROUTE_SIGN_IN }))
 }
 
-export function logout() {
-    store.commit('user/logout')
+export function logout()
+{
+    useUserStore().logout()
+    useAuthStore().forget()
 
-    forgetToken()
-
-    router.push({name: ROUTE_MAIN})
+    router.push({ name: ROUTE_MAIN })
 }

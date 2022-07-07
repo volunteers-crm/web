@@ -1,13 +1,5 @@
-export default {
-    pageTitle: null,
+import { Meta } from '@/contracts/store/Meta'
 
-    menu: {
-        rail: false
-    },
-
-    times: {
-        update: {
-            every: 10
-        }
-    }
-}
+export default (): Meta => ({
+    pageTitle: null
+})

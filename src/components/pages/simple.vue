@@ -17,10 +17,7 @@
 <script lang="ts" setup>
 import VLoaderPage from '@/components/pages/loader.vue'
 
-import {defineProps, reactive} from "vue";
-import {useStore} from "vuex";
-
-const store = useStore()
+import { defineProps, ref } from 'vue'
 
 defineProps<{
     title: string,
@@ -28,7 +25,7 @@ defineProps<{
     params?: object
 }>()
 
-const data = reactive({
+const data = ref({
     title: '',
     content: ''
 })

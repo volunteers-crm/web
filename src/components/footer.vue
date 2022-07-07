@@ -21,11 +21,11 @@
 </template>
 
 <script lang="ts" setup>
-import {APPLICATION_TITLE} from "@/constants/meta";
+import { APPLICATION_TITLE } from '@/constants/meta'
 
-import {users} from '@/plugins/menu'
+import { users } from '@/plugins/menu'
 
-import {ref} from "vue";
+import { ref } from 'vue'
 
 const year = ref(new Date().getFullYear())
 

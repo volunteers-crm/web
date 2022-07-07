@@ -11,12 +11,12 @@
 </template>
 
 <script lang="ts" setup>
-import {telegram} from "@/plugins/links";
+import { telegram } from '@/plugins/links'
 
-import {useStore} from "vuex";
-import {ref} from "vue";
+import { ref } from 'vue'
+import { useUserStore } from '@/store'
 
-const store = useStore()
+const userStore = useUserStore()
 
 const props = defineProps<{
     id: number,
@@ -26,19 +26,19 @@ const props = defineProps<{
     text?: boolean
 }>()
 
-const currentUserId = ref(store.getters['user/getUser'].id)
+const currentUserId = ref(userStore.get.id)
 
 const itsMe = (): boolean => currentUserId.value === props.id
 </script>
 
 <style lang="scss">
 .telegram__link {
-    display: inline;
     color: darkgrey;
+    display: inline;
 
     span, a {
-        text-decoration: none;
         color: darkgrey;
+        text-decoration: none;
     }
 
     a:hover {

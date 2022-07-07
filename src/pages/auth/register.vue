@@ -36,18 +36,18 @@
 import VPage from '@/components/pages/info.vue'
 import TelegramSignInBtn from '@/components/buttons/telegram/sign-in.vue'
 
-import {API_URL_AUTH} from "@/constants/api_routes";
-import {ROUTE_ADMIN_DASHBOARD} from "@/routes/names";
+import { API_URL_AUTH } from '@/constants/api_routes'
+import { ROUTE_ADMIN_DASHBOARD } from '@/routes/names'
 
-import {onMounted, ref} from "vue";
-import {useRouter} from "vue-router";
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/store'
 
 import url from '@/plugins/url'
 import api from '@/plugins/axios'
 
-import {setToken} from "@/plugins/auth";
-
 const router = useRouter()
+const authStore = useAuthStore()
 
 const firstName = ref(url.getParam('first_name'))
 const avatar = ref(url.getParam('photo_url'))
@@ -61,11 +61,9 @@ onMounted(() => {
             params: url.getParams()
         })
         .then((response: any) => {
-            setToken(response?.data?.token)
+            authStore.set(response?.data?.token)
 
-            router.push({
-                name: ROUTE_ADMIN_DASHBOARD
-            })
+            router.push({ name: ROUTE_ADMIN_DASHBOARD })
         })
         .catch((error: any) => {
             errorMessage.value = error?.message

@@ -1,7 +1,9 @@
-import {getLocale} from "@/plugins/locale";
+import { useSettingsStore } from '@/store'
 
-const lang = getLocale()
+const settingsStore = useSettingsStore()
 
-const resolve = (lang: string) => import(`../lang/${lang}.json`);
+const lang = settingsStore.locale
 
-export default {lang, resolve}
+const resolve = (lang: string) => import(`../lang/${ lang }.json`)
+
+export default { lang, resolve }

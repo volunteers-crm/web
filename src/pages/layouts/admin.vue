@@ -48,21 +48,24 @@ import VFooterBox from '@/components/footer.vue'
 import VLocale from '@/components/locale.vue'
 import VAdminMenu from '@/components/menu/admin.vue'
 
-import {computed, ref} from "vue";
-import {useStore} from "vuex";
+import { computed, ref } from 'vue'
 
-import {APPLICATION_TITLE} from "@/constants/meta";
-import {logout} from "@/plugins/user";
+import { APPLICATION_TITLE } from '@/constants/meta'
 
-const store = useStore()
+import { logout } from '@/plugins/user'
+import { useMetaStore, useSettingsStore, useUserStore } from '@/store'
+
+const metaStore = useMetaStore()
+const userStore = useUserStore()
+const settingsStore = useSettingsStore()
 
 const appName = ref(APPLICATION_TITLE)
 
-const pageName = computed(() => store.getters['meta/getPageTitle'])
+const pageName = computed(() => metaStore.pageTitle)
 
-const user = computed(() => store.getters['user/getUser'])
+const user = computed(() => userStore.get)
 
-const navigation = computed(() => store.getters['meta/getMenuRail'])
+const navigation = computed(() => settingsStore.menuRail)
 
-const navigationToggle = () => store.dispatch('meta/menuRailToggle')
+const navigationToggle = () => settingsStore.toggleMenuRail()
 </script>

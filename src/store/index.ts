@@ -1,13 +1,13 @@
-import {createStore} from "vuex";
+import { defineStore } from 'pinia'
 
-import meta from "@/store/meta";
-import pages from "@/store/pages";
-import user from "@/store/user";
+import auth from './auth'
+import meta from './meta'
+import page from './page'
+import user from './user'
+import settings from './settings'
 
-export default createStore({
-    modules: {
-        meta,
-        pages,
-        user,
-    }
-})
+export const useAuthStore = defineStore('auth', auth)
+export const useMetaStore = defineStore('meta', meta)
+export const usePageStore = defineStore('page', page)
+export const useUserStore = defineStore('user', user)
+export const useSettingsStore = defineStore('settings', settings)

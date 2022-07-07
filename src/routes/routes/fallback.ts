@@ -1,4 +1,4 @@
-import {ROUTE_404} from "@/routes/names";
+import { ROUTE_404 } from '@/routes/names'
 
 export default [
     {
