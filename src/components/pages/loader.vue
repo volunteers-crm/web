@@ -50,6 +50,10 @@ const props = withDefaults(defineProps<{
     fake?: any,
     fakeTimeout?: number
 }>(), {
+    btnGoBack: false,
+    btnGoMain: false,
+    btnReload: false,
+    noCache: false,
     fake: null,
     fakeTimeout: 1500
 })
@@ -69,7 +73,6 @@ const setPageTitle = () => {
 }
 
 onBeforeMount(async () => {
-    console.log(props.fake, !! props.fake)
     if (!! props.fake) {
         await setTimeout(() => {
             content.value = props.fake

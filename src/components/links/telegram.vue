@@ -18,13 +18,20 @@ import { ref } from 'vue'
 
 const userStore = useUserStore()
 
-const props = defineProps<{
-    id: number,
-    username?: string | number | null,
-    name: string,
-    me?: boolean,
-    text?: boolean
-}>()
+const props = withDefaults(
+    defineProps<{
+        id: number,
+        username?: string | number | null,
+        name: string,
+        me?: boolean,
+        text?: boolean
+    }>(),
+    {
+        username: null,
+        me: false,
+        text: false
+    }
+)
 
 const currentUserId = ref(userStore.user.id)
 

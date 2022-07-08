@@ -8,8 +8,6 @@
     >
         Show Issue ID
     </v-loader-page>
-
-    {{ route || 'aaa' }}
 </template>
 
 <script lang="ts" setup>
@@ -28,5 +26,5 @@ const url = ref(API_ISSUES_SHOW)
 
 const title = ref(meta.title)
 
-const fake = computed(() => findIssue(params.id))
+const fake = computed(() => findIssue(Number(params.id)))
 </script>

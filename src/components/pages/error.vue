@@ -28,12 +28,19 @@ import { ROUTE_MAIN } from '@/routes/names'
 
 const router = useRouter()
 
-const props = defineProps<{
-    title: string,
-    goBack?: boolean,
-    goMain?: boolean,
-    reload?: boolean
-}>()
+const props = withDefaults(
+    defineProps<{
+        title: string,
+        goBack?: boolean,
+        goMain?: boolean,
+        reload?: boolean
+    }>(),
+    {
+        goBack: false,
+        goMain: false,
+        reload: false
+    }
+)
 
 const goBackAction = () => router.back()
 const goHomeAction = () => router.push({ name: ROUTE_MAIN })
