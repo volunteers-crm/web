@@ -29,10 +29,6 @@ export const useUserStore = defineStore({
         }
     }),
 
-    getters: {
-        get: (state: UserStore): User => state.user
-    },
-
     actions: {
         set(user: User)
         {

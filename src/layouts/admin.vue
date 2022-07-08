@@ -65,7 +65,7 @@ const appName = ref(APPLICATION_TITLE)
 
 const pageName = computed(() => metaStore.pageTitle)
 
-const user = computed(() => userStore.get)
+const user = computed(() => userStore.user)
 
 const navigation = computed(() => settingsStore.menu.rail)
 
