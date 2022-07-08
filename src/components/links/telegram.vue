@@ -26,7 +26,7 @@ const props = defineProps<{
     text?: boolean
 }>()
 
-const currentUserId = ref(userStore.get.id)
+const currentUserId = ref(userStore.user.id)
 
 const itsMe = (): boolean => currentUserId.value === props.id
 </script>

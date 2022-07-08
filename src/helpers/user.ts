@@ -13,9 +13,7 @@ export function login()
     return axios
         .get(API_URL_ME)
         .then((response: any) => {
-            const userStore = useUserStore()
-
-            userStore.set(response?.data)
+            useUserStore().set(response?.data)
 
             router.push({ name: ROUTE_ADMIN_DASHBOARD })
         })
