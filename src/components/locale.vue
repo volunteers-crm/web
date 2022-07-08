@@ -27,7 +27,7 @@
 import { ref } from 'vue'
 
 import locales from '@/constants/locales'
-import { useSettingsStore } from '@/store'
+import { useSettingsStore } from '@/stores/settings'
 
 const settingsStore = useSettingsStore()
 

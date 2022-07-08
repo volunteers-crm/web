@@ -16,7 +16,7 @@ export default [
     {
         path: '/about',
         name: ROUTE_ABOUT,
-        component: () => import('@/pages/about/index.vue'),
+        component: () => import('@/pages/main/about.vue'),
         meta: {
             layout: LAYOUT_DEFAULT,
             title: 'About Us',
@@ -26,7 +26,7 @@ export default [
     {
         path: '/sign-in',
         name: ROUTE_SIGN_IN,
-        component: () => import('@/pages/auth/sign-in.vue'),
+        component: () => import('@/pages/main/auth/sign-in.vue'),
         meta: {
             title: 'Sign In'
         }

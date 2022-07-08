@@ -4,6 +4,7 @@
             color="purple"
             indeterminate
         />
+
     </v-info-page>
 
     <v-error-page
@@ -22,11 +23,12 @@ import VErrorPage from '@/components/pages/error.vue'
 import VInfoPage from '@/components/pages/info.vue'
 
 import { computed, onBeforeMount, ref } from 'vue'
-import { useMetaStore, usePageStore } from '@/store'
 
 import _ from 'lodash'
+import axios from 'axios'
 
-import api from '@/plugins/axios'
+import { useMetaStore } from '@/stores/meta'
+import { usePageStore } from '@/stores/page'
 
 const metaStore = useMetaStore()
 const pageStore = usePageStore()
@@ -46,10 +48,10 @@ const props = withDefaults(defineProps<{
     btnGoMain?: boolean,
     btnReload?: boolean,
     noCache?: boolean,
-    fake: any,
+    fake?: any,
     fakeTimeout?: number
 }>(), {
-    fake: {},
+    fake: null,
     fakeTimeout: 1500
 })
 
@@ -64,7 +66,7 @@ const requestUrl = computed(() => {
 })
 
 onBeforeMount(async () => {
-    if (props.fake) {
+    if (!! props.fake) {
         await setTimeout(() => {
             content.value = props.fake
 
@@ -84,7 +86,7 @@ onBeforeMount(async () => {
         return
     }
 
-    await api
+    await axios
         .get(requestUrl.value)
         .then(response => content.value = response?.data)
         .catch(error => {

@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts" setup>
-import { telegram } from '@/plugins/links'
+import { telegram } from '@/helpers/links'
+import { useUserStore } from '@/stores/user'
 
 import { ref } from 'vue'
-import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
 

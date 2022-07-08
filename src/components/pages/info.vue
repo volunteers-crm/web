@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { defineProps, onBeforeMount } from 'vue'
-import { useMetaStore } from '@/store'
+import { useMetaStore } from '@/stores/meta'
 
 const props = defineProps<{
     title: string

@@ -7,9 +7,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { useSettingsStore } from '@/store'
+import { useSettingsStore } from '@/stores/settings'
 
 const settingsStore = useSettingsStore()
 
-const minutes = ref(settingsStore.timeoutAdminDashboard)
+const minutes = ref(settingsStore.timeout.admin.dashboard)
 </script>

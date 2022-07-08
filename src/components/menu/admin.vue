@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import { ROUTE_ADMIN_DASHBOARD } from '@/routes/names'
 
-import { manages } from '@/plugins/menu'
+import { manages } from '@/helpers/menu'
 import { collect } from '@/helpers/collection'
 
 const getName = (route: any) => {

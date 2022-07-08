@@ -4,14 +4,15 @@ import { createRouter, createWebHistory } from 'vue-router'
 import authMiddleware from '@/routes/middlewares/auth'
 
 import user from '@/routes/routes/user'
-import manage from '@/routes/routes/manage'
+import admin from '@/routes/routes/admin'
 import fallback from '@/routes/routes/fallback'
-import { useMetaStore } from '@/store'
+
+import { useMetaStore } from '@/stores/meta'
 
 const router = createRouter({
     history: createWebHistory(),
 
-    routes: [...user, ...manage, ...fallback]
+    routes: [...user, ...admin, ...fallback]
 })
 
 router.beforeEach(async (to: any, from: any, next: any) => {

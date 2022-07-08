@@ -23,7 +23,7 @@
 <script lang="ts" setup>
 import { APPLICATION_TITLE } from '@/constants/meta'
 
-import { users } from '@/plugins/menu'
+import { users } from '@/helpers/menu'
 
 import { ref } from 'vue'
 
