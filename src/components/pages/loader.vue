@@ -4,7 +4,6 @@
             color="purple"
             indeterminate
         />
-
     </v-info-page>
 
     <v-error-page
@@ -65,14 +64,19 @@ const requestUrl = computed(() => {
     return url
 })
 
+const setPageTitle = () => {
+    metaStore.setPageTitle(props.title, props?.params)
+}
+
 onBeforeMount(async () => {
+    console.log(props.fake, !! props.fake)
     if (!! props.fake) {
         await setTimeout(() => {
             content.value = props.fake
 
-            metaStore.setPageTitle(props.title)
-
             isLoading.value = false
+
+            setPageTitle()
         }, props.fakeTimeout)
 
         return
@@ -95,7 +99,7 @@ onBeforeMount(async () => {
             isError.value = true
         })
         .finally(() => {
-            metaStore.setPageTitle(props.title)
+            setPageTitle()
 
             isLoading.value = false
         })

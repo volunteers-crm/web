@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { trans } from 'laravel-vue-i18n'
+import _ from 'lodash'
 
 import { APPLICATION_TITLE } from '@/constants/meta'
 
@@ -16,9 +17,13 @@ export const useMetaStore = defineStore({
     }),
 
     actions: {
-        setPageTitle(title?: string)
+        setPageTitle(title?: string, params?: object)
         {
             title = trans(title || '')
+
+            _.each(params || {}, (value: any, key: string) => {
+                title = title?.replace(`:${ key }`, value)
+            })
 
             this.$state.pageTitle = title
 
