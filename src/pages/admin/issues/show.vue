@@ -1,12 +1,21 @@
 <template>
     <v-loader-page
+        v-slot="{ props }"
         :fake="fake"
         :params="params"
         :title="title"
         :url="url"
         no-cache
     >
-        Show Issue ID
+        <h1>Show Issue #{{ props.id }}</h1>
+
+        <div>
+            {{ props?.client?.name || 'unknown' }}
+        </div>
+
+        <div>
+            {{ props }}
+        </div>
     </v-loader-page>
 </template>
 

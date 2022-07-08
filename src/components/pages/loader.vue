@@ -14,7 +14,10 @@
         :title="errorMessage"
     />
 
-    <slot v-if="!isLoading && !isError" />
+    <slot
+        v-if="!isLoading && !isError"
+        :props="content"
+    />
 </template>
 
 <script lang="ts" setup>
