@@ -130,6 +130,84 @@ export const messages = {
             type: MESSAGE_TYPE_DOCUMENT,
             created_at: '2022-07-05 23:48:59',
             updated_at: '2022-07-05 23:48:59'
+        },
+        {
+            id: 7,
+            sender: {
+                id: 678,
+                username: 'olivia',
+                name: 'Olivia Milfred',
+                avatar: 'https://randomuser.me/api/portraits/women/45.jpg'
+            },
+            content: text,
+            type: MESSAGE_TYPE_TEXT,
+            created_at: '2022-07-05 23:49:08',
+            updated_at: '2022-07-05 23:49:08'
+        },
+        {
+            id: 8,
+            sender: {
+                id: 1,
+                name: 'Sandra Adams',
+                username: 'sandra_adams',
+                avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
+            },
+            content: text,
+            type: MESSAGE_TYPE_TEXT,
+            created_at: '2022-07-05 23:48:27',
+            updated_at: '2022-07-05 23:48:27'
+        },
+        {
+            id: 7,
+            sender: {
+                id: 678,
+                username: 'olivia',
+                name: 'Olivia Milfred',
+                avatar: 'https://randomuser.me/api/portraits/women/45.jpg'
+            },
+            content: text,
+            type: MESSAGE_TYPE_TEXT,
+            created_at: '2022-07-05 23:49:08',
+            updated_at: '2022-07-05 23:49:08'
+        },
+        {
+            id: 8,
+            sender: {
+                id: 1,
+                name: 'Sandra Adams',
+                username: 'sandra_adams',
+                avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
+            },
+            content: text,
+            type: MESSAGE_TYPE_TEXT,
+            created_at: '2022-07-05 23:48:27',
+            updated_at: '2022-07-05 23:48:27'
+        },
+        {
+            id: 7,
+            sender: {
+                id: 678,
+                username: 'olivia',
+                name: 'Olivia Milfred',
+                avatar: 'https://randomuser.me/api/portraits/women/45.jpg'
+            },
+            content: text,
+            type: MESSAGE_TYPE_TEXT,
+            created_at: '2022-07-05 23:49:08',
+            updated_at: '2022-07-05 23:49:08'
+        },
+        {
+            id: 8,
+            sender: {
+                id: 1,
+                name: 'Sandra Adams',
+                username: 'sandra_adams',
+                avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
+            },
+            content: text,
+            type: MESSAGE_TYPE_TEXT,
+            created_at: '2022-07-05 23:48:27',
+            updated_at: '2022-07-05 23:48:27'
         }
     ]
 }

@@ -79,6 +79,9 @@ const sendMessage = () => {
 
 <style lang="scss" scoped>
 .chat {
+    max-height: calc(100vh - 64px - 96px);
+    overflow-y: auto;
+
     &__messages {
         background: #E5F6E5 url("@/assets/images/chat-background.webp") repeat fixed;
         box-shadow: inset 0 2px 1px -1px rgba(0, 0, 0, 0.2),

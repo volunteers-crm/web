@@ -7,7 +7,7 @@
         :url="url"
         no-cache
     >
-        <v-container class="fill-height" fluid>
+        <v-container class="fill-height py-0" fluid>
             <v-row class="fill-height" no-gutters>
                 <v-col cols="2">
                     <v-list>
@@ -37,7 +37,9 @@
                         </v-card-title>
 
                         <v-card-text v-if="!!props.curator">
-                            <p v-text="props.curator.name" />
+                            <p v-if="isMe(props.curator.id)" v-text="$t('You')" />
+                            <p v-else v-text="props.curator.name" />
+
                             <p class="text-grey" v-text="`@${props.curator.username}`" />
                         </v-card-text>
 
@@ -126,8 +128,10 @@ import { findIssue } from '@/_fakes/issues'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import { useUserStore } from '@/stores/user'
 
 const { meta, params } = useRoute()
+const userStore = useUserStore()
 
 const url = ref(API_ISSUES_SHOW)
 
@@ -136,6 +140,8 @@ const title = ref(meta.title)
 const formatDate = (date: string) => dateFormat(date)
 
 const fake = computed(() => findIssue(Number(params.id)))
+
+const isMe = (id: number) => id === userStore.user.id
 
 const hasTakeToWork = ref(false)
 
