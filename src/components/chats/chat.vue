@@ -2,7 +2,7 @@
     <div class="chat fill-height d-flex flex-column">
         <div class="chat__messages pa-5 overflow-y-auto">
             <v-message
-                v-for="message in fakeMessages()"
+                v-for="message in messages()"
                 :key="message.id"
                 :message="message"
             />
@@ -12,6 +12,7 @@
             <div class="w-100">
                 <v-textarea
                     v-model="message"
+                    :disabled="hasSendingMessage"
                     :placeholder="$t('Write a message...')"
                     auto-grow
                     autofocus
@@ -25,7 +26,8 @@
 
             <div class="px-2 pt-1">
                 <v-btn
-                    color="primary"
+                    :color="message.length ? 'primary' : 'default'"
+                    :disabled="!message.length || hasSendingMessage"
                     icon="mdi-send"
                     variant="text"
                     @click="sendMessage"
@@ -39,9 +41,11 @@
 import VMessage from '@/components/chats/message.vue'
 
 import { STATUS_CANCELLED, STATUS_DONE } from '@/constants/statuses'
+import { API_ISSUES_MESSAGE } from '@/constants/api_routes'
 
 import { computed, ref } from 'vue'
 import { findMessages } from '@/_fakes/chat'
+import axios from 'axios'
 
 const props = defineProps<{
     issueId: number,
@@ -50,12 +54,26 @@ const props = defineProps<{
 
 const message = ref('')
 
-const fakeMessages = ref(() => findMessages(props.issueId))
+const hasSendingMessage = ref(false)
+
+const messages = ref(() => findMessages(props.issueId))
 
 const isClosed = computed(() => [STATUS_DONE, STATUS_CANCELLED].includes(props.status))
 
 const sendMessage = () => {
-    alert('sent!')
+    if (! message.value.length) {
+        return
+    }
+
+    hasSendingMessage.value = true
+
+    axios.post(API_ISSUES_MESSAGE, { message })
+        .then(response => {
+            messages.value.push(response?.data)
+
+            message.value = ''
+        })
+        .finally(() => hasSendingMessage.value = false)
 }
 </script>
 
