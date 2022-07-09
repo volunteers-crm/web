@@ -1,4 +1,4 @@
-import { ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_ISSUES_INDEX, ROUTE_ADMIN_ISSUES_SHOW } from '@/routes/names'
+import { ROUTE_ADMIN_CHATS, ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_ISSUES_INDEX, ROUTE_ADMIN_ISSUES_SHOW } from '@/routes/names'
 
 import { LAYOUT_ADMIN } from '@/constants/layouts'
 
@@ -53,6 +53,17 @@ export default [
                         }
                     }
                 ]
+            },
+            {
+                path: 'chats',
+                name: ROUTE_ADMIN_CHATS,
+                component: () => import('@/pages/admin/chats.vue'),
+                meta: {
+                    layout: LAYOUT_ADMIN,
+                    title: 'Chats',
+                    icon: 'mdi-forum',
+                    requiresAuth: true
+                }
             }
         ]
     }

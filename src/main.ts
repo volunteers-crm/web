@@ -19,7 +19,7 @@ import { telegramLoginTemp } from 'vue3-telegram-login'
 import App from '@/app.vue'
 
 loadFonts()
-initAxios(pinia)
+initAxios()
 
 createApp(App)
     .use(pinia)
