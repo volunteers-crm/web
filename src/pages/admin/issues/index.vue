@@ -57,9 +57,7 @@
             <td class="text-center">{{ item.source }}</td>
 
             <td class="text-center text-lowercase">
-                <v-chip :color="color(item.status)" label>
-                    {{ $t(item.status) }}
-                </v-chip>
+                <v-status-btn :status="item.status" />
             </td>
 
             <td class="text-center">{{ item.chat.timezone }}</td>
@@ -72,10 +70,9 @@
 
 <script lang="ts" setup>
 import VTelegramLink from '@/components/links/telegram.vue'
+import VStatusBtn from '@/components/buttons/status.vue'
 
 import { ROUTE_ADMIN_ISSUES_SHOW } from '@/routes/names'
-
-import { color } from '@/helpers/status-color'
 import { issues } from '@/_fakes/issues'
 
 import moment from 'moment'

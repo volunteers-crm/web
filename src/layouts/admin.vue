@@ -3,7 +3,7 @@
         <v-list>
             <v-list-item
                 :prepend-avatar="user.avatar"
-                :subtitle="user.username"
+                :subtitle="`@${user.username}`"
                 :title="user.name"
             >
                 <template v-if="!navigation" v-slot:append>
