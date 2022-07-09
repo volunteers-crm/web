@@ -3,43 +3,43 @@ import _ from 'lodash'
 
 import { useToast } from 'vue-toastification'
 import { trans } from 'laravel-vue-i18n'
-import { createPinia } from 'pinia'
+import { Pinia } from 'pinia'
 
 import { useSettingsStore } from '@/stores/settings'
 import { useAuthStore } from '@/stores/auth'
 
-const pinia = createPinia()
+export const initAxios = (pinia: Pinia) => {
+    const toast = useToast()
+    const settingsStore = useSettingsStore(pinia)
+    const authStore = useAuthStore(pinia)
 
-const toast = useToast()
-const settingsStore = useSettingsStore(pinia)
-const authStore = useAuthStore(pinia)
+    axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+    axios.defaults.headers.common['X-Localization'] = settingsStore.locale
+    axios.defaults.headers.common['X-Authorization'] = authStore.token || 'undefined'
 
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.headers.common['X-Localization'] = settingsStore.locale
-axios.defaults.headers.common['X-Authorization'] = authStore.token || 'undefined'
+    axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL
+    axios.interceptors.response.use(
+        response => response,
+        error => {
+            switch (error?.status) {
+                case 422:
+                    let errors: string[] = []
 
-axios.interceptors.response.use(
-    response => response,
-    error => {
-        switch (error?.status) {
-            case 422:
-                let errors: string[] = []
+                    _.each(error?.data?.data, messages => {
+                        errors.push(messages.join('<br>'))
+                    })
 
-                _.each(error?.data?.data, messages => {
-                    errors.push(messages.join('<br>'))
-                })
+                    toast.error(errors.join('<br>'))
+                    break
 
-                toast.error(errors.join('<br>'))
-                break
+                default:
+                    toast.error(trans(error?.data?.message || 'Whoops! Something went wrong.'))
+            }
 
-            default:
-                toast.error(trans(error?.data?.message || 'Whoops! Something went wrong.'))
+            throw error
         }
+    )
 
-        throw error
-    }
-)
-
-export const initAxios = () => axios
+    return axios
+}
