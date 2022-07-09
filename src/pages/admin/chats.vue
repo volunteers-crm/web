@@ -93,6 +93,10 @@
                 <v-card>
                     <v-card-title>
                         {{ $t('Available') }}
+
+                        <v-btn>
+                            sync icon
+                        </v-btn>
                     </v-card-title>
 
                     <v-card-text>
