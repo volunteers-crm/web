@@ -11,6 +11,7 @@
     "Curators & Coordinators": "Kuratoren und Koordinatoren",
     "Dashboard": "Dashboard",
     "done": "erledigt",
+    "edited": "bearbeitet",
     "go back": "zurück gehen",
     "guest": "Gast",
     "Hello": "Hallo",
@@ -37,9 +38,12 @@
     "Status": "Status",
     "Storage": "Lagerung",
     "The data is updated every :minutes minutes.": "Die Daten werden alle :minutes Minuten aktualisiert.",
+    "The time is indicated in the chat time zone.": "Die Uhrzeit wird in der Chat-Zeitzone angegeben.",
     "Timezone": "Zeitzone",
     "unassigned": "nicht zugeordnet",
     "Updated At": "Aktualisiert am",
     "Whoops! Something went wrong.": "Ups, etwas ist schief gelaufen.",
-    "Whoops!": "Ups!"
+    "Whoops!": "Ups!",
+    "Write a message...": "Schreibe deine Nachricht...",
+    "You": "Sie"
 }

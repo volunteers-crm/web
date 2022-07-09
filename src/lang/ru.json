@@ -11,6 +11,7 @@
     "Curators & Coordinators": "Кураторы и координаторы",
     "Dashboard": "Доска",
     "done": "выполнена",
+    "edited": "изменено",
     "go back": "назад",
     "guest": "гость",
     "Hello": "Привет",
@@ -37,9 +38,12 @@
     "Status": "Статус",
     "Storage": "Хранилище",
     "The data is updated every :minutes minutes.": "Данные обновляются каждые :minutes минут.",
+    "The time is indicated in the chat time zone.": "Время указывается в часовой зоне чата.",
     "Timezone": "Часовой пояс",
     "unassigned": "неназначенные",
     "Updated At": "Обновлено",
     "Whoops! Something went wrong.": "Упс! Что-то пошло не так!",
-    "Whoops!": "Упс!"
+    "Whoops!": "Упс!",
+    "Write a message...": "Написать сообщение...",
+    "You": "Вы"
 }

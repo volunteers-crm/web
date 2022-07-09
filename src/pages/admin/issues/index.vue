@@ -73,9 +73,9 @@ import VTelegramLink from '@/components/links/telegram.vue'
 import VStatusBtn from '@/components/buttons/status.vue'
 
 import { ROUTE_ADMIN_ISSUES_SHOW } from '@/routes/names'
-import { issues } from '@/_fakes/issues'
 
-import moment from 'moment'
+import { dateFormatRows } from '@/helpers/date'
+import { issues } from '@/_fakes/issues'
 
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
@@ -84,11 +84,7 @@ const router = useRouter()
 
 const items = ref(issues)
 
-const dateFormat = (date: string) => {
-    const value = moment(date)
-
-    return `${ value.format('YYYY-MM-DD') }<br>${ value.format('HH:mm') }`
-}
+const dateFormat = (date: string) => dateFormatRows(date)
 
 const goTo = (id: number) => router.push({
     name: ROUTE_ADMIN_ISSUES_SHOW,

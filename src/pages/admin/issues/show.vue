@@ -7,8 +7,8 @@
         :url="url"
         no-cache
     >
-        <v-container fluid>
-            <v-row no-gutters>
+        <v-container class="fill-height" fluid>
+            <v-row class="fill-height" no-gutters>
                 <v-col cols="2">
                     <v-list>
                         <v-list-item
@@ -42,7 +42,15 @@
                         </v-card-text>
 
                         <v-card-text v-else class="text-red">
-                            {{ $t('Curator not appointed') }}
+                            <p>
+                                {{ $t('Curator not appointed') }}
+                            </p>
+
+                            <p>
+                                <v-btn>
+                                    I have
+                                </v-btn>
+                            </p>
                         </v-card-text>
                     </v-card>
 
@@ -74,10 +82,24 @@
                             </p>
                         </v-card-text>
                     </v-card>
+
+                    <v-divider />
+
+                    <v-card elevation="0">
+                        <v-card-text>
+                            <p class="date__info">
+                                <span>{{ $t('Chat Timezone') }}:</span>
+                                {{ props.chat.timezone }}
+                            </p>
+                        </v-card-text>
+                    </v-card>
                 </v-col>
 
                 <v-col cols="10">
-                    messages will be here
+                    <v-chat
+                        :issue-id="props.id"
+                        :status="props.status"
+                    />
                 </v-col>
             </v-row>
         </v-container>
@@ -87,14 +109,15 @@
 <script lang="ts" setup>
 import VLoaderPage from '@/components/pages/loader.vue'
 import VStatusBtn from '@/components/buttons/status.vue'
+import VChat from '@/components/chats/chat.vue'
 
 import { API_ISSUES_SHOW } from '@/constants/api_routes'
 
+import { dateFormat } from '@/helpers/date'
 import { findIssue } from '@/_fakes/issues'
 
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import moment from 'moment'
 
 const { meta, params } = useRoute()
 
@@ -102,9 +125,7 @@ const url = ref(API_ISSUES_SHOW)
 
 const title = ref(meta.title)
 
-const formatDate = (date: string) => {
-    return moment(date).format('LLL')
-}
+const formatDate = (date: string) => dateFormat(date)
 
 const fake = computed(() => findIssue(Number(params.id)))
 </script>

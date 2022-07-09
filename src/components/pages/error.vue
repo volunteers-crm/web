@@ -21,7 +21,6 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { ROUTE_MAIN } from '@/routes/names'

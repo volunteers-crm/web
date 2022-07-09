@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import VLoaderPage from '@/components/pages/loader.vue'
 
-import { defineProps, ref } from 'vue'
+import { ref } from 'vue'
 
 defineProps<{
     title: string,
