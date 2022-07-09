@@ -15,10 +15,9 @@
                     :placeholder="$t('Write a message...')"
                     auto-grow
                     autofocus
-                    class="overflow-y-auto"
+                    class="chat__action__message-box"
                     density="comfortable"
                     hide-details
-                    max-rows="6"
                     rows="2"
                     @keyup.ctrl.enter="sendMessage"
                 />
@@ -68,6 +67,13 @@ const sendMessage = () => {
         inset 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
         inset 0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
         height: 100%;
+    }
+
+    &__action {
+        &__message-box {
+            max-height: 164px !important;
+            overflow-y: auto !important;
+        }
     }
 }
 </style>
