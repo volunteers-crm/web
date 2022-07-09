@@ -42,24 +42,25 @@ const errorMessage = ref('')
 
 const content = ref({})
 
-const props = withDefaults(defineProps<{
-    title: string
-    url: string,
-    params?: object,
-    btnGoBack?: boolean,
-    btnGoMain?: boolean,
-    btnReload?: boolean,
-    noCache?: boolean,
-    fake?: any,
-    fakeTimeout?: number
-}>(), {
-    btnGoBack: false,
-    btnGoMain: false,
-    btnReload: false,
-    noCache: false,
-    fake: null,
-    fakeTimeout: 1500
-})
+const props = withDefaults(
+    defineProps<{
+        title: string
+        url: string,
+        params?: object,
+        btnGoBack?: boolean,
+        btnGoMain?: boolean,
+        btnReload?: boolean,
+        noCache?: boolean,
+        fake?: any,
+        fakeTimeout?: number
+    }>(), {
+        btnGoBack: false,
+        btnGoMain: false,
+        btnReload: false,
+        noCache: false,
+        fake: null,
+        fakeTimeout: 1500
+    })
 
 const requestUrl = computed(() => {
     let url = props.url

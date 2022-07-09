@@ -37,6 +37,7 @@
     "Source": "Source",
     "Status": "Status",
     "Storage": "Storage",
+    "Take to work": "Take to work",
     "The data is updated every :minutes minutes.": "The data is updated every :minutes minutes.",
     "The time is indicated in the chat time zone.": "The time is indicated in the chat time zone.",
     "Timezone": "Timezone",

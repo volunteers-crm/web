@@ -8,19 +8,30 @@
             />
         </div>
 
-        <div v-if="!isClosed" class="chat__action">
-            <v-textarea
-                v-model="message"
-                :placeholder="$t('Write a message...')"
-                append-icon="mdi-send"
-                auto-grow
-                autofocus
-                counter
-                hide-details
-                max-rows="6"
-                rows="2"
-                @click:append="sendMessage"
-            />
+        <div v-if="!isClosed" class="chat__action d-flex">
+            <div class="w-100">
+                <v-textarea
+                    v-model="message"
+                    :placeholder="$t('Write a message...')"
+                    auto-grow
+                    autofocus
+                    class="overflow-y-auto"
+                    density="comfortable"
+                    hide-details
+                    max-rows="6"
+                    rows="2"
+                    @keyup.ctrl.enter="sendMessage"
+                />
+            </div>
+
+            <div class="px-2 pt-1">
+                <v-btn
+                    color="primary"
+                    icon="mdi-send"
+                    variant="text"
+                    @click="sendMessage"
+                />
+            </div>
         </div>
     </div>
 </template>

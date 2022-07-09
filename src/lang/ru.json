@@ -37,6 +37,7 @@
     "Source": "Источник заявки",
     "Status": "Статус",
     "Storage": "Хранилище",
+    "Take to work": "Взять в работу",
     "The data is updated every :minutes minutes.": "Данные обновляются каждые :minutes минут.",
     "The time is indicated in the chat time zone.": "Время указывается в часовой зоне чата.",
     "Timezone": "Часовой пояс",

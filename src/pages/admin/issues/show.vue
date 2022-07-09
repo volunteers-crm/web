@@ -46,11 +46,18 @@
                                 {{ $t('Curator not appointed') }}
                             </p>
 
-                            <p>
-                                <v-btn>
-                                    I have
-                                </v-btn>
-                            </p>
+                            <v-btn
+                                :disabled="hasTakeToWork"
+                                :loading="hasTakeToWork"
+                                block
+                                class="mt-2"
+                                color="primary"
+                                flat
+                                size="small"
+                                @click="takeToWork"
+                            >
+                                {{ $t('Take to work') }}
+                            </v-btn>
                         </v-card-text>
                     </v-card>
 
@@ -111,13 +118,14 @@ import VLoaderPage from '@/components/pages/loader.vue'
 import VStatusBtn from '@/components/buttons/status.vue'
 import VChat from '@/components/chats/chat.vue'
 
-import { API_ISSUES_SHOW } from '@/constants/api_routes'
+import { API_ISSUES_SHOW, API_ISSUES_START_WORK } from '@/constants/api_routes'
 
 import { dateFormat } from '@/helpers/date'
 import { findIssue } from '@/_fakes/issues'
 
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import axios from 'axios'
 
 const { meta, params } = useRoute()
 
@@ -128,6 +136,16 @@ const title = ref(meta.title)
 const formatDate = (date: string) => dateFormat(date)
 
 const fake = computed(() => findIssue(Number(params.id)))
+
+const hasTakeToWork = ref(false)
+
+const takeToWork = () => {
+    hasTakeToWork.value = true
+
+    axios.post(API_ISSUES_START_WORK)
+        .then(response => console.log('success started!'))
+        .finally(() => hasTakeToWork.value = false)
+}
 </script>
 
 <style lang="scss" scoped>

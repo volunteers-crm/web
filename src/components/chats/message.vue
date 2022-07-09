@@ -70,8 +70,8 @@ const isMe = computed(() => props.message.sender.id === userStore.user.id)
 @import "@/assets/styles/_mixin";
 
 .chat {
-    $chat-border-radius-curve: $chat-border-radius * 1.5;
-    $chat-box-shadow-radius: $chat-border-radius / 2;
+    $chat-border-radius-curve: calc($chat-border-radius * 1.5);
+    $chat-box-shadow-radius: calc($chat-border-radius / 2);
 
     &__message {
         $background-color: white;
