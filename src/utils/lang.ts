@@ -1,12 +1,10 @@
-import { createPinia } from 'pinia'
+import { Pinia } from 'pinia'
 import { useSettingsStore } from '@/stores/settings'
 
-const pinia = createPinia()
+export default (pinia: Pinia) => {
+    const lang = useSettingsStore(pinia).locale
 
-const settingsStore = useSettingsStore(pinia)
+    const resolve = (lang: string) => import(`../lang/${ lang }.json`)
 
-const lang = settingsStore.locale
-
-const resolve = (lang: string) => import(`../lang/${ lang }.json`)
-
-export default { lang, resolve }
+    return { lang, resolve }
+}
