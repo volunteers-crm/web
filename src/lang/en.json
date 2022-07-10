@@ -16,6 +16,7 @@
     "Client": "Client",
     "Closed Issues": "Closed Issues",
     "Confirm": "Confirm",
+    "Connect": "Connect",
     "Created At": "Created At",
     "Curator not appointed": "Curator not appointed",
     "Curator": "Curator",
@@ -62,5 +63,17 @@
     "Whoops! Something went wrong.": "Whoops! Something went wrong.",
     "Whoops!": "Whoops!",
     "Write a message...": "Write a message...",
-    "You": "You"
+    "You": "You",
+    "ID": "ID",
+    "Bot Username": "Bot Username",
+    "Bot Token": "Bot Token",
+    "Localization": "Localization",
+    "Enter any storage name.": "Enter any storage name.",
+    "Enter any role name.": "Enter any role name.",
+    "Press Enter to apply the changes.": "Press Enter to apply the changes.",
+    "The maximum number is :count names.": "The maximum number is :count names.",
+    "This field is required.": "This field is required.",
+    "This format is invalid.": "This format is invalid.",
+    "This must end with one of the following: :values.": "This must end with one of the following: :values.",
+    "This must be a valid timezone.": "This must be a valid timezone."
 }

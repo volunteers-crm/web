@@ -12,12 +12,24 @@ interface Timeout
     }
 }
 
+interface Storage
+{
+    count: number
+}
+
+interface Roles
+{
+    count: number
+}
+
 interface SettingsStore
 {
     locale: string,
 
     menu: Menu,
-    timeout: Timeout
+    timeout: Timeout,
+    storage: Storage,
+    roles: Roles
 }
 
 export const useSettingsStore = defineStore({
@@ -36,6 +48,14 @@ export const useSettingsStore = defineStore({
             admin: {
                 dashboard: 10
             }
+        },
+
+        storage: {
+            count: 20
+        },
+
+        roles: {
+            count: 50
         }
     }),
 

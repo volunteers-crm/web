@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 export const dateFormat = (date: string) => moment(date).format('LLL')
 
@@ -9,3 +9,5 @@ export const dateFormatFull = (date: string) => moment(date).format('YYYY-MM-DD,
 export const dateFormatTime = (date: string) => moment(date).format('HH:mm')
 
 export const isToday = (date: string) => moment(date).isSame(new Date(), 'day')
+
+export const timezones = () => moment.tz.names()

@@ -3,6 +3,7 @@ import pinia from '@/utils/pinia'
 import { createApp } from 'vue'
 import { i18nVue } from 'laravel-vue-i18n'
 import VueApexCharts from 'vue3-apexcharts'
+import Maska from 'maska'
 
 import Toast from 'vue-toastification'
 import ToastOptions from '@/utils/toast'
@@ -25,6 +26,7 @@ createApp(App)
     .use(pinia)
     .use(routes)
     .use(vuetify)
+    .use(Maska)
     .use(Toast, ToastOptions)
     .use(i18nVue, i18nOptions(pinia))
     .use(VueApexCharts)
