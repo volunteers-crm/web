@@ -11,28 +11,28 @@
                         <v-table>
                             <thead>
                             <tr>
-                                <td v-text="$t('Username')" />
-                                <td v-text="$t('Name')" />
-                                <td v-text="$t('Timezone')" />
-                                <td v-text="$t('Open Issues')" />
-                                <td v-text="$t('Closed Issues')" />
-                                <td v-text="$t('Actions')" />
+                                <th v-text="$t('Username')" />
+                                <th v-text="$t('Name')" />
+                                <th v-text="$t('Timezone')" />
+                                <th v-text="$t('Open Issues')" />
+                                <th v-text="$t('Closed Issues')" />
+                                <th v-text="$t('Actions')" />
                             </tr>
                             </thead>
                             <tbody>
                             <tr
-                                v-for="chat in chats"
-                                :key="chat.id"
+                                v-for="channel in channels"
+                                :key="channel.id"
                             >
-                                <td v-text="`@${chat.username}`" />
-                                <td v-text="chat.name" />
-                                <td v-text="chat.timezone" />
-                                <td v-text="chat.issues.open" />
-                                <td v-text="chat.issues.closed" />
+                                <td v-text="`@${channel.username}`" />
+                                <td v-text="channel.name" />
+                                <td v-text="channel.timezone" />
+                                <td v-text="channel.issues.open" />
+                                <td v-text="channel.issues.closed" />
 
                                 <td>
                                     <v-dialog
-                                        v-model="dialogs.show[chat.id]"
+                                        v-model="dialogs.show[channel.id]"
                                         persistent
                                     >
                                         <template v-slot:activator="{ props }">
@@ -51,11 +51,11 @@
 
                                             <v-card-text>
                                                 <p
-                                                    v-html="$t('Are you sure you want to disable <strong>:name</strong> chat from the ticket management system?', chat)"
+                                                    v-html="$t('Are you sure you want to disable <strong>:name</strong> channel from the ticket management system?', channel)"
                                                 />
 
                                                 <p
-                                                    v-if="!!chat.issues.open"
+                                                    v-if="!!channel.issues.open"
                                                     class="mt-2"
                                                     v-text="$t('All non-closed issues will be automatically completed, and we will notify the applicants.')"
                                                 />
@@ -65,17 +65,17 @@
                                                 <v-spacer />
 
                                                 <v-btn
-                                                    :disabled="!!dialogs.loading[chat.id]"
-                                                    :loading="!!dialogs.loading[chat.id]"
+                                                    :disabled="!!dialogs.loading[channel.id]"
+                                                    :loading="!!dialogs.loading[channel.id]"
                                                     color="red darken-2"
-                                                    @click="disableChat(chat.id)"
+                                                    @click="disableChannel(channel.id)"
                                                 >
                                                     {{ $t('Agree') }}
                                                 </v-btn>
 
                                                 <v-btn
-                                                    :disabled="!!dialogs.loading[chat.id]"
-                                                    @click="dialogs.show[chat.id] = false"
+                                                    :disabled="!!dialogs.loading[channel.id]"
+                                                    @click="dialogs.show[channel.id] = false"
                                                     v-text="$t('Cancel')"
                                                 />
                                             </v-card-actions>
@@ -93,28 +93,25 @@
                 <v-card>
                     <v-card-title>
                         {{ $t('Available') }}
-
-                        <v-btn>
-                            sync icon
-                        </v-btn>
                     </v-card-title>
 
                     <v-card-text>
                         <v-table>
                             <thead>
                             <tr>
-                                <td v-text="$t('Username')" />
-                                <td v-text="$t('Name')" />
-                                <td v-text="$t('Actions')" />
+                                <th v-text="$t('Username')" />
+                                <th v-text="$t('Name')" />
+                                <th v-text="$t('Actions')" />
                             </tr>
                             </thead>
                             <tbody>
                             <tr
-                                v-for="chat in chats"
-                                :key="chat.id"
+                                v-for="channel in availableChannels"
+                                v-if="availableChannels.length"
+                                :key="channel.id"
                             >
-                                <td v-text="`@${chat.username}`" />
-                                <td v-text="chat.name" />
+                                <td v-text="`@${channel.username}`" />
+                                <td v-text="channel.name" />
 
                                 <td>
                                     <v-btn
@@ -122,6 +119,11 @@
                                         icon="mdi-plus"
                                         variant="text"
                                     />
+                                </td>
+                            </tr>
+                            <tr v-else>
+                                <td class="text-center" colspan="3">
+                                    {{ $t('We did not find the channels you created.') }}
                                 </td>
                             </tr>
                             </tbody>
@@ -134,28 +136,33 @@
 </template>
 
 <script lang="ts" setup>
-import { API_CHATS_CHAT } from '@/constants/api_routes'
+import { API_CHANNELS_AVAILABLE, API_CHANNELS_CHANNEL } from '@/constants/api_routes'
 
-import { chats } from '@/_fakes/chats'
-import { ref } from 'vue'
+import { channels } from '@/_fakes/channels'
+import { onMounted, ref } from 'vue'
 
 import _ from 'lodash'
 import axios from 'axios'
+
+const availableChannels = ref([])
 
 const dialogs = ref({
     show: {},
     loading: {}
 })
 
-const disableChat = (id: number) => {
+const disableChannel = (id: number) => {
     _.set(dialogs.value.loading, id, true)
 
-    axios.delete(API_CHATS_CHAT.replace(':id', String(id)))
-        .then(() => _.reject(chats, (chat: any) => chat.id === id))
+    axios.delete(API_CHANNELS_CHANNEL.replace(':id', String(id)))
+        .then(() => _.reject(channels, (channel: any) => channel.id === id))
         .finally(() => {
             _.set(dialogs.value.loading, id, false)
             _.set(dialogs.value.show, id, false)
         })
-
 }
+
+onMounted(() => axios.get(API_CHANNELS_AVAILABLE)
+    .then((response: any) => availableChannels.value = response.data)
+)
 </script>

@@ -1,4 +1,4 @@
-export const chats = [
+export const channels = [
     {
         id: 1,
         username: 'help_chat',
