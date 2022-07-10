@@ -128,6 +128,7 @@
                                         </template>
 
                                         <v-card
+                                            max-width="1024px"
                                             min-width="800px"
                                             width="100%"
                                         >
@@ -190,26 +191,24 @@
 
                                                         <v-row>
                                                             <v-col cols="12" md="6" sm="12">
-                                                                <v-combobox
-                                                                    v-model="form.data.storage"
+                                                                <div v-if="form.data.storage.length" class="mb-1">
+                                                                    <v-chip
+                                                                        v-for="store in form.data.storage"
+                                                                        :key="store"
+                                                                        class="mb-1 mr-1"
+                                                                        closable
+                                                                        @click:close="removeStorageChip(store)"
+                                                                    >
+                                                                        {{ store }}
+                                                                    </v-chip>
+                                                                </div>
+
+                                                                <v-text-field
+                                                                    v-model="form.storage"
+                                                                    :disabled="hasDisabledAddStorage"
                                                                     :label="$t('Storage')"
-                                                                    closable-chips
-                                                                    multiple
-                                                                    required
-                                                                >
-                                                                    <template v-slot:selection="{ attrs, item, select, selected }">
-                                                                        <v-chip
-                                                                            :input-value="selected"
-                                                                            closable
-                                                                            v-bind="attrs"
-                                                                            @click="select"
-                                                                            @click:close="removeStorageChip(item.title)"
-                                                                        >
-                                                                            <strong>{{ item.title.trim() }}</strong>
-                                                                            <span>(interest)</span>
-                                                                        </v-chip>
-                                                                    </template>
-                                                                </v-combobox>
+                                                                    @keyup.enter="pushStorageChip"
+                                                                />
 
                                                                 <div class="hint">
                                                                     <p v-text="$t('Enter any storage name.')" />
@@ -219,12 +218,23 @@
                                                             </v-col>
 
                                                             <v-col cols="12" md="6" sm="12">
-                                                                <v-combobox
-                                                                    v-model="form.data.roles"
+                                                                <div v-if="form.data.roles.length" class="mb-1">
+                                                                    <v-chip
+                                                                        v-for="role in form.data.roles"
+                                                                        :key="role"
+                                                                        class="mb-1 mr-1"
+                                                                        closable
+                                                                        @click:close="removeRolesChip(role)"
+                                                                    >
+                                                                        {{ role }}
+                                                                    </v-chip>
+                                                                </div>
+
+                                                                <v-text-field
+                                                                    v-model="form.roles"
+                                                                    :disabled="hasDisabledAddRoles"
                                                                     :label="$t('Roles')"
-                                                                    closable-chips
-                                                                    multiple
-                                                                    required
+                                                                    @keyup.enter="pushRolesChip"
                                                                 />
 
                                                                 <div class="hint">
@@ -261,7 +271,7 @@
                                                     <v-spacer />
 
                                                     <v-btn
-                                                        :color="dialogs.loading || !form.valid ? 'red lighten-4' : 'red darken-2'"
+                                                        :color="dialogs.loading || !form.valid ? 'default' : 'red darken-2'"
                                                         :disabled="dialogs.loading || !form.valid"
                                                         :loading="dialogs.loading"
                                                         @click="connectChannel(channel.id)"
@@ -318,6 +328,9 @@ const timezonesList = ref(timezones())
 const maxStorageCount = computed(() => settingsStore.storage.count)
 const maxRolesCount = computed(() => settingsStore.roles.count)
 
+const hasDisabledAddStorage = computed(() => form.value.data.storage.length >= maxStorageCount.value)
+const hasDisabledAddRoles = computed(() => form.value.data.roles.length >= maxRolesCount.value)
+
 const localesList = computed(() => {
     return _.map(locales, (value, key) => Object.create({ value, key }))
 })
@@ -344,10 +357,17 @@ const form = ref({
             token: null
         }
     },
+    storage: '',
+    roles: '',
     rules: {
         timezone: [
             (v: any) => !! v || trans('This field is required.'),
             (v: any) => timezonesList.value.includes(v) || trans('This must be a valid timezone.')
+        ],
+
+        storage: [
+            (v: any) => !! v || trans('This field is required.'),
+            (v: any) => v.length < 3 || trans('The string must be at least :min characters.', { min: '3' })
         ],
 
         bot: {
@@ -363,11 +383,28 @@ const form = ref({
     }
 })
 
+const pushStorageChip = () => {
+    if (! form.value.data.storage.includes(form.value.storage.trim())) {
+        form.value.data.storage.push(form.value.storage.trim())
+    }
+
+    form.value.storage = ''
+}
+
+const pushRolesChip = () => {
+    form.value.data.roles.push(form.value.roles)
+    form.value.roles = ''
+}
+
 const removeStorageChip = (value: string) => {
     form.value.data.storage.splice(form.value.data.storage.indexOf(value), 1)
     form.value.data.storage = [...form.value.data.storage]
 }
-const removeRolesChip = (value: any) => _.reject(form.value.data.roles, (item: string) => item === value)
+
+const removeRolesChip = (value: string) => {
+    form.value.data.roles.splice(form.value.data.roles.indexOf(value), 1)
+    form.value.data.roles = [...form.value.data.roles]
+}
 
 const disableChannel = (id: number) => {
     dialogs.value.loading = true

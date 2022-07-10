@@ -75,5 +75,6 @@
     "This field is required.": "This field is required.",
     "This format is invalid.": "This format is invalid.",
     "This must end with one of the following: :values.": "This must end with one of the following: :values.",
-    "This must be a valid timezone.": "This must be a valid timezone."
+    "This must be a valid timezone.": "This must be a valid timezone.",
+    "The string must be at least :min characters.": "The string must be at least :min characters."
 }
