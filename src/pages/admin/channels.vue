@@ -211,7 +211,7 @@
                                                                 />
 
                                                                 <div class="hint">
-                                                                    <p v-text="$t('Enter any storage name.')" />
+                                                                    <p v-text="$t('Enter any storage name. For example, suitcases.')" />
                                                                     <p v-text="$t('Press Enter to apply the changes.')" />
                                                                     <p v-text="$t('The maximum number is :count names.', { count: maxStorageCount })" />
                                                                 </div>
@@ -238,7 +238,7 @@
                                                                 />
 
                                                                 <div class="hint">
-                                                                    <p v-text="$t('Enter any role name.')" />
+                                                                    <p v-text="$t('Enter any role name. For example, clothes.')" />
                                                                     <p v-text="$t('Press Enter to apply the changes.')" />
                                                                     <p v-text="$t('The maximum number is :count names.', { count: maxRolesCount })" />
                                                                 </div>
@@ -271,12 +271,12 @@
                                                     <v-spacer />
 
                                                     <v-btn
-                                                        :color="dialogs.loading || !form.valid ? 'default' : 'red darken-2'"
+                                                        :color="dialogs.loading || !form.valid ? 'default' : 'green darken-2'"
                                                         :disabled="dialogs.loading || !form.valid"
                                                         :loading="dialogs.loading"
                                                         @click="connectChannel(channel.id)"
                                                     >
-                                                        {{ $t('Agree') }}
+                                                        {{ $t('Connect') }}
                                                     </v-btn>
 
                                                     <v-btn
