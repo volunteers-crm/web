@@ -170,7 +170,7 @@
                                                                 <v-autocomplete
                                                                     v-model="form.data.timezone"
                                                                     :items="timezonesList"
-                                                                    :label="$t('Timezone')"
+                                                                    :label="`${$t('Timezone')} *`"
                                                                     :rules="form.rules.timezone"
                                                                     autofocus
                                                                     required
@@ -181,7 +181,7 @@
                                                                 <v-select
                                                                     v-model="form.data.locale"
                                                                     :items="localesList"
-                                                                    :label="$t('Localization')"
+                                                                    :label="`${$t('Localization')} *`"
                                                                     item-title="value"
                                                                     item-value="key"
                                                                     required
@@ -249,7 +249,7 @@
                                                             <v-col cols="12" md="6" sm="12">
                                                                 <v-text-field
                                                                     v-model="form.data.bot.username"
-                                                                    :label="$t('Bot Username')"
+                                                                    :label="`${$t('Bot Username')} *`"
                                                                     :rules="form.rules.bot.username"
                                                                     required
                                                                 />
@@ -258,10 +258,16 @@
                                                             <v-col cols="12" md="6" sm="12">
                                                                 <v-text-field
                                                                     v-model="form.data.bot.token"
-                                                                    :label="$t('Bot Token')"
+                                                                    :label="`${$t('Bot Token')} *`"
                                                                     :rules="form.rules.bot.token"
                                                                     required
                                                                 />
+                                                            </v-col>
+                                                        </v-row>
+
+                                                        <v-row>
+                                                            <v-col class="text-grey" cols="12">
+                                                                {{ $t('* indicates required field.') }}
                                                             </v-col>
                                                         </v-row>
                                                     </v-container>
