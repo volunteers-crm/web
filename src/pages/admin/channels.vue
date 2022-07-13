@@ -170,7 +170,7 @@
                                                                 <v-autocomplete
                                                                     v-model="form.data.timezone"
                                                                     :items="timezonesList"
-                                                                    :label="`${$t('Timezone')} *`"
+                                                                    :label="$t('Timezone')"
                                                                     :rules="form.rules.timezone"
                                                                     autofocus
                                                                     required
@@ -181,93 +181,11 @@
                                                                 <v-select
                                                                     v-model="form.data.locale"
                                                                     :items="localesList"
-                                                                    :label="`${$t('Localization')} *`"
+                                                                    :label="$t('Localization')"
                                                                     item-title="value"
                                                                     item-value="key"
                                                                     required
                                                                 />
-                                                            </v-col>
-                                                        </v-row>
-
-                                                        <v-row>
-                                                            <v-col cols="12" md="6" sm="12">
-                                                                <div v-if="form.data.storage.length" class="mb-1">
-                                                                    <v-chip
-                                                                        v-for="store in form.data.storage"
-                                                                        :key="store"
-                                                                        class="mb-1 mr-1"
-                                                                        closable
-                                                                        @click:close="removeStorageChip(store)"
-                                                                    >
-                                                                        {{ store }}
-                                                                    </v-chip>
-                                                                </div>
-
-                                                                <v-text-field
-                                                                    v-model="form.storage"
-                                                                    :disabled="hasDisabledAddStorage"
-                                                                    :label="$t('Storage')"
-                                                                    @keyup.enter="pushStorageChip"
-                                                                />
-
-                                                                <div class="hint">
-                                                                    <p v-text="$t('Enter any storage name. For example, suitcases.')" />
-                                                                    <p v-text="$t('Press Enter to apply the changes.')" />
-                                                                    <p v-text="$t('The maximum number is :count names.', { count: maxStorageCount })" />
-                                                                </div>
-                                                            </v-col>
-
-                                                            <v-col cols="12" md="6" sm="12">
-                                                                <div v-if="form.data.roles.length" class="mb-1">
-                                                                    <v-chip
-                                                                        v-for="role in form.data.roles"
-                                                                        :key="role"
-                                                                        class="mb-1 mr-1"
-                                                                        closable
-                                                                        @click:close="removeRolesChip(role)"
-                                                                    >
-                                                                        {{ role }}
-                                                                    </v-chip>
-                                                                </div>
-
-                                                                <v-text-field
-                                                                    v-model="form.roles"
-                                                                    :disabled="hasDisabledAddRoles"
-                                                                    :label="$t('Roles')"
-                                                                    @keyup.enter="pushRolesChip"
-                                                                />
-
-                                                                <div class="hint">
-                                                                    <p v-text="$t('Enter any role name. For example, clothes.')" />
-                                                                    <p v-text="$t('Press Enter to apply the changes.')" />
-                                                                    <p v-text="$t('The maximum number is :count names.', { count: maxRolesCount })" />
-                                                                </div>
-                                                            </v-col>
-                                                        </v-row>
-
-                                                        <v-row>
-                                                            <v-col cols="12" md="6" sm="12">
-                                                                <v-text-field
-                                                                    v-model="form.data.bot.username"
-                                                                    :label="`${$t('Bot Username')} *`"
-                                                                    :rules="form.rules.bot.username"
-                                                                    required
-                                                                />
-                                                            </v-col>
-
-                                                            <v-col cols="12" md="6" sm="12">
-                                                                <v-text-field
-                                                                    v-model="form.data.bot.token"
-                                                                    :label="`${$t('Bot Token')} *`"
-                                                                    :rules="form.rules.bot.token"
-                                                                    required
-                                                                />
-                                                            </v-col>
-                                                        </v-row>
-
-                                                        <v-row>
-                                                            <v-col class="text-grey" cols="12">
-                                                                {{ $t('* indicates required field.') }}
                                                             </v-col>
                                                         </v-row>
                                                     </v-container>
@@ -331,15 +249,7 @@ const availableChannels = ref([])
 
 const timezonesList = ref(timezones())
 
-const maxStorageCount = computed(() => settingsStore.storage.count)
-const maxRolesCount = computed(() => settingsStore.roles.count)
-
-const hasDisabledAddStorage = computed(() => form.value.data.storage.length >= maxStorageCount.value)
-const hasDisabledAddRoles = computed(() => form.value.data.roles.length >= maxRolesCount.value)
-
-const localesList = computed(() => {
-    return _.map(locales, (value, key) => Object.create({ value, key }))
-})
+const localesList = computed(() => _.map(locales, (value, key) => Object.create({ value, key })))
 
 const dialogs = ref({
     show: {},
@@ -355,62 +265,15 @@ const form = ref({
         username: null,
         name: null,
         timezone: null,
-        locale: null,
-        storage: [],
-        roles: [],
-        bot: {
-            username: null,
-            token: null
-        }
+        locale: null
     },
-    storage: '',
-    roles: '',
     rules: {
         timezone: [
             (v: any) => !! v || trans('This field is required.'),
             (v: any) => timezonesList.value.includes(v) || trans('This must be a valid timezone.')
-        ],
-
-        storage: [
-            (v: any) => !! v || trans('This field is required.'),
-            (v: any) => v.length < 3 || trans('The string must be at least :min characters.', { min: '3' })
-        ],
-
-        bot: {
-            username: [
-                (v: any) => !! v || trans('This field is required.'),
-                (v: any) => (_.endsWith(v, '_bot') || _.endsWith(v, 'Bot')) || trans('This must end with one of the following: :values.', { values: '_bot, Bot' })
-            ],
-            token: [
-                (v: any) => !! v || trans('This field is required.'),
-                (v: any) => /^\d+:AAE.{32}$/.test(v) || trans('This format is invalid.')
-            ]
-        }
+        ]
     }
 })
-
-const pushStorageChip = () => {
-    if (! form.value.data.storage.includes(form.value.storage.trim())) {
-        form.value.data.storage.push(form.value.storage.trim())
-    }
-
-    form.value.storage = ''
-}
-
-const pushRolesChip = () => {
-    form.value.data.roles.push(form.value.roles)
-    form.value.roles = ''
-}
-
-const removeStorageChip = (value: string) => {
-    form.value.data.storage.splice(form.value.data.storage.indexOf(value), 1)
-    form.value.data.storage = [...form.value.data.storage]
-}
-
-const removeRolesChip = (value: string) => {
-    form.value.data.roles.splice(form.value.data.roles.indexOf(value), 1)
-    form.value.data.roles = [...form.value.data.roles]
-}
 
 const disableChannel = (id: number) => {
     dialogs.value.loading = true
@@ -444,11 +307,3 @@ onMounted(() => axios.get(API_CHANNELS_AVAILABLE)
     .catch(() => availableChannels.value = channels)
 )
 </script>
-
-<style lang="scss" scoped>
-.hint {
-    color: grey;
-    font-size: 9pt;
-    margin-top: -20px;
-}
-</style>
