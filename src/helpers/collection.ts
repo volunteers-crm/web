@@ -19,6 +19,11 @@ export class Collection
         return new Collection(_.map(this.#items, callback))
     }
 
+    pluck(key: string): Collection
+    {
+        return this.map((item: any) => _.get(item, key))
+    }
+
     find(callback: any): any
     {
         return _.find(this.#items, callback)

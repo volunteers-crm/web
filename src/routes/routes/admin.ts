@@ -1,4 +1,4 @@
-import { ROUTE_ADMIN_APPEALS_INDEX, ROUTE_ADMIN_APPEALS_SHOW, ROUTE_ADMIN_CHANNELS, ROUTE_ADMIN_DASHBOARD } from '@/routes/names'
+import { ROUTE_ADMIN_APPEALS_INDEX, ROUTE_ADMIN_APPEALS_SHOW, ROUTE_ADMIN_BOTS, ROUTE_ADMIN_CHANNELS, ROUTE_ADMIN_DASHBOARD } from '@/routes/names'
 
 import { LAYOUT_ADMIN } from '@/constants/layouts'
 
@@ -62,6 +62,17 @@ export default [
                     layout: LAYOUT_ADMIN,
                     title: 'Channels',
                     icon: 'mdi-forum',
+                    requiresAuth: true
+                }
+            },
+            {
+                path: 'bots',
+                name: ROUTE_ADMIN_BOTS,
+                component: () => import('@/pages/admin/bots.vue'),
+                meta: {
+                    layout: LAYOUT_ADMIN,
+                    title: 'Bots',
+                    icon: 'mdi-ninja',
                     requiresAuth: true
                 }
             }
