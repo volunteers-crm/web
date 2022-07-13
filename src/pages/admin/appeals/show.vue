@@ -106,7 +106,7 @@
 
                 <v-col cols="10">
                     <v-chat
-                        :issue-id="props.id"
+                        :appeal-id="props.id"
                         :status="props.status"
                     />
                 </v-col>
@@ -120,10 +120,10 @@ import VLoaderPage from '@/components/pages/loader.vue'
 import VStatusBtn from '@/components/buttons/status.vue'
 import VChat from '@/components/chats/chat.vue'
 
-import { API_ISSUES_SHOW, API_ISSUES_START_WORK } from '@/constants/api_routes'
+import { API_APPEALS_SHOW, API_APPEALS_START_WORK } from '@/constants/api_routes'
 
 import { dateFormat } from '@/helpers/date'
-import { findIssue } from '@/_fakes/issues'
+import { findAppeal } from '@/_fakes/appeals'
 
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -133,13 +133,13 @@ import { useUserStore } from '@/stores/user'
 const { meta, params } = useRoute()
 const userStore = useUserStore()
 
-const url = ref(API_ISSUES_SHOW)
+const url = ref(API_APPEALS_SHOW)
 
 const title = ref(meta.title)
 
 const formatDate = (date: string) => dateFormat(date)
 
-const fake = computed(() => findIssue(Number(params.id)))
+const fake = computed(() => findAppeal(Number(params.id)))
 
 const isMe = (id: number) => id === userStore.user.id
 
@@ -148,7 +148,7 @@ const hasTakeToWork = ref(false)
 const takeToWork = () => {
     hasTakeToWork.value = true
 
-    axios.post(API_ISSUES_START_WORK)
+    axios.post(API_APPEALS_START_WORK)
         .then(response => console.log('success started!'))
         .finally(() => hasTakeToWork.value = false)
 }

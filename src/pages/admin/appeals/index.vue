@@ -72,22 +72,22 @@
 import VTelegramLink from '@/components/links/telegram.vue'
 import VStatusBtn from '@/components/buttons/status.vue'
 
-import { ROUTE_ADMIN_ISSUES_SHOW } from '@/routes/names'
+import { ROUTE_ADMIN_APPEALS_SHOW } from '@/routes/names'
 
 import { dateFormatRows } from '@/helpers/date'
-import { issues } from '@/_fakes/issues'
+import { appeals } from '@/_fakes/appeals'
 
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
 const router = useRouter()
 
-const items = ref(issues)
+const items = ref(appeals)
 
 const dateFormat = (date: string) => dateFormatRows(date)
 
 const goTo = (id: number) => router.push({
-    name: ROUTE_ADMIN_ISSUES_SHOW,
+    name: ROUTE_ADMIN_APPEALS_SHOW,
     params: { id }
 })
 </script>

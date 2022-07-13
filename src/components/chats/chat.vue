@@ -41,14 +41,14 @@
 import VMessage from '@/components/chats/message.vue'
 
 import { STATUS_CANCELLED, STATUS_DONE } from '@/constants/statuses'
-import { API_ISSUES_MESSAGE } from '@/constants/api_routes'
+import { API_APPEALS_MESSAGE } from '@/constants/api_routes'
 
 import { computed, ref } from 'vue'
 import { findMessages } from '@/_fakes/chat'
 import axios from 'axios'
 
 const props = defineProps<{
-    issueId: number,
+    appealId: number,
     status: string
 }>()
 
@@ -56,7 +56,7 @@ const message = ref('')
 
 const hasSendingMessage = ref(false)
 
-const messages = ref(() => findMessages(props.issueId))
+const messages = ref(() => findMessages(props.appealId))
 
 const isClosed = computed(() => [STATUS_DONE, STATUS_CANCELLED].includes(props.status))
 
@@ -67,7 +67,7 @@ const sendMessage = () => {
 
     hasSendingMessage.value = true
 
-    axios.post(API_ISSUES_MESSAGE, { message })
+    axios.post(API_APPEALS_MESSAGE, { message })
         .then(response => {
             messages.value.push(response?.data)
 

@@ -4,7 +4,7 @@ export const channels = [
         username: 'help_chat',
         name: 'We Can Help',
         timezone: 'UTC',
-        issues: {
+        appeals: {
             open: 14,
             closed: 36
         }
@@ -14,7 +14,7 @@ export const channels = [
         username: 'help_chat2',
         name: 'Something',
         timezone: 'Europe/Moscow',
-        issues: {
+        appeals: {
             open: 0,
             closed: 19
         }

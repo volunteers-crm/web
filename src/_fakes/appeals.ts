@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export const issues = [
+export const appeals = [
     {
         id: 1,
         chat: {
@@ -70,7 +70,7 @@ export const issues = [
     }
 ]
 
-export function findIssue(id: number): any
+export function findAppeal(id: number): any
 {
-    return _.find(issues, issue => issue.id === id)
+    return _.find(appeals, appeal => appeal.id === id)
 }

@@ -1,13 +1,13 @@
 <template>
     <v-card>
         <v-card-title>
-            {{ $t('Issues') }}
+            {{ $t('Appeals') }}
         </v-card-title>
 
         <v-card-text>
             <apexchart
-                :options="issues.options"
-                :series="issues.series"
+                :options="appeals.options"
+                :series="appeals.series"
                 height="200"
                 type="area"
             />
@@ -55,10 +55,10 @@ const randomDates = () => {
     return values
 }
 
-const issues = ref({
+const appeals = ref({
     options: {
         chart: {
-            id: 'chart-issues'
+            id: 'chart-appeals'
         },
         xaxis: {
             categories: randomDates()

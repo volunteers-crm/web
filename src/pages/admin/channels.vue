@@ -14,8 +14,8 @@
                                 <th v-text="$t('Username')" />
                                 <th v-text="$t('Name')" />
                                 <th v-text="$t('Timezone')" />
-                                <th v-text="$t('Open Issues')" />
-                                <th v-text="$t('Closed Issues')" />
+                                <th v-text="$t('Open Appeals')" />
+                                <th v-text="$t('Closed Appeals')" />
                                 <th v-text="$t('Actions')" />
                             </tr>
                             </thead>
@@ -27,8 +27,8 @@
                                 <td v-text="`@${channel.username}`" />
                                 <td v-text="channel.name" />
                                 <td v-text="channel.timezone" />
-                                <td v-text="channel.issues.open" />
-                                <td v-text="channel.issues.closed" />
+                                <td v-text="channel.appeals.open" />
+                                <td v-text="channel.appeals.closed" />
 
                                 <td>
                                     <v-dialog
@@ -55,9 +55,9 @@
                                                 />
 
                                                 <p
-                                                    v-if="!!channel.issues.open"
+                                                    v-if="!!channel.appeals.open"
                                                     class="mt-2"
-                                                    v-text="$t('All non-closed issues will be automatically completed, and we will notify the applicants.')"
+                                                    v-text="$t('All non-closed appeals will be automatically completed, and we will notify the applicants.')"
                                                 />
                                             </v-card-text>
 

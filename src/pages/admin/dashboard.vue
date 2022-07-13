@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <issues-chart />
+                <appeals-chart />
             </v-col>
             <v-col>
                 <coordinators-chart />
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import IssuesChart from '@/components/charts/issues.vue'
+import AppealsChart from '@/components/charts/appeals.vue'
 import CoordinatorsChart from '@/components/charts/coordinators.vue'
 import StorageChart from '@/components/charts/storage.vue'
 import RolesChart from '@/components/charts/roles.vue'</script>

@@ -6,8 +6,8 @@
 
         <v-card-text>
             <apexchart
-                :options="issues.options"
-                :series="issues.series"
+                :options="roles.options"
+                :series="roles.series"
                 height="200"
                 type="bar"
             />
@@ -40,7 +40,7 @@ const randomData = () => {
     return values
 }
 
-const issues = ref({
+const roles = ref({
     options: {
         chart: {
             id: 'chart-roles',
