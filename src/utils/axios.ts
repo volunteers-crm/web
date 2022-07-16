@@ -21,7 +21,7 @@ axios.defaults.headers.common['X-Authorization'] = authStore.token || 'undefined
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
 axios.interceptors.response.use(
-    response => response,
+    response => response.data,
     error => {
         switch (error?.status) {
             case 422:

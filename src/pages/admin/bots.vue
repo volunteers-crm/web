@@ -14,6 +14,67 @@
                         <v-card-text class="fill-height d-flex justify-center align-center">
                             <v-icon icon="mdi-plus" />
                         </v-card-text>
+
+                        <v-dialog
+                            v-model="cardCreate"
+                            activator="parent"
+                            persistent
+                        >
+                            <v-form
+                                :ref="form.ref.add"
+                                v-model="form.validate.add"
+                                :disabled="cardLoading['add']"
+                                lazy-validation
+                            >
+                                <v-card min-width="800px">
+                                    <v-card-title v-text="$t('New bot')" />
+
+                                    <v-card-text>
+                                        <v-text-field
+                                            v-model="form.username"
+                                            :label="$t('Bot Username')"
+                                            :rules="rules.bot.username"
+                                            variant="underlined"
+                                        />
+
+                                        <v-text-field
+                                            v-model="form.token"
+                                            :label="$t('Bot Token')"
+                                            :rules="rules.bot.token"
+                                            variant="underlined"
+                                        />
+
+                                        <v-select
+                                            v-model="form.channels"
+                                            :items="channels"
+                                            :label="$t('Channels')"
+                                            item-title="name"
+                                            item-value="id"
+                                            multiple
+                                            variant="underlined"
+                                        />
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                        <v-spacer />
+
+                                        <v-btn
+                                            :disabled="cardLoading['add'] || !form.validate.add"
+                                            :loading="cardLoading['add']"
+                                            @click="addBot"
+                                        >
+                                            {{ $t('Add') }}
+                                        </v-btn>
+
+                                        <v-btn
+                                            :disabled="cardLoading['add']"
+                                            @click="cardCreate = false"
+                                            v-text="$t('Cancel')"
+                                        />
+                                    </v-card-actions>
+                                </v-card>
+                            </v-form>
+                        </v-dialog>
                     </v-card>
                 </v-hover>
             </v-col>
@@ -83,12 +144,16 @@
                                 <v-text-field
                                     v-model="form.token"
                                     :label="$t('Bot Token')"
+                                    :rules="rules.bot.token"
                                     variant="underlined"
                                 />
 
                                 <v-select
                                     v-model="form.channels"
+                                    :items="channels"
                                     :label="$t('Channels')"
+                                    item-title="name"
+                                    item-value="id"
                                     multiple
                                     variant="underlined"
                                 />
@@ -145,19 +210,48 @@
 </template>
 
 <script lang="ts" setup>
+import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
+
+import { computed, ref, watch } from 'vue'
+import { trans } from 'laravel-vue-i18n'
+import { useToast } from 'vue-toastification'
 import { bots } from '@/_fakes/bots'
-import { computed, ref } from 'vue'
+import { channels } from '@/_fakes/channels'
 
 import _ from 'lodash'
+import axios from 'axios'
 
+const cardCreate = ref(false)
 const cardEdit = ref({})
 const cardDelete = ref({})
 const cardLoading = ref({})
 
 const form = ref({
+    ref: {
+        add: 'add-form'
+    },
+
+    validate: {
+        add: false
+    },
+
     username: '',
     token: '',
     channels: []
+})
+
+const rules = ref({
+    bot: {
+        username: [
+            (v: string) => !! v || trans('This field is required.'),
+            (v: string) => _.endsWith(v, 'Bot') || _.endsWith(v, '_bot') || trans('This must end with one of the following: :values.', { values: 'Bot, _bot' }),
+            (v: string) => /^(@|https:\/\/t.me\/)?[\d\w]+(_bot|Bot)$/.test(v) || trans('This format is invalid.')
+        ],
+
+        token: [
+            (v: string) => /^\d{8,10}:[a-zA-Z\d_-]{35}$/.test(v) || trans('This format is invalid.')
+        ]
+    }
 })
 
 const colSize = computed(() => {
@@ -172,18 +266,75 @@ const colSize = computed(() => {
     return _.get(sizes, size, 3)
 })
 
+const toast = useToast()
+
+watch(
+    () => cardCreate.value,
+    (val: boolean) => val && resetForm()
+)
+
+watch(
+    () => cardEdit.value,
+    (val: object) => !! _.filter(val, (item: boolean) => item) && resetForm()
+)
+
+watch(
+    () => cardDelete.value,
+    (val: object) => !! _.filter(val, (item: boolean) => item) && resetForm()
+)
+
+const resetForm = () => {
+    form.value.username = ''
+    form.value.token = ''
+    form.value.channels = []
+}
+
+const addBot = () => {
+    // validate form
+
+    _.set(cardLoading.value, 'add', true)
+
+    axios.post(API_BOTS_INDEX, form.value)
+        .then((response: any) => {
+            bots.push(response.data)
+
+            toast.success(trans('Bot :name has been successfully attached to your account.', {
+                name: response.data.name
+            }))
+
+            cardCreate.value = false
+        })
+        .finally(() => _.set(cardLoading.value, 'add', false))
+}
+
 const updateBot = (id: number) => {
     _.set(cardLoading.value, id, true)
 
-    alert(`Bot #${ id } was updated!`)
+    axios.put(API_BOTS_BOT.replace(':id', String(id)), form.value)
+        .then((response: any) => {
+            bots.push(response.data)
 
-    _.set(cardEdit.value, id, false)
+            toast.success(trans('Bot :name has been successfully attached to your account.', {
+                name: response.data.name
+            }))
+
+            _.set(cardEdit.value, id, false)
+        })
+        .finally(() => _.set(cardLoading.value, id, false))
 }
 
 const deleteBot = (id: number) => {
     _.set(cardLoading.value, id, true)
 
-    alert(`Bot #${ id } was deleted!`)
+    axios.delete(API_BOTS_BOT.replace(':id', String(id)))
+        .then(() => {
+            _.reject(bots, (bot: any) => bot.id === id)
+
+            toast.success(trans('Bot has been successfully removed from your account.'))
+
+            _.set(cardDelete.value, id, false)
+        })
+        .finally(() => _.set(cardLoading.value, id, false))
 }
 </script>
 
