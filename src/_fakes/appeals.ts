@@ -17,7 +17,6 @@ export const appeals: Appeal[] = [
             avatar: 'https://randomuser.me/api/portraits/men/83.jpg'
         },
         curator: null,
-        source: 'help_bot',
         status: 'new',
         created_at: '2022-07-05 23:48',
         updated_at: '2022-07-06 01:59'
@@ -43,7 +42,6 @@ export const appeals: Appeal[] = [
             name: 'Adam Freeman',
             avatar: 'https://randomuser.me/api/portraits/men/53.jpg'
         },
-        source: 'crm',
         status: 'in_progress',
         created_at: '2022-07-06 20:48',
         updated_at: '2022-07-06 21:59'
@@ -69,7 +67,6 @@ export const appeals: Appeal[] = [
             name: 'Sandra Adams',
             avatar: 'https://randomuser.me/api/portraits/women/9.jpg'
         },
-        source: 'crm',
         status: 'done',
         created_at: '2022-07-06 20:48',
         updated_at: '2022-07-06 21:59'

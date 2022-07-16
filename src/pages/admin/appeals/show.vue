@@ -67,12 +67,12 @@
 
                     <v-card elevation="0">
                         <v-card-title>
-                            {{ $t('Chat') }}
+                            {{ $t('Bot') }}
                         </v-card-title>
 
                         <v-card-text>
-                            <p v-text="props.chat.name" />
-                            <p class="text-grey" v-text="`@${props.chat.username}`" />
+                            <p v-text="props.bot.name" />
+                            <p class="text-grey" v-text="`@${props.bot.username}`" />
                         </v-card-text>
                     </v-card>
 
@@ -97,8 +97,8 @@
                     <v-card elevation="0">
                         <v-card-text>
                             <p class="date__info">
-                                <span>{{ $t('Chat Timezone') }}:</span>
-                                {{ props.chat.timezone }}
+                                <span>{{ $t('Timezone') }}:</span>
+                                {{ props.bot.timezone }}
                             </p>
                         </v-card-text>
                     </v-card>

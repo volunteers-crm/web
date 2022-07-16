@@ -20,6 +20,7 @@
                     density="comfortable"
                     hide-details
                     rows="2"
+                    variant="underlined"
                     @keyup.ctrl.enter="sendMessage"
                 />
             </div>

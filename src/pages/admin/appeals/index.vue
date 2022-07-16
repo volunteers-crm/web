@@ -3,12 +3,11 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>{{ $t('Chat') }}</th>
+            <th>{{ $t('Bot') }}</th>
             <th>{{ $t('Client') }}</th>
             <th>{{ $t('Curator') }}</th>
-            <th class="text-center">{{ $t('Source') }}</th>
             <th class="text-center">{{ $t('Status') }}</th>
-            <th class="text-center">{{ $t('Chat Timezone') }}</th>
+            <th class="text-center">{{ $t('Timezone') }}</th>
             <th class="text-center">{{ $t('Created At') }}</th>
             <th class="text-center">{{ $t('Updated At') }}</th>
         </tr>
@@ -24,9 +23,9 @@
 
             <td>
                 <v-telegram-link
-                    :id="item.chat.id"
-                    :name="item.chat.name"
-                    :username="item.chat.username"
+                    :id="item.bot.id"
+                    :name="item.bot.name"
+                    :username="item.bot.username"
                     text
                 />
             </td>
@@ -54,13 +53,11 @@
                 <span v-else class="text-red" v-text="$t('No')" />
             </td>
 
-            <td class="text-center">{{ item.source }}</td>
-
             <td class="text-center text-lowercase">
                 <v-status-btn :status="item.status" />
             </td>
 
-            <td class="text-center">{{ item.chat.timezone }}</td>
+            <td class="text-center">{{ item.bot.timezone }}</td>
             <td class="text-center" v-html="dateFormat(item.created_at)" />
             <td class="text-center" v-html="dateFormat(item.updated_at)" />
         </tr>
