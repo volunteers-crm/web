@@ -23,7 +23,6 @@
         "roboto-fontface": "*",
         "vue": "^3.2.25",
         "vue-router": "^4.0.16",
-        "vue-telegram-login": "^2.1.0",
         "vue-toastification": "^2.0.0-rc.5",
         "vue3-apexcharts": "^1.4.1",
         "vue3-telegram-login": "^0.0.4",
