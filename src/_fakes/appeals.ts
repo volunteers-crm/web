@@ -63,9 +63,9 @@ export const appeals: Appeal[] = [
         },
         curator: {
             id: 1,
-            username: 'sandra_adams',
             name: 'Sandra Adams',
-            avatar: 'https://randomuser.me/api/portraits/women/9.jpg'
+            username: 'sandra_adams',
+            avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
         },
         status: 'done',
         created_at: '2022-07-06 20:48',

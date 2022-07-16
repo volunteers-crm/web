@@ -1,17 +1,26 @@
 <template>
     <v-list>
         <v-list-item
-            :prepend-avatar="avatar"
-            :subtitle="`@${username}`"
-            :title="name"
+            :prepend-avatar="user.avatar"
+            :subtitle="`@${user.username}`"
+            :title="title"
         />
     </v-list>
 </template>
 
 <script lang="ts" setup>
-defineProps<{
-    name: string,
-    username: string,
-    avatar: string
+import { useUserStore } from '@/stores/user'
+import { computed } from 'vue'
+import { trans } from 'laravel-vue-i18n'
+
+const props = defineProps<{
+    user: User,
+    allowMe?: boolean
 }>()
+
+const userStore = useUserStore()
+
+const title = computed(() => props.allowMe && isMe(props.user.id) ? trans('You') : props.user.name)
+
+const isMe = (id: number) => id === userStore.user.id
 </script>

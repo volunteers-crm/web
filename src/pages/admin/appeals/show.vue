@@ -9,14 +9,8 @@
     >
         <v-container class="fill-height py-0" fluid>
             <v-row class="fill-height" no-gutters>
-                <v-col cols="2">
-                    <v-list>
-                        <v-list-item
-                            :prepend-avatar="props.client.avatar"
-                            :subtitle="`@${props.client.username}`"
-                            :title="props.client.name"
-                        />
-                    </v-list>
+                <v-col cols="3">
+                    <v-user :user="props.client" />
 
                     <v-divider />
 
@@ -32,15 +26,68 @@
                     <v-divider />
 
                     <v-card elevation="0">
+                        <v-card-text>
+                            <v-row>
+                                <v-col cols="12">
+                                    Address
+                                </v-col>
+
+                                <v-col cols="12">
+                                    Date
+                                </v-col>
+
+                                <v-col cols="12">
+                                    Peoples Count
+                                </v-col>
+
+                                <v-col cols="12">
+                                    TODO
+                                </v-col>
+
+                                <v-col cols="12">
+                                    <v-textarea
+                                        :label="$t('Information')"
+                                        :placeholder="$t('Write a information about appeal...')"
+                                        class="mb-0 pb-0"
+                                        persistent-placeholder
+                                        variant="underlined"
+                                    />
+                                </v-col>
+
+                                <v-col cols="12">
+                                    Channels
+                                </v-col>
+                            </v-row>
+                        </v-card-text>
+
+                        <v-card-actions>
+                            <v-spacer />
+
+                            <v-btn block>
+                                Preview
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-col>
+
+                <v-col cols="7">
+                    <v-chat
+                        :appeal-id="props.id"
+                        :status="props.status"
+                    />
+                </v-col>
+
+                <v-col cols="2">
+                    <v-card elevation="0">
                         <v-card-title>
                             {{ $t('Curator') }}
                         </v-card-title>
 
-                        <v-card-text v-if="!!props.curator">
-                            <p v-if="isMe(props.curator.id)" v-text="$t('You')" />
-                            <p v-else v-text="props.curator.name" />
-
-                            <p class="text-grey" v-text="`@${props.curator.username}`" />
+                        <v-card-text v-if="!!props.curator" class="pa-0">
+                            <v-user
+                                :user="props.curator"
+                                allow-me
+                            />
                         </v-card-text>
 
                         <v-card-text v-else class="text-red">
@@ -103,13 +150,6 @@
                         </v-card-text>
                     </v-card>
                 </v-col>
-
-                <v-col cols="10">
-                    <v-chat
-                        :appeal-id="props.id"
-                        :status="props.status"
-                    />
-                </v-col>
             </v-row>
         </v-container>
     </v-loader-page>
@@ -119,6 +159,7 @@
 import VLoaderPage from '@/components/pages/loader.vue'
 import VStatusBtn from '@/components/buttons/status.vue'
 import VChat from '@/components/chats/chat.vue'
+import VUser from '@/components/info/user.vue'
 
 import { API_APPEALS_SHOW, API_APPEALS_START_WORK } from '@/constants/api_routes'
 
@@ -128,10 +169,8 @@ import { findAppeal } from '@/_fakes/appeals'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
-import { useUserStore } from '@/stores/user'
 
 const { meta, params } = useRoute()
-const userStore = useUserStore()
 
 const url = ref(API_APPEALS_SHOW)
 
@@ -140,8 +179,6 @@ const title = ref(meta.title)
 const formatDate = (date: string) => dateFormat(date)
 
 const fake = computed(() => findAppeal(Number(params.id)))
-
-const isMe = (id: number) => id === userStore.user.id
 
 const hasTakeToWork = ref(false)
 
