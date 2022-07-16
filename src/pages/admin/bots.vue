@@ -30,29 +30,70 @@
                                     <v-card-title v-text="$t('New bot')" />
 
                                     <v-card-text>
-                                        <v-text-field
-                                            v-model="form.username"
-                                            :label="$t('Bot Username')"
-                                            :rules="rules.bot.username"
-                                            variant="underlined"
-                                        />
+                                        <v-row>
+                                            <v-col cols="12" sm="4">
+                                                <v-text-field
+                                                    v-model="form.username"
+                                                    :label="$t('Bot Username')"
+                                                    :rules="rules.bot.username"
+                                                    autofocus
+                                                    variant="underlined"
+                                                />
+                                            </v-col>
 
-                                        <v-text-field
-                                            v-model="form.token"
-                                            :label="$t('Bot Token')"
-                                            :rules="rules.bot.token"
-                                            variant="underlined"
-                                        />
+                                            <v-col cols="12" sm="8">
+                                                <v-text-field
+                                                    v-model="form.token"
+                                                    :label="$t('Bot Token')"
+                                                    :rules="rules.bot.token"
+                                                    variant="underlined"
+                                                />
+                                            </v-col>
+                                        </v-row>
 
-                                        <v-select
-                                            v-model="form.channels"
-                                            :items="channels"
-                                            :label="$t('Channels')"
-                                            item-title="name"
-                                            item-value="id"
-                                            multiple
-                                            variant="underlined"
-                                        />
+                                        <v-row>
+                                            <v-col cols="12">
+                                                <v-select
+                                                    v-model="form.channels"
+                                                    :items="channels"
+                                                    :label="$t('Channels')"
+                                                    chips
+                                                    item-title="name"
+                                                    item-value="id"
+                                                    multiple
+                                                    variant="underlined"
+                                                />
+
+                                                <p class="hint" v-text="$t('When you select channels, appeals will be published only in them.')" />
+                                                <p class="hint" v-text="$t('Otherwise, coordinators will be asked to select channels for appeals publication.')" />
+                                            </v-col>
+                                        </v-row>
+
+                                        <v-row>
+                                            <v-col cols="12" md="6" sm="12">
+                                                <v-autocomplete
+                                                    v-model="form.timezone"
+                                                    :items="timezonesList"
+                                                    :label="$t('Timezone')"
+                                                    :rules="rules.bot.timezone"
+                                                    class="mb-0 pb-0"
+                                                    required
+                                                    variant="underlined"
+                                                />
+                                            </v-col>
+
+                                            <v-col cols="12" md="6" sm="12">
+                                                <v-select
+                                                    v-model="form.locale"
+                                                    :items="localesList"
+                                                    :label="$t('Localization')"
+                                                    item-title="value"
+                                                    item-value="key"
+                                                    required
+                                                    variant="underlined"
+                                                />
+                                            </v-col>
+                                        </v-row>
                                     </v-card-text>
 
                                     <v-card-actions>
@@ -95,25 +136,30 @@
                     >
                         <v-card-title v-text="bot.username" />
 
+
+                        <v-card-subtitle>
+                            {{ locales[bot.locale] }} |
+                            {{ bot.timezone }}
+                        </v-card-subtitle>
+
                         <v-card-text v-if="bot.channels">
-                            <div class="pb-4">
+                            <p class="pb-4">
                                 {{ $t('Appeals will be automatically published to the following channels:') }}
-                            </div>
+                            </p>
 
-                            <div
-
+                            <p
                                 v-for="channel in bot.channels"
                                 :key="channel.id"
                             >
                                 - {{ channel.name }}
-                            </div>
+                            </p>
                         </v-card-text>
 
-                        <v-card-text
-                            v-else
-                            class="text-grey"
-                            v-text="$t('Channels for automatic publication of appeals are not selected.')"
-                        />
+                        <v-card-text v-else>
+                            <p v-text="$t('Channels for automatic publication of appeals are not selected.')" />
+                            <p v-text="$t('Coordinators will be asked to select channels for appeals publication.')" />
+                        </v-card-text>
+
 
                         <v-card-actions>
                             <v-spacer />
@@ -213,11 +259,14 @@ import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
 import { computed, ref, watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
 import { useToast } from 'vue-toastification'
-import { bots } from '@/_fakes/bots'
-import { channels } from '@/_fakes/channels'
 
 import _ from 'lodash'
 import axios from 'axios'
+
+import { timezones } from '@/helpers/date'
+import locales from '@/constants/locales'
+import { bots } from '@/_fakes/bots'
+import { channels } from '@/_fakes/channels'
 
 const cardCreate = ref(false)
 const cardEdit = ref({})
@@ -235,7 +284,9 @@ const form = ref({
 
     username: '',
     token: '',
-    channels: []
+    channels: [],
+    timezone: '',
+    locale: 'en'
 })
 
 const rules = ref({
@@ -248,6 +299,11 @@ const rules = ref({
 
         token: [
             (v: string) => /^\d{8,10}:[a-zA-Z\d_-]{35}$/.test(v) || trans('This format is invalid.')
+        ],
+
+        timezone: [
+            (v: any) => !! v || trans('This field is required.'),
+            (v: any) => timezonesList.value.includes(v) || trans('This must be a valid timezone.')
         ]
     }
 })
@@ -263,6 +319,10 @@ const colSize = computed(() => {
 
     return _.get(sizes, size, 3)
 })
+
+const timezonesList = ref(timezones())
+
+const localesList = computed(() => _.map(locales, (value, key) => Object.create({ value, key })))
 
 const toast = useToast()
 
@@ -285,6 +345,8 @@ const resetForm = () => {
     form.value.username = ''
     form.value.token = ''
     form.value.channels = []
+    form.value.timezone = ''
+    form.value.locale = 'en'
 }
 
 const addBot = () => {
@@ -353,5 +415,10 @@ const deleteBot = (id: number) => {
     &__reveal {
 
     }
+}
+
+.hint {
+    color: grey;
+    font-size: 9pt;
 }
 </style>

@@ -1,12 +1,14 @@
 import _ from 'lodash'
 
-export const appeals = [
+export const appeals: Appeal[] = [
     {
         id: 1,
-        chat: {
-            username: 'help_chat',
-            name: 'We Can Help',
-            timezone: 'UTC'
+        bot: {
+            id: 1,
+            username: 'Example1Bot',
+            name: 'Example 1 Bot',
+            timezone: 'UTC',
+            locale: 'en'
         },
         client: {
             id: 123,
@@ -22,10 +24,12 @@ export const appeals = [
     },
     {
         id: 2,
-        chat: {
-            username: 'help_chat2',
-            name: 'Something',
-            timezone: 'Europe/Moscow'
+        bot: {
+            id: 2,
+            username: 'Example2Bot',
+            name: 'Example 2 Bot',
+            timezone: 'America/Havana',
+            locale: 'de'
         },
         client: {
             id: 456,
@@ -46,10 +50,12 @@ export const appeals = [
     },
     {
         id: 3,
-        chat: {
-            username: 'help_chat',
-            name: 'We Can Help',
-            timezone: 'UTC'
+        bot: {
+            id: 1,
+            username: 'Example1Bot',
+            name: 'Example 1 Bot',
+            timezone: 'UTC',
+            locale: 'en'
         },
         client: {
             id: 678,

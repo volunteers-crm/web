@@ -6,7 +6,7 @@ const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec mi
 
 const photo = 'https://fakeimg.pl/350x200/?text=World&font=lobster'
 
-export const messages = {
+export const messages: FakeMessages = {
     1: [
         {
             id: 1,

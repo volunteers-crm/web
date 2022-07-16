@@ -1,7 +1,10 @@
-export const bots = [
+export const bots: Bot[] = [
     {
         id: 1,
         username: 'Example1Bot',
+        name: 'Example 1 Bot',
+        timezone: 'UTC',
+        locale: 'en',
         channels: [
             {
                 id: 1,
@@ -12,6 +15,9 @@ export const bots = [
     },
     {
         id: 2,
-        username: 'Example2Bot'
+        username: 'Example2Bot',
+        name: 'Example 2 Bot',
+        timezone: 'America/Havana',
+        locale: 'de'
     }
 ]
