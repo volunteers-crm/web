@@ -86,123 +86,121 @@
                 cols="12"
             >
                 <v-hover v-slot="{ isHovering, props }">
-                    <v-fade-transition>
-                        <v-card
-                            v-if="!cardEdit[bot.id] && !cardDelete[bot.id]"
-                            :elevation="isHovering ? 4 : 1"
-                            :loading="cardLoading[bot.id]"
-                            class="fill-height d-flex flex-column"
-                            v-bind="props"
-                        >
-                            <v-card-title v-text="bot.username" />
+                    <v-card
+                        v-if="!cardEdit[bot.id] && !cardDelete[bot.id]"
+                        :elevation="isHovering ? 4 : 1"
+                        :loading="cardLoading[bot.id]"
+                        class="fill-height d-flex flex-column"
+                        v-bind="props"
+                    >
+                        <v-card-title v-text="bot.username" />
 
-                            <v-card-text v-if="bot.channels">
-                                <div class="pb-4">
-                                    {{ $t('Appeals will be automatically published to the following channels:') }}
-                                </div>
+                        <v-card-text v-if="bot.channels">
+                            <div class="pb-4">
+                                {{ $t('Appeals will be automatically published to the following channels:') }}
+                            </div>
 
-                                <div
+                            <div
 
-                                    v-for="channel in bot.channels"
-                                    :key="channel.id"
-                                >
-                                    - {{ channel.name }}
-                                </div>
-                            </v-card-text>
+                                v-for="channel in bot.channels"
+                                :key="channel.id"
+                            >
+                                - {{ channel.name }}
+                            </div>
+                        </v-card-text>
 
-                            <v-card-text
-                                v-else
-                                class="text-grey"
-                                v-text="$t('Channels for automatic publication of appeals are not selected.')"
+                        <v-card-text
+                            v-else
+                            class="text-grey"
+                            v-text="$t('Channels for automatic publication of appeals are not selected.')"
+                        />
+
+                        <v-card-actions>
+                            <v-spacer />
+
+                            <v-btn
+                                @click="cardEdit[bot.id] = true"
+                            >
+                                {{ $t('Edit') }}
+                            </v-btn>
+
+                            <v-btn
+                                class="text-red-darken-1"
+                                @click="cardDelete[bot.id] = true"
+                            >
+                                {{ $t('Delete') }}
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+
+                    <v-card
+                        v-if="cardEdit[bot.id]"
+                        class="card__reveal"
+                    >
+                        <v-card-title v-text="bot.username" />
+
+                        <v-card-text>
+                            <v-text-field
+                                v-model="form.token"
+                                :label="$t('Bot Token')"
+                                :rules="rules.bot.token"
+                                variant="underlined"
                             />
 
-                            <v-card-actions>
-                                <v-spacer />
+                            <v-select
+                                v-model="form.channels"
+                                :items="channels"
+                                :label="$t('Channels')"
+                                item-title="name"
+                                item-value="id"
+                                multiple
+                                variant="underlined"
+                            />
+                        </v-card-text>
 
-                                <v-btn
-                                    @click="cardEdit[bot.id] = true"
-                                >
-                                    {{ $t('Edit') }}
-                                </v-btn>
+                        <v-card-actions>
+                            <v-spacer />
 
-                                <v-btn
-                                    class="text-red-darken-1"
-                                    @click="cardDelete[bot.id] = true"
-                                >
-                                    {{ $t('Delete') }}
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
+                            <v-btn @click="updateBot(bot.id)">
+                                {{ $t('Save') }}
+                            </v-btn>
 
-                        <v-card
-                            v-if="cardEdit[bot.id]"
-                            class="card__reveal"
-                        >
-                            <v-card-title v-text="bot.username" />
+                            <v-btn @click="cardEdit[bot.id] = false">
+                                {{ $t('Cancel') }}
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
 
-                            <v-card-text>
-                                <v-text-field
-                                    v-model="form.token"
-                                    :label="$t('Bot Token')"
-                                    :rules="rules.bot.token"
-                                    variant="underlined"
-                                />
+                    <v-card
+                        v-if="cardDelete[bot.id]"
+                        class="card__reveal"
+                    >
+                        <v-card-title>
+                            You are sure?
+                        </v-card-title>
 
-                                <v-select
-                                    v-model="form.channels"
-                                    :items="channels"
-                                    :label="$t('Channels')"
-                                    item-title="name"
-                                    item-value="id"
-                                    multiple
-                                    variant="underlined"
-                                />
-                            </v-card-text>
+                        <v-card-text>
+                            Some text
+                        </v-card-text>
 
-                            <v-card-actions>
-                                <v-spacer />
+                        <v-card-actions>
+                            <v-spacer />
 
-                                <v-btn @click="updateBot(bot.id)">
-                                    {{ $t('Save') }}
-                                </v-btn>
+                            <v-btn
+                                class="text-green-darken-1"
+                                @click="cardDelete[bot.id] = false"
+                            >
+                                {{ $t('No') }}
+                            </v-btn>
 
-                                <v-btn @click="cardEdit[bot.id] = false">
-                                    {{ $t('Cancel') }}
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-
-                        <v-card
-                            v-if="cardDelete[bot.id]"
-                            class="card__reveal"
-                        >
-                            <v-card-title>
-                                You are sure?
-                            </v-card-title>
-
-                            <v-card-text>
-                                Some text
-                            </v-card-text>
-
-                            <v-card-actions>
-                                <v-spacer />
-
-                                <v-btn
-                                    class="text-green-darken-1"
-                                    @click="cardDelete[bot.id] = false"
-                                >
-                                    {{ $t('No') }}
-                                </v-btn>
-
-                                <v-btn
-                                    class="text-red"
-                                    @click="deleteBot(bot.id)"
-                                >
-                                    {{ $t('Yes, delete') }}
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-fade-transition>
+                            <v-btn
+                                class="text-red"
+                                @click="deleteBot(bot.id)"
+                            >
+                                {{ $t('Yes, delete') }}
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
                 </v-hover>
             </v-col>
         </v-row>
