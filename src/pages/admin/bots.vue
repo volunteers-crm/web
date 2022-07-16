@@ -1,47 +1,208 @@
 <template>
-    <v-table>
-        <thead>
-        <tr>
-            <th v-text="$t('Bot Username')" />
-            <th v-text="$t('Channels')" />
-            <th v-text="$t('Actions')" />
-        </tr>
-        </thead>
-        <tbody>
-        <tr
-            v-for="bot in bots"
-            :key="bot.id"
-        >
-            <td>
-                {{ bot.username }}
-            </td>
+    <v-container>
+        <v-row>
+            <v-col
+                :md="colSize"
+                cols="12"
+            >
+                <v-hover v-slot="{ isHovering, props }">
+                    <v-card
+                        :elevation="isHovering ? 4 : 1"
+                        class="fill-height add-icon"
+                        v-bind="props"
+                    >
+                        <v-card-text class="fill-height d-flex justify-center align-center">
+                            <v-icon icon="mdi-plus" />
+                        </v-card-text>
+                    </v-card>
+                </v-hover>
+            </v-col>
 
-            <td>
-                {{ channelNames(bot).join('<br>') }}
-            </td>
+            <v-col
+                v-for="bot in bots"
+                :key="bot.id"
+                :md="colSize"
+                cols="12"
+            >
+                <v-hover v-slot="{ isHovering, props }">
+                    <v-fade-transition>
+                        <v-card
+                            v-if="!cardEdit[bot.id] && !cardDelete[bot.id]"
+                            :elevation="isHovering ? 4 : 1"
+                            :loading="cardLoading[bot.id]"
+                            class="fill-height d-flex flex-column"
+                            v-bind="props"
+                        >
+                            <v-card-title v-text="bot.username" />
 
-            <td>
-                <v-btn
-                    icon="mdi-pencil"
-                    size="small"
-                    variant="text"
-                />
+                            <v-card-text v-if="bot.channels">
+                                <div class="pb-4">
+                                    {{ $t('Appeals will be automatically published to the following channels:') }}
+                                </div>
 
-                <v-btn
-                    icon="mdi-delete"
-                    size="small"
-                    variant="text"
-                />
-            </td>
-        </tr>
-        </tbody>
-    </v-table>
+                                <div
+
+                                    v-for="channel in bot.channels"
+                                    :key="channel.id"
+                                >
+                                    - {{ channel.name }}
+                                </div>
+                            </v-card-text>
+
+                            <v-card-text
+                                v-else
+                                class="text-grey"
+                                v-text="$t('Channels for automatic publication of appeals are not selected.')"
+                            />
+
+                            <v-card-actions>
+                                <v-spacer />
+
+                                <v-btn
+                                    @click="cardEdit[bot.id] = true"
+                                >
+                                    {{ $t('Edit') }}
+                                </v-btn>
+
+                                <v-btn
+                                    class="text-red-darken-1"
+                                    @click="cardDelete[bot.id] = true"
+                                >
+                                    {{ $t('Delete') }}
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+
+                        <v-card
+                            v-if="cardEdit[bot.id]"
+                            class="card__reveal"
+                        >
+                            <v-card-title v-text="bot.username" />
+
+                            <v-card-text>
+                                <v-text-field
+                                    v-model="form.token"
+                                    :label="$t('Bot Token')"
+                                    variant="underlined"
+                                />
+
+                                <v-select
+                                    v-model="form.channels"
+                                    :label="$t('Channels')"
+                                    multiple
+                                    variant="underlined"
+                                />
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-spacer />
+
+                                <v-btn @click="updateBot(bot.id)">
+                                    {{ $t('Save') }}
+                                </v-btn>
+
+                                <v-btn @click="cardEdit[bot.id] = false">
+                                    {{ $t('Cancel') }}
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+
+                        <v-card
+                            v-if="cardDelete[bot.id]"
+                            class="card__reveal"
+                        >
+                            <v-card-title>
+                                You are sure?
+                            </v-card-title>
+
+                            <v-card-text>
+                                Some text
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-spacer />
+
+                                <v-btn
+                                    class="text-green-darken-1"
+                                    @click="cardDelete[bot.id] = false"
+                                >
+                                    {{ $t('No') }}
+                                </v-btn>
+
+                                <v-btn
+                                    class="text-red"
+                                    @click="deleteBot(bot.id)"
+                                >
+                                    {{ $t('Yes, delete') }}
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-fade-transition>
+                </v-hover>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script lang="ts" setup>
-import { collect } from '@/helpers/collection'
-
 import { bots } from '@/_fakes/bots'
+import { computed, ref } from 'vue'
 
-const channelNames = (bot: any) => collect(bot?.channels || []).pluck('name').get()
+import _ from 'lodash'
+
+const cardEdit = ref({})
+const cardDelete = ref({})
+const cardLoading = ref({})
+
+const form = ref({
+    username: '',
+    token: '',
+    channels: []
+})
+
+const colSize = computed(() => {
+    const size = bots.length + 1
+
+    const sizes = {
+        1: 3,
+        2: 6,
+        3: 4
+    }
+
+    return _.get(sizes, size, 3)
+})
+
+const updateBot = (id: number) => {
+    _.set(cardLoading.value, id, true)
+
+    alert(`Bot #${ id } was updated!`)
+
+    _.set(cardEdit.value, id, false)
+}
+
+const deleteBot = (id: number) => {
+    _.set(cardLoading.value, id, true)
+
+    alert(`Bot #${ id } was deleted!`)
+}
 </script>
+
+<style lang="scss" scoped>
+.add-icon {
+    cursor: pointer;
+
+    i {
+        &.v-icon {
+            caret-color: #9E9E9E !important;
+            color: #9E9E9E !important;
+            font-size: calc(var(--v-icon-size-multiplier) * 5em);
+        }
+    }
+}
+
+.card {
+    &__reveal {
+
+    }
+}
+</style>
