@@ -27,6 +27,7 @@
         "vue-toastification": "^2.0.0-rc.5",
         "vue3-apexcharts": "^1.4.1",
         "vue3-audio-player": "^1.0.5",
+        "vue3-openlayers": "^0.1.68",
         "vue3-telegram-login": "^0.0.4",
         "vuetify": "^3.0.0-beta.5",
         "webfontloader": "^1.0.0"

@@ -15,6 +15,7 @@ import vuetify from '@/utils/vuetify'
 import i18nOptions from '@/utils/lang'
 import { loadFonts } from '@/utils/webfontloader'
 import { initAxios } from '@/utils/axios'
+import OpenLayersMap from '@/utils/maps'
 
 import { telegramLoginTemp } from 'vue3-telegram-login'
 
@@ -28,6 +29,7 @@ createApp(App)
     .use(routes)
     .use(vuetify)
     .use(Maska)
+    .use(OpenLayersMap)
     .use(VueApexCharts)
     .use(Toast, ToastOptions)
     .use(i18nVue, i18nOptions(pinia))

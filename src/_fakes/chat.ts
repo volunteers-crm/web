@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { MESSAGE_TYPE_DOCUMENT, MESSAGE_TYPE_TEXT } from '@/constants/message_types'
+import { MESSAGE_TYPE_DOCUMENT, MESSAGE_TYPE_LOCATION, MESSAGE_TYPE_TEXT } from '@/constants/message_types'
 
 const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec mi justo. Ut a diam quis diam efficitur lacinia non.'
 
@@ -34,6 +34,22 @@ export const messages: FakeMessages = {
                 preview: photo
             },
             type: MESSAGE_TYPE_DOCUMENT,
+            created_at: '2022-07-05 23:48:27',
+            updated_at: '2022-07-05 23:48:27'
+        },
+        {
+            id: 3,
+            sender: {
+                id: 123,
+                username: 'john',
+                name: 'John Doe',
+                avatar: 'https://randomuser.me/api/portraits/men/83.jpg'
+            },
+            content: {
+                longitude: 59.927857,
+                latitude: 30.350500
+            },
+            type: MESSAGE_TYPE_LOCATION,
             created_at: '2022-07-05 23:48:27',
             updated_at: '2022-07-05 23:48:27'
         }
