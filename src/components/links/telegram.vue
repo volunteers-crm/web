@@ -1,5 +1,5 @@
 <template>
-    <span v-if="me && itsMe()" class="text-green">{{ $t('Me') }}</span>
+    <span v-if="me && itsMe()" class="text-green" v-text="$t('You')" />
     <span v-else v-text="name" />
 
     <div class="telegram__link">
