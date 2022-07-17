@@ -41,12 +41,20 @@
                                                 />
                                             </v-col>
 
-                                            <v-col cols="12" sm="8">
+                                            <v-col cols="11" sm="7">
                                                 <v-text-field
                                                     v-model="form.token"
                                                     :label="$t('Bot Token')"
                                                     :rules="rules.bot.token"
                                                     variant="underlined"
+                                                />
+                                            </v-col>
+
+                                            <v-col cols="1" sm="1">
+                                                <v-btn
+                                                    flat
+                                                    icon="mdi-information"
+                                                    @click="dialogs.registerBot = true"
                                                 />
                                             </v-col>
                                         </v-row>
@@ -136,7 +144,6 @@
                     >
                         <v-card-title v-text="bot.username" />
 
-
                         <v-card-subtitle>
                             {{ locales[bot.locale] }} |
                             {{ bot.timezone }}
@@ -186,22 +193,36 @@
                         <v-card-title v-text="bot.username" />
 
                         <v-card-text>
-                            <v-text-field
-                                v-model="form.token"
-                                :label="$t('Bot Token')"
-                                :rules="rules.bot.token"
-                                variant="underlined"
-                            />
+                            <v-row>
+                                <v-col cols="10">
+                                    <v-text-field
+                                        v-model="form.token"
+                                        :label="$t('Bot Token')"
+                                        :rules="rules.bot.token"
+                                        variant="underlined"
+                                    />
+                                </v-col>
 
-                            <v-select
-                                v-model="form.channels"
-                                :items="channels"
-                                :label="$t('Channels')"
-                                item-title="name"
-                                item-value="id"
-                                multiple
-                                variant="underlined"
-                            />
+                                <v-col cols="2">
+                                    <v-btn
+                                        flat
+                                        icon="mdi-information"
+                                        @click="dialogs.registerBot = true"
+                                    />
+                                </v-col>
+
+                                <v-col cols="12">
+                                    <v-select
+                                        v-model="form.channels"
+                                        :items="channels"
+                                        :label="$t('Channels')"
+                                        item-title="name"
+                                        item-value="id"
+                                        multiple
+                                        variant="underlined"
+                                    />
+                                </v-col>
+                            </v-row>
                         </v-card-text>
 
                         <v-card-actions>
@@ -251,6 +272,50 @@
             </v-col>
         </v-row>
     </v-container>
+
+    <v-dialog v-model="dialogs.registerBot">
+        <v-card>
+            <v-card-title>
+                {{ $t('Bot Information') }}
+            </v-card-title>
+
+            <v-card-text>
+                <v-expansion-panels>
+                    <v-expansion-panel>
+                        <v-expansion-panel-title>
+                            {{ $t('Registering a new bot') }}
+                        </v-expansion-panel-title>
+
+                        <v-expansion-panel-text>
+                            <p class="mb-2" v-html="$t('To register a new bot, you need to go to the messages to the main @BotFather bot.')" />
+                            <p class="mb-2" v-html="$t('Then send him the command /newbot and follow the instructions.')" />
+                            <p class="mb-2" v-html="$t('When finished, @BotFather will provide you with your bot\'s token.')" />
+                        </v-expansion-panel-text>
+                    </v-expansion-panel>
+
+                    <v-expansion-panel>
+                        <v-expansion-panel-title>
+                            {{ $t('Connecting a previously created bot') }}
+                        </v-expansion-panel-title>
+
+                        <v-expansion-panel-text>
+                            <p class="mb-2" v-html="$t('To connect a previously created bot, you need to send the /mybots command to the @BotFather bot.')" />
+                            <p API Token class="mb-2" v-html="$t('Then select the desired bot in the list and click the `API Token` button.')" />
+                        </v-expansion-panel-text>
+                    </v-expansion-panel>
+                </v-expansion-panels>
+            </v-card-text>
+
+            <v-card-actions>
+                <v-spacer />
+
+                <v-btn
+                    @click="dialogs.registerBot = false"
+                    v-text="$t('Close')"
+                />
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -272,6 +337,10 @@ const cardCreate = ref(false)
 const cardEdit = ref({})
 const cardDelete = ref({})
 const cardLoading = ref({})
+
+const dialogs = ref({
+    registerBot: false
+})
 
 const form = ref({
     ref: {
