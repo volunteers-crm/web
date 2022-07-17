@@ -8,7 +8,14 @@ export const appeals: Appeal[] = [
             username: 'Example1Bot',
             name: 'Example 1 Bot',
             timezone: 'UTC',
-            locale: 'en'
+            locale: 'en',
+            channels: [
+                {
+                    id: 1,
+                    username: 'help_chat',
+                    name: 'We Can Help'
+                }
+            ]
         },
         client: {
             id: 123,
@@ -53,7 +60,14 @@ export const appeals: Appeal[] = [
             username: 'Example1Bot',
             name: 'Example 1 Bot',
             timezone: 'UTC',
-            locale: 'en'
+            locale: 'en',
+            channels: [
+                {
+                    id: 1,
+                    username: 'help_chat',
+                    name: 'We Can Help'
+                }
+            ]
         },
         client: {
             id: 678,
