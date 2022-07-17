@@ -339,8 +339,13 @@ const previewTodo = computed(() => {
 
 const allowToPublish = computed(() => {
     const value = form.value
+    const todo = previewTodo.value
 
-    return value.address || value.date || value.persons || value.comment || previewTodo.value.length
+    if (! value.channels.length) {
+        return false
+    }
+
+    return value.address || value.date || value.persons || value.comment || todo.length
 })
 
 const publish = () => {
