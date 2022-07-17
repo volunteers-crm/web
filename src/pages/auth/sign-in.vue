@@ -25,7 +25,7 @@ const router = useRouter()
 const isRegister = computed(() => url.hasParam('id'))
 
 onBeforeMount(() => {
-    if (userStore.isLogged) {
+    if (userStore.hasLogged) {
         router.push({ name: ROUTE_ADMIN_DASHBOARD })
     }
 })

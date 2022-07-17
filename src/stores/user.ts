@@ -10,7 +10,7 @@ interface User
 
 interface UserStore
 {
-    isLogged: boolean,
+    token: string | null,
 
     user: User
 }
@@ -18,8 +18,10 @@ interface UserStore
 export const useUserStore = defineStore({
     id: 'user',
 
+    persist: true,
+
     state: (): UserStore => ({
-        isLogged: false,
+        token: null,
 
         user: {
             id: null,
@@ -29,12 +31,19 @@ export const useUserStore = defineStore({
         }
     }),
 
+    getters: {
+        hasLogged: (state: UserStore): boolean => !! state.token && !! state.user.id
+    },
+
     actions: {
-        set(user: User)
+        setToken(token: string)
+        {
+            this.$state.token = token.trim()
+        },
+
+        setUser(user: User)
         {
             this.$state.user = Object.assign(this.user, user)
-
-            this.$state.isLogged = true
         },
 
         logout()

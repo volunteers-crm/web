@@ -42,12 +42,12 @@ import { ROUTE_ADMIN_DASHBOARD } from '@/routes/names'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
 
 import url from '@/helpers/url'
+import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
-const authStore = useAuthStore()
+const userStore = useUserStore()
 
 const firstName = ref(url.getParam('first_name'))
 const avatar = ref(url.getParam('photo_url'))
@@ -61,7 +61,8 @@ onMounted(() => {
             params: url.getParams()
         })
         .then((response: any) => {
-            authStore.set(response?.data?.token)
+            userStore.setToken(response.data.token)
+            userStore.setUser(response.data.user)
 
             router.push({ name: ROUTE_ADMIN_DASHBOARD })
         })

@@ -13,7 +13,6 @@ import { useRoute } from 'vue-router'
 import { LAYOUT_ADMIN, LAYOUT_DEFAULT } from '@/constants/layouts'
 
 import fakeUser from '@/_fakes/user'
-import { useAuthStore } from '@/stores/auth'
 import { useUserStore } from '@/stores/user'
 
 const layout = computed(() => {
@@ -28,7 +27,7 @@ const layout = computed(() => {
 
 // TODO: Push fake user data
 onBeforeMount(() => {
-    useAuthStore().set('Bearer qwerty12345')
-    useUserStore().set(fakeUser)
+    useUserStore().setToken('Bearer qwerty12345')
+    useUserStore().setUser(fakeUser)
 })
 </script>

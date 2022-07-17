@@ -6,17 +6,17 @@ import { trans } from 'laravel-vue-i18n'
 import { createPinia } from 'pinia'
 
 import { useSettingsStore } from '@/stores/settings'
-import { useAuthStore } from '@/stores/auth'
+import { useUserStore } from '@/stores/user'
 
 const pinia = createPinia()
 
 const toast = useToast()
 const settingsStore = useSettingsStore(pinia)
-const authStore = useAuthStore(pinia)
+const userStore = useUserStore(pinia)
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.headers.common['X-Localization'] = settingsStore.locale
-axios.defaults.headers.common['X-Authorization'] = authStore.token || 'undefined'
+axios.defaults.headers.common['X-Locale'] = settingsStore.locale
+axios.defaults.headers.common['Authorization'] = userStore.token || 'undefined'
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 

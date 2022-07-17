@@ -63,7 +63,7 @@ const pageName = computed(() => metaStore.pageTitle)
 
 const hasShowPageTitle = computed(() => pageName.value !== appName.value)
 
-const isLoggedUser = computed(() => userStore.isLogged)
+const isLoggedUser = computed(() => userStore.hasLogged)
 
 const goToMain = () => router.push({ name: ROUTE_MAIN })
 </script>
