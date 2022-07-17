@@ -1,5 +1,6 @@
 interface MediaMessageType
 {
     src: string,
-    preview: string
+    preview: string,
+    type?: string
 }

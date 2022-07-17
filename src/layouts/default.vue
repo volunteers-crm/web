@@ -1,9 +1,9 @@
 <template>
     <v-app-bar app elevation="0" prominent>
         <v-app-bar-title>
-                <span class="link-cursor" @click="goToMain">
-                    {{ appName }}
-                </span>
+            <span class="link-cursor" @click="goToMain">
+                {{ appName }}
+            </span>
 
             <div
                 v-if="hasShowPageTitle"

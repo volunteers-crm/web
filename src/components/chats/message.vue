@@ -52,7 +52,7 @@ const props = defineProps<{
 
 const userStore = useUserStore()
 
-const template = computed(() => defineAsyncComponent(() => import(`./types/${ props.message.type }.vue`)))
+const template = computed(() => defineAsyncComponent(() => import(`../content-types/${ props.message.type }.vue`)))
 
 const sentAt = computed(() => {
     const date = props.message.created_at

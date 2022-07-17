@@ -3,7 +3,6 @@
         <div class="chat__messages pa-5 overflow-y-auto">
             <v-message
                 v-for="message in messages()"
-                :key="message.id"
                 :message="message"
             />
         </div>

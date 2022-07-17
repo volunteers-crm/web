@@ -2,7 +2,7 @@ interface Message
 {
     id: number,
     sender: User,
-    content: string
+    content: DefaultMessageType
         | AudioMessageType
         | ContactMessageType
         | DocumentMessageType

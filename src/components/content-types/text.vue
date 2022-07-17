@@ -1,9 +1,9 @@
 <template>
-    {{ content }}
+    {{ content.text }}
 </template>
 
 <script lang="ts" setup>
 defineProps<{
-    content: string | number
+    content: DefaultMessageType
 }>()
 </script>

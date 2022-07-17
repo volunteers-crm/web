@@ -16,7 +16,7 @@ export const messages: FakeMessages = {
                 name: 'John Doe',
                 avatar: 'https://randomuser.me/api/portraits/men/83.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:48:08',
             updated_at: '2022-07-06 01:59:09'
@@ -64,7 +64,7 @@ export const messages: FakeMessages = {
                 name: 'Dave Nox',
                 avatar: 'https://randomuser.me/api/portraits/men/78.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:48:08',
             updated_at: '2022-07-05 23:48:08'
@@ -77,7 +77,7 @@ export const messages: FakeMessages = {
                 name: 'Adam Freeman',
                 avatar: 'https://randomuser.me/api/portraits/men/53.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:48:27',
             updated_at: '2022-07-05 23:48:27'
@@ -90,7 +90,7 @@ export const messages: FakeMessages = {
                 name: 'Adam Freeman',
                 avatar: 'https://randomuser.me/api/portraits/men/53.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:48:59',
             updated_at: '2022-07-05 23:48:59'
@@ -106,7 +106,7 @@ export const messages: FakeMessages = {
                 name: 'Olivia Milfred',
                 avatar: 'https://randomuser.me/api/portraits/women/45.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:48:08',
             updated_at: '2022-07-05 23:48:08'
@@ -119,7 +119,7 @@ export const messages: FakeMessages = {
                 name: 'Olivia Milfred',
                 avatar: 'https://randomuser.me/api/portraits/women/45.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:49:08',
             updated_at: '2022-07-05 23:49:08'
@@ -132,7 +132,7 @@ export const messages: FakeMessages = {
                 username: 'sandra_adams',
                 avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:48:27',
             updated_at: '2022-07-05 23:48:27'
@@ -161,7 +161,7 @@ export const messages: FakeMessages = {
                 name: 'Olivia Milfred',
                 avatar: 'https://randomuser.me/api/portraits/women/45.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:49:08',
             updated_at: '2022-07-05 23:49:08'
@@ -174,7 +174,7 @@ export const messages: FakeMessages = {
                 username: 'sandra_adams',
                 avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:48:27',
             updated_at: '2022-07-05 23:48:27'
@@ -187,7 +187,7 @@ export const messages: FakeMessages = {
                 name: 'Olivia Milfred',
                 avatar: 'https://randomuser.me/api/portraits/women/45.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:49:08',
             updated_at: '2022-07-05 23:49:08'
@@ -200,7 +200,7 @@ export const messages: FakeMessages = {
                 username: 'sandra_adams',
                 avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:48:27',
             updated_at: '2022-07-05 23:48:27'
@@ -213,7 +213,7 @@ export const messages: FakeMessages = {
                 name: 'Olivia Milfred',
                 avatar: 'https://randomuser.me/api/portraits/women/45.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:49:08',
             updated_at: '2022-07-05 23:49:08'
@@ -226,7 +226,7 @@ export const messages: FakeMessages = {
                 username: 'sandra_adams',
                 avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
             },
-            content: text,
+            content: { text },
             type: MESSAGE_TYPE_TEXT,
             created_at: '2022-07-05 23:48:27',
             updated_at: '2022-07-05 23:48:27'
