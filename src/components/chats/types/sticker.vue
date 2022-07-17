@@ -1,9 +1,12 @@
 <template>
-    sticker will be here
+    <v-img
+        :lazy-src="content.preview"
+        :src="content.src"
+    />
 </template>
 
 <script lang="ts" setup>
 defineProps<{
-    content: string | number
+    content: MediaMessageType
 }>()
 </script>

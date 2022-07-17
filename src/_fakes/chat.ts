@@ -29,7 +29,10 @@ export const messages: FakeMessages = {
                 name: 'John Doe',
                 avatar: 'https://randomuser.me/api/portraits/men/83.jpg'
             },
-            content: photo,
+            content: {
+                src: photo,
+                preview: photo
+            },
             type: MESSAGE_TYPE_DOCUMENT,
             created_at: '2022-07-05 23:48:27',
             updated_at: '2022-07-05 23:48:27'
@@ -126,7 +129,10 @@ export const messages: FakeMessages = {
                 name: 'Olivia Milfred',
                 avatar: 'https://randomuser.me/api/portraits/women/45.jpg'
             },
-            content: photo,
+            content: {
+                src: photo,
+                preview: photo
+            },
             type: MESSAGE_TYPE_DOCUMENT,
             created_at: '2022-07-05 23:48:59',
             updated_at: '2022-07-05 23:48:59'

@@ -1,9 +1,16 @@
 <template>
-    audio will be here
+    <audio-player :option="options" />
 </template>
 
 <script lang="ts" setup>
-defineProps<{
-    content: string | number
+import AudioPlayer from 'vue3-audio-player'
+import { ref } from 'vue'
+
+const props = defineProps<{
+    content: AudioMessageType
 }>()
+
+const options = ref({
+    src: props.content.src
+})
 </script>

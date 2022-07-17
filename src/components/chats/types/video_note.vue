@@ -1,9 +1,11 @@
 <template>
-    video note will be here
+    <vue3-video-player
+        :src="content.src"
+    />
 </template>
 
 <script lang="ts" setup>
 defineProps<{
-    content: string | number
+    content: MediaMessageType
 }>()
 </script>

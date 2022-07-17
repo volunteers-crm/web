@@ -8,6 +8,7 @@
         "preview": "vue-tsc --noEmit && vite build && vite preview"
     },
     "dependencies": {
+        "@cloudgeek/vue3-video-player": "^0.3.10",
         "@mdi/font": "^6.2.0",
         "apexcharts": "^3.35.3",
         "axios": "^0.27.2",
@@ -25,6 +26,7 @@
         "vue-router": "^4.0.16",
         "vue-toastification": "^2.0.0-rc.5",
         "vue3-apexcharts": "^1.4.1",
+        "vue3-audio-player": "^1.0.5",
         "vue3-telegram-login": "^0.0.4",
         "vuetify": "^3.0.0-beta.5",
         "webfontloader": "^1.0.0"

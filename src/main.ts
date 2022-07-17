@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import { i18nVue } from 'laravel-vue-i18n'
 import VueApexCharts from 'vue3-apexcharts'
 import Maska from 'maska'
+import Vue3VideoPlayer from '@cloudgeek/vue3-video-player'
 
 import Toast from 'vue-toastification'
 import ToastOptions from '@/utils/toast'
@@ -27,8 +28,9 @@ createApp(App)
     .use(routes)
     .use(vuetify)
     .use(Maska)
+    .use(VueApexCharts)
     .use(Toast, ToastOptions)
     .use(i18nVue, i18nOptions(pinia))
-    .use(VueApexCharts)
+    .use(Vue3VideoPlayer)
     .component('TelegramLogin', telegramLoginTemp)
     .mount('#app')

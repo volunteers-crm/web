@@ -1,0 +1,4 @@
+interface AudioMessageType
+{
+    src: string
+}
