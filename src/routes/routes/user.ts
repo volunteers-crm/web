@@ -1,4 +1,4 @@
-import { ROUTE_ABOUT, ROUTE_MAIN, ROUTE_SIGN_IN } from '@/routes/names'
+import { ROUTE_ABOUT, ROUTE_BECOME, ROUTE_MAIN, ROUTE_SIGN_IN } from '@/routes/names'
 
 import { LAYOUT_DEFAULT } from '@/constants/layouts'
 
@@ -10,6 +10,17 @@ export default [
         meta: {
             layout: LAYOUT_DEFAULT,
             title: 'Home',
+            show: true
+        }
+    },
+    {
+        path: '/become',
+        name: ROUTE_BECOME,
+        component: () => import('@/pages/become.vue'),
+        meta: {
+            layout: LAYOUT_DEFAULT,
+            title: 'Become a coordinator',
+            requiresAuth: true,
             show: true
         }
     },
