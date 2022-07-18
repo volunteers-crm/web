@@ -25,6 +25,8 @@ export const appeals: Appeal[] = [
         },
         curator: null,
         status: 'new',
+        is_published: false,
+        published_at: '2022-07-07 12:34',
         created_at: '2022-07-05 23:48',
         updated_at: '2022-07-06 01:59'
     },
@@ -50,6 +52,8 @@ export const appeals: Appeal[] = [
             avatar: 'https://randomuser.me/api/portraits/men/53.jpg'
         },
         status: 'in_progress',
+        is_published: true,
+        published_at: '2022-07-07 12:34',
         created_at: '2022-07-06 20:48',
         updated_at: '2022-07-06 21:59'
     },
@@ -82,6 +86,8 @@ export const appeals: Appeal[] = [
             avatar: 'https://randomuser.me/api/portraits/women/85.jpg'
         },
         status: 'done',
+        is_published: true,
+        published_at: '2022-07-07 12:34',
         created_at: '2022-07-06 20:48',
         updated_at: '2022-07-06 21:59'
     }

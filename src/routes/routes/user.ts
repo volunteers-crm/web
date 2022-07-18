@@ -19,7 +19,7 @@ export default [
         component: () => import('@/pages/become.vue'),
         meta: {
             layout: LAYOUT_DEFAULT,
-            title: 'Become a coordinator',
+            title: 'Become a volunteer',
             requiresAuth: true,
             show: true
         }

@@ -1,3 +1,5 @@
+import { roles } from '@/_fakes/roles'
+
 export const bots: Bot[] = [
     {
         id: 1,
@@ -21,3 +23,12 @@ export const bots: Bot[] = [
         locale: 'de'
     }
 ]
+
+export const botsSearch: Bot = {
+    id: 1,
+    username: 'Example1Bot',
+    name: 'Example 1 Bot',
+    timezone: 'UTC',
+    locale: 'en',
+    roles
+}

@@ -1,12 +1,23 @@
 <template>
-    <v-text-field
+    <v-row
         v-for="(value, key) in items"
-        v-model="items[key]"
-        :label="$t(`${label} :id`, { id: key + 1 })"
-        hide-details
-        prepend-icon="mdi-format-list-checks"
-        variant="underlined"
-    />
+    >
+        <v-col cols="12">
+            <v-text-field
+                v-model="items[key]"
+                :density="density"
+                :label="$t(`${label} :id`, { id: key + 1 })"
+                hide-details
+                prepend-icon="mdi-format-list-checks"
+            />
+        </v-col>
+    </v-row>
+
+    <v-row v-if="!! hint">
+        <v-col class="text-grey" cols="12">
+            {{ hint }}
+        </v-col>
+    </v-row>
 </template>
 
 <script lang="ts" setup>
@@ -20,10 +31,12 @@ const props = withDefaults(
         modelValue: any,
         label?: string,
         hint?: string
+        density?: string
     }>(),
     {
         label: 'Todo',
-        hint: ''
+        hint: '',
+        density: 'elevated'
     }
 )
 
