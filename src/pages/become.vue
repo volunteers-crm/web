@@ -2,7 +2,7 @@
     <v-container>
         <h1 class="text-h4 mb-4" v-text="pageTitle" />
 
-        <v-form :disabled="finding || sending">
+        <v-form :disabled="finding || sending" @submit.prevent="findBot">
             <v-card elevation="0">
                 <v-card-text class="mx-0 px-0">
                     <p class="mb-2">
@@ -24,14 +24,16 @@
                         :loading="finding"
                         class="px-10"
                         color="primary"
+                        type="submit"
                         variant="elevated"
-                        @click="findBot"
                     >
                         {{ $t('Find a team') }}
                     </v-btn>
                 </v-card-actions>
             </v-card>
+        </v-form>
 
+        <v-form :disabled="finding || sending" @submit.prevent="sendForm">
             <v-fade-transition>
                 <v-card v-if="hasLoadedBot" elevation="0">
                     <v-card-text class="mx-0 px-0">
@@ -123,8 +125,8 @@
                             :loading="sending"
                             class="px-10"
                             color="primary"
+                            type="submit"
                             variant="elevated"
-                            @click="sendForm"
                         >
                             {{ $t('Sent') }}
                         </v-btn>
