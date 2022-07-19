@@ -91,7 +91,7 @@
                             <v-col cols="12">
                                 <v-select
                                     v-model="form.roles"
-                                    :items="bot.roles"
+                                    :items="botRoles"
                                     :label="$t('Choose the role you are interested in')"
                                     chips
                                     item-title="title"
@@ -148,10 +148,12 @@ import { useMetaStore } from '@/stores/meta'
 
 import { hasValidTelegramUsername } from '@/helpers/validation'
 import { cleanTelegramUsername } from '@/helpers/cleaners'
-import { botsSearch } from '@/_fakes/bots'
+import { botSearch } from '@/_fakes/bots'
 import { useToast } from 'vue-toastification'
+import { useBecomeStore } from '@/stores/become'
 
 const metaStore = useMetaStore()
+const becomeStore = useBecomeStore()
 const toast = useToast()
 
 const pageTitle = computed(() => metaStore.pageTitle)
@@ -171,22 +173,12 @@ const form = ref({
     is_coordinator: false
 })
 
-const initialBot = ref({
-    id: null,
-    username: null,
-    name: null,
-    timezone: null,
-    locale: null,
-    roles: []
-})
-
-const bot = ref({ ...initialBot })
-
-const botName = computed(() => bot.value.name)
+const botName = computed(() => becomeStore.name)
+const botRoles = computed(() => becomeStore.roles)
 
 const hasDisabledBotFind = computed(() => ! hasValidTelegramUsername(form.value.bot))
 
-const hasLoadedBot = computed(() => !! bot.value?.id)
+const hasLoadedBot = computed(() => !! becomeStore.id)
 
 const findBot = () => {
     finding.value = true
@@ -194,11 +186,11 @@ const findBot = () => {
     const username = cleanTelegramUsername(form.value.bot || '')
 
     axios.get(API_BOTS_SEARCH, { params: { username } })
-        .then((response: any) => bot.value = Object.assign(bot.value, response))
+        .then((response: any) => becomeStore.set(response))
         .finally(() => finding.value = false)
 
     // TODO: remove this fake activation
-    bot.value = Object.assign(bot.value, botsSearch)
+    becomeStore.set(botSearch)
 }
 
 const sendForm = () => {
@@ -208,7 +200,7 @@ const sendForm = () => {
         .then((response: any) => {
             toast.success(response)
 
-            Object.assign(bot.value, initialBot.value)
+            becomeStore.reset()
         })
         .finally(() => sending.value = false)
 }

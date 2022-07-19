@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-interface User
+interface UserStore
 {
     id: number | null,
     username: string | null,
@@ -8,42 +8,24 @@ interface User
     avatar: string | null
 }
 
-interface UserStore
-{
-    token: string | null,
-
-    user: User
-}
-
 export const useUserStore = defineStore({
     id: 'user',
 
-    persist: true,
-
     state: (): UserStore => ({
-        token: null,
-
-        user: {
-            id: null,
-            username: null,
-            name: null,
-            avatar: null
-        }
+        id: null,
+        username: null,
+        name: null,
+        avatar: null
     }),
 
     getters: {
-        hasLogged: (state: UserStore): boolean => !! state.token && !! state.user.id
+        hasLogged: (state: UserStore): boolean => !! state.id
     },
 
     actions: {
-        setToken(token: string)
+        set(user: User)
         {
-            this.$state.token = token.trim()
-        },
-
-        setUser(user: User)
-        {
-            this.$state.user = Object.assign(this.user, user)
+            this.$state = Object.assign(this.$state, user)
         },
 
         logout()

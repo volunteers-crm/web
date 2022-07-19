@@ -33,7 +33,7 @@ const props = withDefaults(
     }
 )
 
-const currentUserId = ref(userStore.user.id)
+const currentUserId = ref(userStore.id)
 
 const itsMe = (): boolean => currentUserId.value === props.id
 </script>

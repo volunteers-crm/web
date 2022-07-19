@@ -22,5 +22,5 @@ const userStore = useUserStore()
 
 const title = computed(() => props.allowMe && isMe(props.user.id) ? trans('You') : props.user.name)
 
-const isMe = (id: number) => id === userStore.user.id
+const isMe = (id: number) => id === userStore.id
 </script>

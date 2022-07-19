@@ -45,8 +45,10 @@ import { useRouter } from 'vue-router'
 
 import url from '@/helpers/url'
 import { useUserStore } from '@/stores/user'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const userStore = useUserStore()
 
 const firstName = ref(url.getParam('first_name'))
@@ -61,8 +63,8 @@ onMounted(() => {
             params: url.getParams()
         })
         .then((response: any) => {
-            userStore.setToken(response.data.token)
-            userStore.setUser(response.data.user)
+            authStore.setToken(response.data.token)
+            userStore.set(response.data.user)
 
             router.push({ name: ROUTE_ADMIN_DASHBOARD })
         })

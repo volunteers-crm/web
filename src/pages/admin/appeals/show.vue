@@ -321,7 +321,7 @@ const disallowChannelSelect = computed(() => !! appeal.value?.bot?.channels || f
 
 const formatDate = (date: string) => dateFormatFull(date)
 
-const hasDisabledForm = computed(() => appeal.value?.curator?.id !== userStore.user.id)
+const hasDisabledForm = computed(() => appeal.value?.curator?.id !== userStore.id)
 
 const hasTakeToWork = ref(false)
 

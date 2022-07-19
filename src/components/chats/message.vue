@@ -62,7 +62,7 @@ const sentAt = computed(() => {
 
 const isEdited = computed(() => props.message.created_at !== props.message.updated_at)
 
-const isMe = computed(() => props.message.sender.id === userStore.user.id)
+const isMe = computed(() => props.message.sender.id === userStore.id)
 </script>
 
 <style lang="scss">

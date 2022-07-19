@@ -14,6 +14,7 @@ import { LAYOUT_ADMIN, LAYOUT_DEFAULT } from '@/constants/layouts'
 
 import { user } from '@/_fakes/user'
 import { useUserStore } from '@/stores/user'
+import { useAuthStore } from '@/stores/auth'
 
 const layout = computed(() => {
     const { meta } = useRoute()
@@ -27,7 +28,7 @@ const layout = computed(() => {
 
 // TODO: Push fake user data
 onBeforeMount(() => {
-    useUserStore().setToken('Bearer qwerty12345')
-    useUserStore().setUser(user)
+    useAuthStore().setToken('Bearer qwerty12345')
+    useUserStore().set(user)
 })
 </script>
