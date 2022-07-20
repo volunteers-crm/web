@@ -97,7 +97,42 @@
                                     item-title="title"
                                     item-value="id"
                                     multiple
-                                />
+                                >
+                                    <template v-slot:chip="{ item, props }">
+                                        <v-chip
+                                            :text="item.title"
+                                            closable
+                                            v-bind="props"
+                                        />
+                                    </template>
+
+                                    <template v-slot:item="{ item }">
+                                        <v-list-item
+                                            v-if="item?.title?.header"
+                                        >
+                                            <v-list-item-header class="mt-2">
+                                                <v-list-item-title class="text-h6">
+                                                    {{ item.title.header }}
+
+                                                    <v-divider class="mt-2" />
+                                                </v-list-item-title>
+                                            </v-list-item-header>
+                                        </v-list-item>
+
+                                        <div v-else>
+                                            <v-list-item @click="selectRole(item)">
+                                                <v-checkbox-btn
+                                                    :model-value="hasSelectedRole(item)"
+                                                    color="primary"
+                                                />
+
+                                                <v-list-item-title>
+                                                    {{ item.title }}
+                                                </v-list-item-title>
+                                            </v-list-item>
+                                        </div>
+                                    </template>
+                                </v-select>
                             </v-col>
 
                             <v-col cols="12">
@@ -144,13 +179,15 @@ import { API_BOTS_SEARCH, API_VOLUNTEERS_INDEX } from '@/constants/api_routes'
 
 import axios from 'axios'
 import { computed, ref } from 'vue'
+import { useToast } from 'vue-toastification'
+
+import { useBecomeStore } from '@/stores/become'
 import { useMetaStore } from '@/stores/meta'
 
 import { hasValidTelegramUsername } from '@/helpers/validation'
 import { cleanTelegramUsername } from '@/helpers/cleaners'
+import { collect } from '@/helpers/collection'
 import { botSearch } from '@/_fakes/bots'
-import { useToast } from 'vue-toastification'
-import { useBecomeStore } from '@/stores/become'
 
 const metaStore = useMetaStore()
 const becomeStore = useBecomeStore()
@@ -174,11 +211,10 @@ const form = ref({
 })
 
 const botName = computed(() => becomeStore.name)
-const botRoles = computed(() => becomeStore.roles)
+const botRoles = computed(() => collect(becomeStore.roles).getFromGrouped())
+const hasLoadedBot = computed(() => !! becomeStore.id)
 
 const hasDisabledBotFind = computed(() => ! hasValidTelegramUsername(form.value.bot))
-
-const hasLoadedBot = computed(() => !! becomeStore.id)
 
 const findBot = () => {
     finding.value = true
@@ -203,5 +239,27 @@ const sendForm = () => {
             becomeStore.reset()
         })
         .finally(() => sending.value = false)
+}
+
+const findRoleIndex = (item: object): number => {
+    return form.value.roles.findIndex(id => id === item.value)
+}
+
+const selectRole = (item: object) => {
+    const index = findRoleIndex(item)
+
+    if (index === -1) {
+        form.value.roles.push(item.value)
+    } else {
+        const value = [...form.value.roles]
+
+        value.splice(index, 1)
+
+        form.value.roles = value
+    }
+}
+
+const hasSelectedRole = (item: object): boolean => {
+    return findRoleIndex(item) !== -1
 }
 </script>

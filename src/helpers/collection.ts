@@ -2,21 +2,21 @@ import _ from 'lodash'
 
 export class Collection
 {
-    #items: any
+    private readonly items: any
 
     constructor(items: any)
     {
-        this.#items = items
+        this.items = items
     }
 
     filter(callback: any): Collection
     {
-        return new Collection(_.filter(this.#items, callback))
+        return new Collection(_.filter(this.items, callback))
     }
 
     map(callback: any): Collection
     {
-        return new Collection(_.map(this.#items, callback))
+        return new Collection(_.map(this.items, callback))
     }
 
     pluck(key: string): Collection
@@ -26,12 +26,24 @@ export class Collection
 
     find(callback: any): any
     {
-        return _.find(this.#items, callback)
+        return _.find(this.items, callback)
     }
 
     get(): any
     {
-        return this.#items
+        return this.items
+    }
+
+    getFromGrouped(): any
+    {
+        let list: object[] = []
+
+        _.forEach(this.get(), (items: any, header: any) => {
+            list.push({ header })
+            list.push(...items)
+        })
+
+        return list
     }
 }
 
