@@ -1,31 +1,61 @@
 import { defineStore } from 'pinia'
 
+interface BecomeForm
+{
+    bot: string | null,
+    name: string | null,
+    city: string | null,
+    about: string | null,
+    source: string | null,
+    socials: string[],
+    roles: number[],
+    recommendations: string[],
+    is_coordinator: boolean
+}
+
 interface BecomeStore
 {
-    id: number | null,
-    username: string | null,
-    name: string | null,
-    timezone: string | null,
-    locale: string | null,
-    roles: RoleGroupByCategory[]
+    bot: Bot,
+    form: BecomeForm
 }
 
 export const useBecomeStore = defineStore({
     id: 'become',
 
+    persist: true,
+
     state: (): BecomeStore => ({
-        id: null,
-        username: null,
-        name: null,
-        timezone: null,
-        locale: null,
-        roles: []
+        bot: {
+            id: 0,
+            username: '',
+            name: '',
+            timezone: '',
+            locale: '',
+            channels: [],
+            roles: []
+        },
+
+        form: {
+            bot: null,
+            name: null,
+            city: null,
+            about: null,
+            source: null,
+            socials: [],
+            roles: [],
+            recommendations: [],
+            is_coordinator: false
+        }
     }),
 
+    getters: {
+        hasBot: (state: BecomeStore): boolean => !! state.bot.id
+    },
+
     actions: {
-        set(params: Bot)
+        setBot(params: Bot)
         {
-            this.$state = Object.assign(this.$state, params)
+            this.$state.bot = params
         },
 
         reset()

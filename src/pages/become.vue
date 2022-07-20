@@ -10,7 +10,7 @@
                     </p>
 
                     <v-text-field
-                        v-model="form.bot"
+                        v-model="becomeStore.form.bot"
                         :hint="$t('For example, @VolunteersCrmBot or https://t.me/VolunteersCrmBot.')"
                         :label="$t('Bot Username')"
                         autofocus
@@ -35,12 +35,12 @@
 
         <v-form :disabled="finding || sending" @submit.prevent="sendForm">
             <v-fade-transition>
-                <v-card v-if="hasLoadedBot" elevation="0">
+                <v-card v-if="becomeStore.hasBot" elevation="0">
                     <v-card-text class="mx-0 px-0">
                         <v-row>
                             <v-col cols="12" sm="6">
                                 <v-text-field
-                                    v-model="form.name"
+                                    v-model="becomeStore.form.name"
                                     :label="$t('What is your name?')"
                                     density="comfortable"
                                 />
@@ -48,7 +48,7 @@
 
                             <v-col cols="12" sm="6">
                                 <v-text-field
-                                    v-model="form.city"
+                                    v-model="becomeStore.form.city"
                                     :label="$t('What city do you live in?')"
                                     density="comfortable"
                                 />
@@ -56,7 +56,7 @@
 
                             <v-col cols="12">
                                 <v-todo
-                                    v-model="form.socials"
+                                    v-model="becomeStore.form.socials"
                                     :label="$t('Social Network')"
                                     density="comfortable"
                                 />
@@ -64,7 +64,7 @@
 
                             <v-col cols="12">
                                 <v-textarea
-                                    v-model="form.about"
+                                    v-model="becomeStore.form.about"
                                     :label="$t('Please tell us about yourself! If you have experience volunteering or working in social projects, don\'t forget to mention!')"
                                     rows="3"
                                 />
@@ -72,16 +72,16 @@
 
                             <v-col cols="12">
                                 <v-textarea
-                                    v-model="form.source"
+                                    v-model="becomeStore.form.source"
                                     :hint="$t('We carefully and attentively treat the information we work with, so it is very important for us to understand who the people who come to us are. If there are specific people who referred you, please refer to them.')"
-                                    :label="$t('How did you hear about volunteering for the :name project?', { name: botName })"
+                                    :label="$t('How did you hear about volunteering for the :name project?', { name: becomeStore.bot.name })"
                                     rows="3"
                                 />
                             </v-col>
 
                             <v-col cols="12">
                                 <v-todo
-                                    v-model="form.recommendations"
+                                    v-model="becomeStore.form.recommendations"
                                     :hint="$t('If you can be recommended by one of the current project participants, write here his or her telegram-nickname.')"
                                     :label="$t('Recommendations')"
                                     density="comfortable"
@@ -90,7 +90,7 @@
 
                             <v-col cols="12">
                                 <v-select
-                                    v-model="form.roles"
+                                    v-model="becomeStore.form.roles"
                                     :items="botRoles"
                                     :label="$t('Choose the role you are interested in')"
                                     chips
@@ -137,7 +137,7 @@
 
                             <v-col cols="12">
                                 <v-checkbox
-                                    v-model="form.is_coordinator"
+                                    v-model="becomeStore.form.is_coordinator"
                                     color="primary"
                                 >
                                     <template v-slot:label>
@@ -198,41 +198,27 @@ const pageTitle = computed(() => metaStore.pageTitle)
 const finding = ref(false)
 const sending = ref(false)
 
-const form = ref({
-    bot: null,
-    name: null,
-    city: null,
-    socials: [],
-    about: null,
-    source: null,
-    recommendations: [],
-    roles: [],
-    is_coordinator: false
-})
+const botRoles = computed(() => collect(becomeStore.bot.roles).getFromGrouped())
 
-const botName = computed(() => becomeStore.name)
-const botRoles = computed(() => collect(becomeStore.roles).getFromGrouped())
-const hasLoadedBot = computed(() => !! becomeStore.id)
-
-const hasDisabledBotFind = computed(() => ! hasValidTelegramUsername(form.value.bot))
+const hasDisabledBotFind = computed(() => ! hasValidTelegramUsername(becomeStore.form.bot))
 
 const findBot = () => {
     finding.value = true
 
-    const username = cleanTelegramUsername(form.value.bot || '')
+    const username = cleanTelegramUsername(becomeStore.form.bot || '')
 
     axios.get(API_BOTS_SEARCH, { params: { username } })
-        .then((response: any) => becomeStore.set(response))
+        .then((response: any) => becomeStore.setBot(response))
         .finally(() => finding.value = false)
 
     // TODO: remove this fake activation
-    becomeStore.set(botSearch)
+    becomeStore.setBot(botSearch)
 }
 
 const sendForm = () => {
     sending.value = true
 
-    axios.post(API_VOLUNTEERS_INDEX, form.value)
+    axios.post(API_VOLUNTEERS_INDEX, becomeStore.form)
         .then((response: any) => {
             toast.success(response)
 
@@ -241,21 +227,21 @@ const sendForm = () => {
         .finally(() => sending.value = false)
 }
 
-const findRoleIndex = (item: object): number => {
-    return form.value.roles.findIndex(id => id === item.value)
+const findRoleIndex = (item: any): number => {
+    return becomeStore.form.roles.findIndex(id => id === item.value)
 }
 
-const selectRole = (item: object) => {
+const selectRole = (item: any) => {
     const index = findRoleIndex(item)
 
     if (index === -1) {
-        form.value.roles.push(item.value)
+        becomeStore.form.roles.push(item.value)
     } else {
-        const value = [...form.value.roles]
+        const value = [...becomeStore.form.roles]
 
         value.splice(index, 1)
 
-        form.value.roles = value
+        becomeStore.form.roles = value
     }
 }
 

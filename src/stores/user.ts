@@ -25,7 +25,7 @@ export const useUserStore = defineStore({
     actions: {
         set(user: User)
         {
-            this.$state = Object.assign(this.$state, user)
+            this.$state = user
         },
 
         logout()

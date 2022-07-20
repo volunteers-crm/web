@@ -147,6 +147,7 @@ import { onMounted, ref } from 'vue'
 
 import _ from 'lodash'
 import axios from 'axios'
+import { Channel } from 'diagnostics_channel'
 
 const enabledChannels = ref(channels)
 const availableChannels = ref([])
