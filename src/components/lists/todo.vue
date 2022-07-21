@@ -7,6 +7,7 @@
                 v-model="items[key]"
                 :density="density"
                 :label="$t(`${label} :id`, { id: key + 1 })"
+                :required="hasRequired(key)"
                 hide-details
                 prepend-icon="mdi-format-list-checks"
             />
@@ -31,12 +32,14 @@ const props = withDefaults(
         modelValue: any,
         label?: string,
         hint?: string
-        density?: string
+        density?: string,
+        required?: boolean
     }>(),
     {
         label: 'Todo',
         hint: '',
-        density: 'elevated'
+        density: 'elevated',
+        required: false
     }
 )
 
@@ -50,6 +53,8 @@ const createNewItem = (values: string[]) => {
         items.value.push('')
     }
 }
+
+const hasRequired = (index: number): boolean => props.required && (index + 1) < items.value.length
 
 watch(props.modelValue, (values: string[]) => createNewItem(values))
 

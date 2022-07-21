@@ -16,9 +16,10 @@
 
                     <v-text-field
                         v-model="becomeStore.form.bot"
+                        :disabled="hasDisabledFindBot"
                         :hint="$t('For example, @VolunteersCrmBot or https://t.me/VolunteersCrmBot.')"
                         :label="$t('Bot Username')"
-                        :rules="telegramBotUsernameRule"
+                        :rules="rules.bot"
                         autofocus
                         density="comfortable"
                         required
@@ -27,14 +28,53 @@
 
                 <v-card-actions class="justify-center">
                     <v-btn
-                        :disabled="finding || sending || hasDisabledBotFind"
+                        :color="buttonColor(finding || sending || hasDisabledFindBot)"
+                        :disabled="finding || sending || hasDisabledFindBot"
                         :loading="finding"
                         class="px-10"
-                        color="primary"
                         type="submit"
                         variant="elevated"
                     >
                         {{ $t('Find a team') }}
+                    </v-btn>
+
+                    <v-btn
+                        :color="buttonColor(finding || sending || !becomeStore.form.bot, 'warning')"
+                        :disabled="finding || sending || !becomeStore.form.bot"
+                        class="px-10"
+                        variant="elevated"
+                    >
+                        {{ $t('Find new team') }}
+
+                        <v-dialog
+                            v-model="resetDialog"
+                            activator="parent"
+                        >
+                            <v-card>
+                                <v-card-title>
+                                    {{ $t('Confirmation') }}
+                                </v-card-title>
+
+                                <v-card-text>
+                                    {{ $t('Are you sure you want to delete all the data entered in the form and find a new team?') }}
+                                </v-card-text>
+
+                                <v-card-actions>
+                                    <v-spacer />
+
+                                    <v-btn
+                                        color="red"
+                                        @click="resetForm"
+                                        v-text="$t('Confirm')"
+                                    />
+
+                                    <v-btn
+                                        @click="resetDialog = false"
+                                        v-text="$t('Cancel')"
+                                    />
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -54,7 +94,7 @@
                                 <v-text-field
                                     v-model="becomeStore.form.name"
                                     :label="$t('What is your name?')"
-                                    :rules="nameRule"
+                                    :rules="rules.name"
                                     density="comfortable"
                                     required
                                 />
@@ -64,7 +104,7 @@
                                 <v-text-field
                                     v-model="becomeStore.form.city"
                                     :label="$t('What city do you live in?')"
-                                    :rules="textRequired"
+                                    :rules="rules.city"
                                     density="comfortable"
                                     required
                                 />
@@ -75,7 +115,7 @@
                                     v-model="becomeStore.form.roles"
                                     :items="botRoles"
                                     :label="$t('Choose the role you are interested in')"
-                                    :rules="rolesRule"
+                                    :rules="rules.roles"
                                     chips
                                     item-title="title"
                                     item-value="id"
@@ -149,9 +189,9 @@
                             <v-col cols="12">
                                 <v-textarea
                                     v-model="becomeStore.form.about"
+                                    :counter="maxTextLength"
                                     :label="$t('Please tell us about yourself! If you have experience volunteering or working in social projects, don\'t forget to mention!')"
-                                    :rules="textRequired"
-                                    counter
+                                    :rules="rules.about"
                                     required
                                     rows="3"
                                 />
@@ -160,9 +200,9 @@
                             <v-col cols="12">
                                 <v-textarea
                                     v-model="becomeStore.form.source"
+                                    :counter="maxTextLength"
                                     :hint="$t('We carefully and attentively treat the information we work with, so it is very important for us to understand who the people who come to us are. If there are specific people who referred you, please refer to them.')"
                                     :label="$t('How did you hear about volunteering for the :name project?', { name: becomeStore.bot.name })"
-                                    counter
                                     rows="3"
                                 />
                             </v-col>
@@ -171,7 +211,7 @@
                                 <v-todo
                                     v-model="becomeStore.form.socials"
                                     :label="$t('Social Network')"
-                                    :rules="listRule"
+                                    :rules="rules.socials"
                                     density="comfortable"
                                     required
                                 />
@@ -190,10 +230,10 @@
 
                     <v-card-actions class="justify-center">
                         <v-btn
+                            :color="buttonColor(sending)"
                             :disabled="sending"
                             :loading="sending"
                             class="px-10"
-                            color="primary"
                             type="submit"
                             variant="elevated"
                         >
@@ -220,13 +260,15 @@ import { useToast } from 'vue-toastification'
 import { useBecomeStore } from '@/stores/become'
 import { useMetaStore } from '@/stores/meta'
 
-import { hasValidTelegramUsername } from '@/helpers/validation'
+import { validator } from '@/helpers/validation'
 import { cleanTelegramUsername } from '@/helpers/cleaners'
 import { collect } from '@/helpers/collection'
 import { botSearch } from '@/_fakes/bots'
+import { useSettingsStore } from '@/stores/settings'
 
 const metaStore = useMetaStore()
 const becomeStore = useBecomeStore()
+const settingsStore = useSettingsStore()
 const toast = useToast()
 
 const pageTitle = computed(() => metaStore.pageTitle)
@@ -237,41 +279,58 @@ const sendForm: any = ref(null)
 const finding = ref(false)
 const sending = ref(false)
 
+const resetDialog = ref(false)
+
+const rules = ref({
+    bot: telegramBotUsernameRule,
+    name: nameRule,
+    city: textRequired,
+    roles: rolesRule,
+    about: textRequired,
+    socials: listRule
+})
+
+const maxTextLength = computed(() => settingsStore.text.count)
+
 const botRoles = computed(() => collect(becomeStore.bot.roles).getFromGrouped())
 
-const hasDisabledBotFind = computed(() => ! hasValidTelegramUsername(becomeStore.form.bot))
+const hasDisabledFindBot = computed(() => becomeStore.hasBot)
+
+const buttonColor = (has_disable: boolean, color: string = 'primary') => has_disable ? 'default' : color
 
 const findBot = () => {
-    if (! findForm.value.validate()) {
-        return
-    }
+    validator(findForm, () => {
+        finding.value = true
 
-    finding.value = true
+        const username = cleanTelegramUsername(becomeStore.form.bot || '')
 
-    const username = cleanTelegramUsername(becomeStore.form.bot || '')
+        axios.get(API_BOTS_SEARCH, { params: { username } })
+            .then((response: any) => becomeStore.setBot(response))
+            .finally(() => finding.value = false)
 
-    axios.get(API_BOTS_SEARCH, { params: { username } })
-        .then((response: any) => becomeStore.setBot(response))
-        .finally(() => finding.value = false)
-
-    // TODO: remove this fake activation
-    becomeStore.setBot(botSearch)
+        // TODO: remove this fake activation
+        becomeStore.setBot(botSearch)
+    })
 }
 
 const submit = () => {
-    if (! sendForm.value.validate()) {
-        return
-    }
+    validator(sendForm, () => {
+        sending.value = true
 
-    sending.value = true
+        axios.post(API_VOLUNTEERS_INDEX, becomeStore.form)
+            .then((response: any) => {
+                toast.success(response)
 
-    axios.post(API_VOLUNTEERS_INDEX, becomeStore.form)
-        .then((response: any) => {
-            toast.success(response)
+                becomeStore.reset()
+            })
+            .finally(() => sending.value = false)
+    })
+}
 
-            becomeStore.reset()
-        })
-        .finally(() => sending.value = false)
+const resetForm = () => {
+    becomeStore.reset()
+
+    resetDialog.value = false
 }
 
 const findRoleIndex = (item: any): number => {

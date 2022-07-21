@@ -12,12 +12,7 @@ interface Timeout
     }
 }
 
-interface Storage
-{
-    count: number
-}
-
-interface Roles
+interface Count
 {
     count: number
 }
@@ -28,8 +23,9 @@ interface SettingsStore
 
     menu: Menu,
     timeout: Timeout,
-    storage: Storage,
-    roles: Roles
+    storage: Count,
+    roles: Count,
+    text: Count
 }
 
 export const useSettingsStore = defineStore({
@@ -56,6 +52,10 @@ export const useSettingsStore = defineStore({
 
         roles: {
             count: 50
+        },
+
+        text: {
+            count: 3000
         }
     }),
 

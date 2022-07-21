@@ -2,11 +2,11 @@ import { defineStore } from 'pinia'
 
 interface BecomeForm
 {
-    bot: string | null,
-    name: string | null,
-    city: string | null,
-    about: string | null,
-    source: string | null,
+    bot: string,
+    name: string,
+    city: string,
+    about: string,
+    source: string,
     socials: string[],
     roles: number[],
     recommendations: string[],
@@ -36,11 +36,11 @@ export const useBecomeStore = defineStore({
         },
 
         form: {
-            bot: null,
-            name: null,
-            city: null,
-            about: null,
-            source: null,
+            bot: '',
+            name: '',
+            city: '',
+            about: '',
+            source: '',
             socials: [],
             roles: [],
             recommendations: [],

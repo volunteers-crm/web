@@ -1,11 +1,17 @@
-import { strEndsWith } from '@/helpers/str'
+import { Ref } from 'vue'
 
-export const hasValidTelegramUsername = (username?: string | null): boolean => {
-    username = (username || '').trim()
+export const validator = (form: Ref, callback: CallableFunction) => {
+    form.value.validate()
+        .then((validator: any) => {
+            if (! validator.valid) {
+                throw validator.errors
+            }
 
-    if (! username || username.length < 4) {
-        return false
-    }
+            callback()
+        })
+        .catch((errors: any) => {
+            const id: string = errors[0].id
 
-    return strEndsWith(username, ['_bot', 'Bot'])
+            document.getElementById(id)?.focus()
+        })
 }
