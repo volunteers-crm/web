@@ -26,7 +26,7 @@ export const roles: Role[] = [
     },
     {
         id: 2,
-        title: 'Computer warehouse',
+        title: 'Computer storage',
         is_storage: true,
         category: {
             id: 1,

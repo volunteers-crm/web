@@ -54,12 +54,78 @@
                                 />
                             </v-col>
 
-                            <v-col cols="12">
-                                <v-todo
-                                    v-model="becomeStore.form.socials"
-                                    :label="$t('Social Network')"
-                                    density="comfortable"
-                                />
+                            <v-col cols="12" sm="6">
+                                <v-select
+                                    v-model="becomeStore.form.roles"
+                                    :items="botRoles"
+                                    :label="$t('Choose the role you are interested in')"
+                                    chips
+                                    item-title="title"
+                                    item-value="id"
+                                    multiple
+                                >
+                                    <template v-slot:chip="{ item, props }">
+                                        <v-chip
+                                            :text="item.title"
+                                            closable
+                                            v-bind="props"
+                                        />
+                                    </template>
+
+                                    <template v-slot:item="{ item }">
+                                        <v-list-subheader v-if="item?.title?.header" class="text-subtitle-1">
+                                            {{ item.title.header }}
+                                        </v-list-subheader>
+
+                                        <v-list-item v-else @click="selectRole(item)">
+                                            <template v-slot:default>
+                                                <v-list-item-avatar start>
+                                                    <v-checkbox-btn
+                                                        :model-value="hasSelectedRole(item)"
+                                                        color="primary"
+                                                        hide-details
+                                                    />
+                                                </v-list-item-avatar>
+
+                                                <v-list-item-header>
+                                                    <v-list-item-title>
+                                                        {{ item.title }}
+                                                    </v-list-item-title>
+                                                </v-list-item-header>
+
+                                                <v-list-item-avatar v-if="item.raw.is_storage" end>
+                                                    <v-list-item-icon>
+                                                        mdi-package-variant
+                                                    </v-list-item-icon>
+
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        location="top"
+                                                    >
+                                                        {{ $t('Storage') }}
+                                                    </v-tooltip>
+                                                </v-list-item-avatar>
+                                            </template>
+                                        </v-list-item>
+                                    </template>
+                                </v-select>
+                            </v-col>
+
+                            <v-col cols="12" sm="6">
+                                <v-checkbox
+                                    v-model="becomeStore.form.is_coordinator"
+                                    color="primary"
+                                >
+                                    <template v-slot:label>
+                                        <div>
+                                            <p v-text="$t('I want to coordinate')" />
+                                            <p
+                                                class="text-caption"
+                                                v-text="$t('We always need responsible people who will lead specific people: in this role, you need to delve into the situation, understand what people have needs and connect them with the relevant organizations / volunteers, stay in touch and control what is happening.')"
+                                            />
+                                        </div>
+                                    </template>
+                                </v-checkbox>
                             </v-col>
 
                             <v-col cols="12">
@@ -81,75 +147,19 @@
 
                             <v-col cols="12">
                                 <v-todo
-                                    v-model="becomeStore.form.recommendations"
-                                    :hint="$t('If you can be recommended by one of the current project participants, write here his or her telegram-nickname.')"
-                                    :label="$t('Recommendations')"
+                                    v-model="becomeStore.form.socials"
+                                    :label="$t('Social Network')"
                                     density="comfortable"
                                 />
                             </v-col>
 
                             <v-col cols="12">
-                                <v-select
-                                    v-model="becomeStore.form.roles"
-                                    :items="botRoles"
-                                    :label="$t('Choose the role you are interested in')"
-                                    chips
-                                    item-title="title"
-                                    item-value="id"
-                                    multiple
-                                >
-                                    <template v-slot:chip="{ item, props }">
-                                        <v-chip
-                                            :text="item.title"
-                                            closable
-                                            v-bind="props"
-                                        />
-                                    </template>
-
-                                    <template v-slot:item="{ item }">
-                                        <v-list-item
-                                            v-if="item?.title?.header"
-                                        >
-                                            <v-list-item-header class="mt-2">
-                                                <v-list-item-title class="text-h6">
-                                                    {{ item.title.header }}
-
-                                                    <v-divider class="mt-2" />
-                                                </v-list-item-title>
-                                            </v-list-item-header>
-                                        </v-list-item>
-
-                                        <div v-else>
-                                            <v-list-item @click="selectRole(item)">
-                                                <v-checkbox-btn
-                                                    :model-value="hasSelectedRole(item)"
-                                                    color="primary"
-                                                />
-
-                                                <v-list-item-title>
-                                                    {{ item.title }}
-                                                </v-list-item-title>
-                                            </v-list-item>
-                                        </div>
-                                    </template>
-                                </v-select>
-                            </v-col>
-
-                            <v-col cols="12">
-                                <v-checkbox
-                                    v-model="becomeStore.form.is_coordinator"
-                                    color="primary"
-                                >
-                                    <template v-slot:label>
-                                        <div>
-                                            <p v-text="$t('I want to coordinate')" />
-                                            <p
-                                                class="text-caption"
-                                                v-text="$t('We always need responsible people who will lead specific people: in this role, you need to delve into the situation, understand what people have needs and connect them with the relevant organizations / volunteers, stay in touch and control what is happening.')"
-                                            />
-                                        </div>
-                                    </template>
-                                </v-checkbox>
+                                <v-todo
+                                    v-model="becomeStore.form.recommendations"
+                                    :hint="$t('If you can be recommended by one of the current project participants, write here his or her telegram-nickname.')"
+                                    :label="$t('Recommendations')"
+                                    density="comfortable"
+                                />
                             </v-col>
                         </v-row>
                     </v-card-text>
