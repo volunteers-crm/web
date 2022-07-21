@@ -35,7 +35,7 @@
                                                 <v-text-field
                                                     v-model="form.username"
                                                     :label="$t('Bot Username')"
-                                                    :rules="rules.bot.username"
+                                                    :rules="telegramBotUsernameRule"
                                                     autofocus
                                                     variant="underlined"
                                                 />
@@ -45,7 +45,7 @@
                                                 <v-text-field
                                                     v-model="form.token"
                                                     :label="$t('Bot Token')"
-                                                    :rules="rules.bot.token"
+                                                    :rules="telegramTokenRule"
                                                     variant="underlined"
                                                 />
                                             </v-col>
@@ -83,7 +83,7 @@
                                                     v-model="form.timezone"
                                                     :items="timezonesList"
                                                     :label="$t('Timezone')"
-                                                    :rules="rules.bot.timezone"
+                                                    :rules="timezoneRule"
                                                     class="mb-0 pb-0"
                                                     required
                                                     variant="underlined"
@@ -198,7 +198,7 @@
                                     <v-text-field
                                         v-model="form.token"
                                         :label="$t('Bot Token')"
-                                        :rules="rules.bot.token"
+                                        :rules="telegramTokenRule"
                                         variant="underlined"
                                     />
                                 </v-col>
@@ -330,6 +330,7 @@ import axios from 'axios'
 
 import { timezones } from '@/helpers/date'
 import locales from '@/constants/locales'
+import { telegramBotUsernameRule, telegramTokenRule, timezoneRule } from '@/constants/validation'
 import { bots } from '@/_fakes/bots'
 import { channels } from '@/_fakes/channels'
 
@@ -356,25 +357,6 @@ const form = ref({
     channels: [],
     timezone: '',
     locale: 'en'
-})
-
-const rules = ref({
-    bot: {
-        username: [
-            (v: string) => !! v || trans('This field is required.'),
-            (v: string) => _.endsWith(v, 'Bot') || _.endsWith(v, '_bot') || trans('This must end with one of the following: :values.', { values: 'Bot, _bot' }),
-            (v: string) => /^(@|https:\/\/t.me\/)?[\d\w]+(_bot|Bot)$/.test(v) || trans('This format is invalid.')
-        ],
-
-        token: [
-            (v: string) => /^\d{8,10}:[a-zA-Z\d_-]{35}$/.test(v) || trans('This format is invalid.')
-        ],
-
-        timezone: [
-            (v: any) => !! v || trans('This field is required.'),
-            (v: any) => timezonesList.value.includes(v) || trans('This must be a valid timezone.')
-        ]
-    }
 })
 
 const colSize = computed(() => {

@@ -2,7 +2,12 @@
     <v-container>
         <h1 class="text-h4 mb-4" v-text="pageTitle" />
 
-        <v-form :disabled="finding || sending" @submit.prevent="findBot">
+        <v-form
+            ref="findForm"
+            :disabled="finding || sending"
+            lazy-validation
+            @submit.prevent="findBot"
+        >
             <v-card elevation="0">
                 <v-card-text class="mx-0 px-0">
                     <p class="mb-2">
@@ -13,14 +18,16 @@
                         v-model="becomeStore.form.bot"
                         :hint="$t('For example, @VolunteersCrmBot or https://t.me/VolunteersCrmBot.')"
                         :label="$t('Bot Username')"
+                        :rules="telegramBotUsernameRule"
                         autofocus
                         density="comfortable"
+                        required
                     />
                 </v-card-text>
 
                 <v-card-actions class="justify-center">
                     <v-btn
-                        :disabled="finding || hasDisabledBotFind"
+                        :disabled="finding || sending || hasDisabledBotFind"
                         :loading="finding"
                         class="px-10"
                         color="primary"
@@ -33,7 +40,12 @@
             </v-card>
         </v-form>
 
-        <v-form :disabled="finding || sending" @submit.prevent="sendForm">
+        <v-form
+            ref="sendForm"
+            :disabled="finding || sending"
+            lazy-validation
+            @submit.prevent="submit"
+        >
             <v-fade-transition>
                 <v-card v-if="becomeStore.hasBot" elevation="0">
                     <v-card-text class="mx-0 px-0">
@@ -42,7 +54,9 @@
                                 <v-text-field
                                     v-model="becomeStore.form.name"
                                     :label="$t('What is your name?')"
+                                    :rules="nameRule"
                                     density="comfortable"
+                                    required
                                 />
                             </v-col>
 
@@ -50,7 +64,9 @@
                                 <v-text-field
                                     v-model="becomeStore.form.city"
                                     :label="$t('What city do you live in?')"
+                                    :rules="textRequired"
                                     density="comfortable"
+                                    required
                                 />
                             </v-col>
 
@@ -59,10 +75,12 @@
                                     v-model="becomeStore.form.roles"
                                     :items="botRoles"
                                     :label="$t('Choose the role you are interested in')"
+                                    :rules="rolesRule"
                                     chips
                                     item-title="title"
                                     item-value="id"
                                     multiple
+                                    required
                                 >
                                     <template v-slot:chip="{ item, props }">
                                         <v-chip
@@ -132,6 +150,9 @@
                                 <v-textarea
                                     v-model="becomeStore.form.about"
                                     :label="$t('Please tell us about yourself! If you have experience volunteering or working in social projects, don\'t forget to mention!')"
+                                    :rules="textRequired"
+                                    counter
+                                    required
                                     rows="3"
                                 />
                             </v-col>
@@ -141,6 +162,7 @@
                                     v-model="becomeStore.form.source"
                                     :hint="$t('We carefully and attentively treat the information we work with, so it is very important for us to understand who the people who come to us are. If there are specific people who referred you, please refer to them.')"
                                     :label="$t('How did you hear about volunteering for the :name project?', { name: becomeStore.bot.name })"
+                                    counter
                                     rows="3"
                                 />
                             </v-col>
@@ -149,7 +171,9 @@
                                 <v-todo
                                     v-model="becomeStore.form.socials"
                                     :label="$t('Social Network')"
+                                    :rules="listRule"
                                     density="comfortable"
+                                    required
                                 />
                             </v-col>
 
@@ -187,6 +211,8 @@ import VTodo from '@/components/lists/todo.vue'
 
 import { API_BOTS_SEARCH, API_VOLUNTEERS_INDEX } from '@/constants/api_routes'
 
+import { listRule, nameRule, rolesRule, telegramBotUsernameRule, textRequired } from '@/constants/validation'
+
 import axios from 'axios'
 import { computed, ref } from 'vue'
 import { useToast } from 'vue-toastification'
@@ -205,6 +231,9 @@ const toast = useToast()
 
 const pageTitle = computed(() => metaStore.pageTitle)
 
+const findForm: any = ref(null)
+const sendForm: any = ref(null)
+
 const finding = ref(false)
 const sending = ref(false)
 
@@ -213,6 +242,10 @@ const botRoles = computed(() => collect(becomeStore.bot.roles).getFromGrouped())
 const hasDisabledBotFind = computed(() => ! hasValidTelegramUsername(becomeStore.form.bot))
 
 const findBot = () => {
+    if (! findForm.value.validate()) {
+        return
+    }
+
     finding.value = true
 
     const username = cleanTelegramUsername(becomeStore.form.bot || '')
@@ -225,7 +258,11 @@ const findBot = () => {
     becomeStore.setBot(botSearch)
 }
 
-const sendForm = () => {
+const submit = () => {
+    if (! sendForm.value.validate()) {
+        return
+    }
+
     sending.value = true
 
     axios.post(API_VOLUNTEERS_INDEX, becomeStore.form)
