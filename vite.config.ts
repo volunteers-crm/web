@@ -1,10 +1,9 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 
-import vue from '@vitejs/plugin-vue'
-
-// https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
+import i18n from 'laravel-vue-i18n/dist/vite'
 import vuetify from 'vite-plugin-vuetify'
+import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
     resolve: {
@@ -24,7 +23,8 @@ export default defineConfig({
         vuetify({
             autoImport: true,
             styles: 'sass'
-        })
+        }),
+        i18n()
     ],
     css: {
         preprocessorOptions: {
