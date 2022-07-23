@@ -1,4 +1,4 @@
-import { trans } from 'laravel-vue-i18n'
+import { trans } from '@/utils/lang'
 import _ from 'lodash'
 import { timezones } from '@/helpers/date'
 import { useSettingsStore } from '@/stores/settings'

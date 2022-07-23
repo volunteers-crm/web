@@ -292,7 +292,7 @@ import { useRoute } from 'vue-router'
 import axios from 'axios'
 import _ from 'lodash'
 import { useToast } from 'vue-toastification'
-import { trans } from 'laravel-vue-i18n'
+import { trans } from '@/utils/lang'
 
 const { meta, params } = useRoute()
 

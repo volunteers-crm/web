@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/user'
 import { computed } from 'vue'
-import { trans } from 'laravel-vue-i18n'
+import { trans } from '@/utils/lang'
 
 const props = defineProps<{
     user: User,

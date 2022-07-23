@@ -322,14 +322,14 @@
 import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
 
 import { computed, ref, watch } from 'vue'
-import { trans } from 'laravel-vue-i18n'
+import { trans } from '@/utils/lang'
 import { useToast } from 'vue-toastification'
 
 import _ from 'lodash'
 import axios from 'axios'
 
 import { timezones } from '@/helpers/date'
-import locales from '@/constants/locales'
+import { locales } from '@/constants/locales'
 import { telegramBotUsernameRule, telegramTokenRule, timezoneRule } from '@/constants/validation'
 import { bots } from '@/_fakes/bots'
 import { channels } from '@/_fakes/channels'

@@ -2,7 +2,7 @@ import axios from 'axios'
 import _ from 'lodash'
 
 import { useToast } from 'vue-toastification'
-import { trans } from 'laravel-vue-i18n'
+import { trans } from '@/utils/lang'
 import { createPinia } from 'pinia'
 
 import { useSettingsStore } from '@/stores/settings'

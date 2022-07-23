@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { trans } from 'laravel-vue-i18n'
+import { trans } from '@/utils/lang'
 import _ from 'lodash'
 
 import { APPLICATION_TITLE } from '@/constants/meta'

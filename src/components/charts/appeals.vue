@@ -20,10 +20,9 @@
 <script lang="ts" setup>
 import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
 
-import { ref } from 'vue'
-import { trans } from 'laravel-vue-i18n'
-
 import moment from 'moment'
+import { ref } from 'vue'
+import { trans } from '@/utils/lang'
 
 // TODO: remove fake generator
 const count = 5

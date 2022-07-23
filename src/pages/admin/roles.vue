@@ -247,7 +247,7 @@ import VRoles from '@/components/lists/roles.vue'
 import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
 
 import { computed, ref, watch } from 'vue'
-import { trans } from 'laravel-vue-i18n'
+import { trans } from '@/utils/lang'
 import { useToast } from 'vue-toastification'
 
 import _ from 'lodash'

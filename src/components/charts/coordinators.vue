@@ -21,7 +21,7 @@
 import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
 
 import { ref } from 'vue'
-import { trans } from 'laravel-vue-i18n'
+import { trans } from '@/utils/lang'
 
 // TODO: remove fake generator
 const count = 8
