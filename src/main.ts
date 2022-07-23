@@ -18,7 +18,6 @@ import { initAxios } from '@/utils/axios'
 import OpenLayersMap from '@/utils/maps'
 
 import { telegramLoginTemp } from 'vue3-telegram-login'
-
 import App from '@/app.vue'
 
 loadFonts()

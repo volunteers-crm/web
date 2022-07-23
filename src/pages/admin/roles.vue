@@ -27,78 +27,28 @@
                                 lazy-validation
                             >
                                 <v-card min-width="800px">
-                                    <v-card-title v-text="$t('New bot')" />
+                                    <v-card-title v-text="$t('Add roles')" />
 
                                     <v-card-text>
                                         <v-row>
-                                            <v-col cols="12" sm="4">
-                                                <v-text-field
-                                                    v-model="form.username"
-                                                    :label="$t('Bot Username')"
-                                                    :rules="telegramBotUsernameRule"
-                                                    autofocus
-                                                    variant="underlined"
-                                                />
-                                            </v-col>
-
-                                            <v-col cols="11" sm="7">
-                                                <v-text-field
-                                                    v-model="form.token"
-                                                    :label="$t('Bot Token')"
-                                                    :rules="telegramTokenRule"
-                                                    variant="underlined"
-                                                />
-                                            </v-col>
-
-                                            <v-col cols="1" sm="1">
-                                                <v-btn
-                                                    flat
-                                                    icon="mdi-information"
-                                                    @click="dialogs.registerBot = true"
-                                                />
-                                            </v-col>
-                                        </v-row>
-
-                                        <v-row>
                                             <v-col cols="12">
                                                 <v-select
-                                                    v-model="form.channels"
-                                                    :items="channels"
-                                                    :label="$t('Channels')"
+                                                    v-model="form.data.category"
+                                                    :items="categories"
+                                                    :label="$t('Role categories')"
                                                     chips
                                                     item-title="name"
                                                     item-value="id"
-                                                    multiple
-                                                    variant="underlined"
-                                                />
-
-                                                <p class="hint" v-text="$t('When you select channels, appeals will be published only in them.')" />
-                                                <p class="hint" v-text="$t('Otherwise, coordinators will be asked to select channels for appeals publication.')" />
-                                            </v-col>
-                                        </v-row>
-
-                                        <v-row>
-                                            <v-col cols="12" md="6" sm="12">
-                                                <v-autocomplete
-                                                    v-model="form.timezone"
-                                                    :items="timezonesList"
-                                                    :label="$t('Timezone')"
-                                                    :rules="timezoneRule"
-                                                    class="mb-0 pb-0"
                                                     required
                                                     variant="underlined"
                                                 />
                                             </v-col>
 
-                                            <v-col cols="12" md="6" sm="12">
-                                                <v-select
-                                                    v-model="form.locale"
-                                                    :items="localesList"
-                                                    :label="$t('Localization')"
-                                                    item-title="value"
-                                                    item-value="key"
+                                            <v-col cols="12">
+                                                <v-roles
+                                                    v-model="form.data.roles"
+                                                    :label="$t('Role')"
                                                     required
-                                                    variant="underlined"
                                                 />
                                             </v-col>
                                         </v-row>
@@ -129,57 +79,38 @@
             </v-col>
 
             <v-col
-                v-for="bot in bots"
-                :key="bot.id"
+                v-for="role in roles"
                 :md="colSize"
                 cols="12"
             >
                 <v-hover v-slot="{ isHovering, props }">
                     <v-card
-                        v-if="!cardEdit[bot.id] && !cardDelete[bot.id]"
+                        v-if="!cardEdit[role.id] && !cardDelete[role.id]"
                         :elevation="isHovering ? 4 : 1"
-                        :loading="cardLoading[bot.id]"
+                        :loading="cardLoading[role.id]"
                         class="fill-height d-flex flex-column"
                         v-bind="props"
                     >
-                        <v-card-title v-text="bot.username" />
+                        <v-card-title v-text="role.title" />
 
-                        <v-card-subtitle>
-                            {{ locales[bot.locale] }} |
-                            {{ bot.timezone }}
-                        </v-card-subtitle>
-
-                        <v-card-text v-if="bot.channels">
-                            <p class="pb-4">
-                                {{ $t('Appeals will be automatically published to the following channels:') }}
-                            </p>
-
-                            <p
-                                v-for="channel in bot.channels"
-                                :key="channel.id"
-                            >
-                                - {{ channel.name }}
+                        <v-card-text>
+                            <p v-for="item in role.roles">
+                                - {{ item.title }}
                             </p>
                         </v-card-text>
-
-                        <v-card-text v-else>
-                            <p v-text="$t('Channels for automatic publication of appeals are not selected.')" />
-                            <p v-text="$t('Coordinators will be asked to select channels for appeals publication.')" />
-                        </v-card-text>
-
 
                         <v-card-actions>
                             <v-spacer />
 
                             <v-btn
-                                @click="cardEdit[bot.id] = true"
+                                @click="cardEdit[role.id] = true"
                             >
                                 {{ $t('Edit') }}
                             </v-btn>
 
                             <v-btn
                                 class="text-red-darken-1"
-                                @click="cardDelete[bot.id] = true"
+                                @click="cardDelete[role.id] = true"
                             >
                                 {{ $t('Delete') }}
                             </v-btn>
@@ -187,39 +118,31 @@
                     </v-card>
 
                     <v-card
-                        v-if="cardEdit[bot.id]"
+                        v-if="cardEdit[role.id]"
                         class="card__reveal"
                     >
-                        <v-card-title v-text="bot.username" />
+                        <v-card-title v-text="role.title" />
 
                         <v-card-text>
                             <v-row>
-                                <v-col cols="10">
-                                    <v-text-field
-                                        v-model="form.token"
-                                        :label="$t('Bot Token')"
-                                        :rules="telegramTokenRule"
+                                <v-col cols="12">
+                                    <v-select
+                                        v-model="form.data.category"
+                                        :items="categories"
+                                        :label="$t('Role categories')"
+                                        chips
+                                        item-title="name"
+                                        item-value="id"
+                                        required
                                         variant="underlined"
-                                    />
-                                </v-col>
-
-                                <v-col cols="2">
-                                    <v-btn
-                                        flat
-                                        icon="mdi-information"
-                                        @click="dialogs.registerBot = true"
                                     />
                                 </v-col>
 
                                 <v-col cols="12">
-                                    <v-select
-                                        v-model="form.channels"
-                                        :items="channels"
-                                        :label="$t('Channels')"
-                                        item-title="name"
-                                        item-value="id"
-                                        multiple
-                                        variant="underlined"
+                                    <v-roles
+                                        v-model="form.data.roles"
+                                        :label="$t('Role')"
+                                        required
                                     />
                                 </v-col>
                             </v-row>
@@ -228,18 +151,18 @@
                         <v-card-actions>
                             <v-spacer />
 
-                            <v-btn @click="updateBot(bot.id)">
+                            <v-btn @click="updateBot(role.id)">
                                 {{ $t('Save') }}
                             </v-btn>
 
-                            <v-btn @click="cardEdit[bot.id] = false">
+                            <v-btn @click="cardEdit[role.id] = false">
                                 {{ $t('Cancel') }}
                             </v-btn>
                         </v-card-actions>
                     </v-card>
 
                     <v-card
-                        v-if="cardDelete[bot.id]"
+                        v-if="cardDelete[role.id]"
                         class="card__reveal"
                     >
                         <v-card-title>
@@ -255,14 +178,14 @@
 
                             <v-btn
                                 class="text-green-darken-1"
-                                @click="cardDelete[bot.id] = false"
+                                @click="cardDelete[role.id] = false"
                             >
                                 {{ $t('No') }}
                             </v-btn>
 
                             <v-btn
                                 class="text-red"
-                                @click="deleteBot(bot.id)"
+                                @click="deleteBot(role.id)"
                             >
                                 {{ $t('Yes, delete') }}
                             </v-btn>
@@ -273,7 +196,7 @@
         </v-row>
     </v-container>
 
-    <v-dialog v-model="dialogs.registerBot">
+    <v-dialog v-model="dialogs.createRole">
         <v-card>
             <v-card-title>
                 {{ $t('Bot Information') }}
@@ -310,7 +233,7 @@
                 <v-spacer />
 
                 <v-btn
-                    @click="dialogs.registerBot = false"
+                    @click="dialogs.createRole = false"
                     v-text="$t('Close')"
                 />
             </v-card-actions>
@@ -319,6 +242,8 @@
 </template>
 
 <script lang="ts" setup>
+import VRoles from '@/components/lists/roles.vue'
+
 import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
 
 import { computed, ref, watch } from 'vue'
@@ -327,12 +252,7 @@ import { useToast } from 'vue-toastification'
 
 import _ from 'lodash'
 import axios from 'axios'
-
-import { timezones } from '@/helpers/date'
-import locales from '@/constants/locales'
-import { telegramBotUsernameRule, telegramTokenRule, timezoneRule } from '@/constants/validation'
 import { bots } from '@/_fakes/bots'
-import { channels } from '@/_fakes/channels'
 
 const cardCreate = ref(false)
 const cardEdit = ref({})
@@ -340,8 +260,12 @@ const cardDelete = ref({})
 const cardLoading = ref({})
 
 const dialogs = ref({
-    registerBot: false
+    createRole: false
 })
+
+const categories = ref(() => [])
+
+const roles = ref(() => [])
 
 const form = ref({
     ref: {
@@ -352,11 +276,10 @@ const form = ref({
         add: false
     },
 
-    username: '',
-    token: '',
-    channels: [],
-    timezone: '',
-    locale: 'en'
+    data: {
+        category: null,
+        roles: []
+    }
 })
 
 const colSize = computed(() => {
@@ -370,10 +293,6 @@ const colSize = computed(() => {
 
     return _.get(sizes, size, 3)
 })
-
-const timezonesList = ref(timezones())
-
-const localesList = computed(() => _.map(locales, (value, key) => Object.create({ value, key })))
 
 const toast = useToast()
 
@@ -393,11 +312,8 @@ watch(
 )
 
 const resetForm = () => {
-    form.value.username = ''
-    form.value.token = ''
-    form.value.channels = []
-    form.value.timezone = ''
-    form.value.locale = 'en'
+    form.value.data.category = null
+    form.value.data.roles = []
 }
 
 const addBot = () => {
