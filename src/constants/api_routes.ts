@@ -15,4 +15,6 @@ export const API_BOTS_INDEX = '/bots'
 export const API_BOTS_BOT = '/bots/:id'
 export const API_BOTS_SEARCH = '/bots/search'
 
+export const API_ROLES_INDEX = '/roles'
+
 export const API_VOLUNTEERS_INDEX = '/volunteers'

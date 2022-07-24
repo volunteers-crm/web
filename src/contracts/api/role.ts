@@ -17,3 +17,10 @@ interface RoleGroupByCategory
 {
     [index: string]: Role[]
 }
+
+interface RoleListItem
+{
+    id?: number,
+    title: string,
+    is_storage: boolean
+}

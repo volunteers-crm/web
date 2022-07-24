@@ -36,8 +36,7 @@
                                                     v-model="form.data.category"
                                                     :items="categories"
                                                     :label="$t('Role categories')"
-                                                    chips
-                                                    item-title="name"
+                                                    item-title="title"
                                                     item-value="id"
                                                     required
                                                     variant="underlined"
@@ -47,6 +46,7 @@
                                             <v-col cols="12">
                                                 <v-roles
                                                     v-model="form.data.roles"
+                                                    :can-storage="canStorageRoles"
                                                     :label="$t('Role')"
                                                     required
                                                 />
@@ -60,7 +60,7 @@
                                         <v-btn
                                             :disabled="cardLoading['add'] || !form.validate.add"
                                             :loading="cardLoading['add']"
-                                            @click="addBot"
+                                            @click="addRoles"
                                         >
                                             {{ $t('Add') }}
                                         </v-btn>
@@ -79,38 +79,36 @@
             </v-col>
 
             <v-col
-                v-for="role in roles"
+                v-for="(items, category) in roles"
                 :md="colSize"
                 cols="12"
             >
                 <v-hover v-slot="{ isHovering, props }">
                     <v-card
-                        v-if="!cardEdit[role.id] && !cardDelete[role.id]"
+                        v-if="!cardEdit[category] && !cardDelete[category]"
                         :elevation="isHovering ? 4 : 1"
-                        :loading="cardLoading[role.id]"
+                        :loading="cardLoading[category]"
                         class="fill-height d-flex flex-column"
                         v-bind="props"
                     >
-                        <v-card-title v-text="role.title" />
+                        <v-card-title v-text="category" />
 
                         <v-card-text>
-                            <p v-for="item in role.roles">
-                                - {{ item.title }}
-                            </p>
+                            <v-list :items="mappedRoles(items)" />
                         </v-card-text>
 
                         <v-card-actions>
                             <v-spacer />
 
                             <v-btn
-                                @click="cardEdit[role.id] = true"
+                                @click="cardEdit[category] = true"
                             >
                                 {{ $t('Edit') }}
                             </v-btn>
 
                             <v-btn
                                 class="text-red-darken-1"
-                                @click="cardDelete[role.id] = true"
+                                @click="cardDelete[category] = true"
                             >
                                 {{ $t('Delete') }}
                             </v-btn>
@@ -118,29 +116,17 @@
                     </v-card>
 
                     <v-card
-                        v-if="cardEdit[role.id]"
+                        v-if="cardEdit[category]"
                         class="card__reveal"
                     >
-                        <v-card-title v-text="role.title" />
+                        <v-card-title v-text="category" />
 
                         <v-card-text>
                             <v-row>
                                 <v-col cols="12">
-                                    <v-select
-                                        v-model="form.data.category"
-                                        :items="categories"
-                                        :label="$t('Role categories')"
-                                        chips
-                                        item-title="name"
-                                        item-value="id"
-                                        required
-                                        variant="underlined"
-                                    />
-                                </v-col>
-
-                                <v-col cols="12">
                                     <v-roles
-                                        v-model="form.data.roles"
+                                        v-model="roles[category]"
+                                        :can-storage="canStorageableCategory(category)"
                                         :label="$t('Role')"
                                         required
                                     />
@@ -151,18 +137,18 @@
                         <v-card-actions>
                             <v-spacer />
 
-                            <v-btn @click="updateBot(role.id)">
+                            <v-btn @click="updateRoles(items)">
                                 {{ $t('Save') }}
                             </v-btn>
 
-                            <v-btn @click="cardEdit[role.id] = false">
+                            <v-btn @click="cardEdit[category] = false">
                                 {{ $t('Cancel') }}
                             </v-btn>
                         </v-card-actions>
                     </v-card>
 
                     <v-card
-                        v-if="cardDelete[role.id]"
+                        v-if="cardDelete[category]"
                         class="card__reveal"
                     >
                         <v-card-title>
@@ -178,14 +164,14 @@
 
                             <v-btn
                                 class="text-green-darken-1"
-                                @click="cardDelete[role.id] = false"
+                                @click="cardDelete[category] = false"
                             >
                                 {{ $t('No') }}
                             </v-btn>
 
                             <v-btn
                                 class="text-red"
-                                @click="deleteBot(role.id)"
+                                @click="deleteRoles(items, category)"
                             >
                                 {{ $t('Yes, delete') }}
                             </v-btn>
@@ -195,56 +181,12 @@
             </v-col>
         </v-row>
     </v-container>
-
-    <v-dialog v-model="dialogs.createRole">
-        <v-card>
-            <v-card-title>
-                {{ $t('Bot Information') }}
-            </v-card-title>
-
-            <v-card-text>
-                <v-expansion-panels>
-                    <v-expansion-panel>
-                        <v-expansion-panel-title>
-                            {{ $t('Registering a new bot') }}
-                        </v-expansion-panel-title>
-
-                        <v-expansion-panel-text>
-                            <p class="mb-2" v-html="$t('To register a new bot, you need to go to the messages to the main @BotFather bot.')" />
-                            <p class="mb-2" v-html="$t('Then send him the command /newbot and follow the instructions.')" />
-                            <p class="mb-2" v-html="$t('When finished, @BotFather will provide you with your bot\'s token.')" />
-                        </v-expansion-panel-text>
-                    </v-expansion-panel>
-
-                    <v-expansion-panel>
-                        <v-expansion-panel-title>
-                            {{ $t('Connecting a previously created bot') }}
-                        </v-expansion-panel-title>
-
-                        <v-expansion-panel-text>
-                            <p class="mb-2" v-html="$t('To connect a previously created bot, you need to send the /mybots command to the @BotFather bot.')" />
-                            <p API Token class="mb-2" v-html="$t('Then select the desired bot in the list and click the `API Token` button.')" />
-                        </v-expansion-panel-text>
-                    </v-expansion-panel>
-                </v-expansion-panels>
-            </v-card-text>
-
-            <v-card-actions>
-                <v-spacer />
-
-                <v-btn
-                    @click="dialogs.createRole = false"
-                    v-text="$t('Close')"
-                />
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
 </template>
 
 <script lang="ts" setup>
 import VRoles from '@/components/lists/roles.vue'
 
-import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
+import { API_ROLES_INDEX } from '@/constants/api_routes'
 
 import { computed, ref, watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
@@ -252,20 +194,16 @@ import { useToast } from 'vue-toastification'
 
 import _ from 'lodash'
 import axios from 'axios'
-import { bots } from '@/_fakes/bots'
+import { roleCategories, rolesGroupByCategory } from '@/_fakes/roles'
 
 const cardCreate = ref(false)
 const cardEdit = ref({})
 const cardDelete = ref({})
 const cardLoading = ref({})
 
-const dialogs = ref({
-    createRole: false
-})
+const categories = ref(roleCategories)
 
-const categories = ref(() => [])
-
-const roles = ref(() => [])
+const roles = ref(rolesGroupByCategory)
 
 const form = ref({
     ref: {
@@ -283,7 +221,7 @@ const form = ref({
 })
 
 const colSize = computed(() => {
-    const size = bots.length + 1
+    const size = roles.value.length + 1
 
     const sizes = {
         1: 3,
@@ -295,6 +233,34 @@ const colSize = computed(() => {
 })
 
 const toast = useToast()
+
+const canStorageRoles = computed(() => {
+    const category = _.find(categories.value, (category: RoleCategory) => category.id === form.value.data.category)
+
+    return category?.can_storage
+})
+
+const canStorageableCategory = (title: string) => {
+    const category = _.find(categories.value, (category: RoleCategory) => category.title === title)
+
+    return category?.can_storage
+}
+
+const mappedRoles = (items: Role[]) => {
+    return _.map(items, (item: Role) => {
+        if (item.is_storage) {
+            return {
+                id: item.id,
+                title: item.title,
+                props: {
+                    appendIcon: 'mdi-package-variant'
+                }
+            }
+        }
+
+        return item
+    })
+}
 
 watch(
     () => cardCreate.value,
@@ -316,16 +282,14 @@ const resetForm = () => {
     form.value.data.roles = []
 }
 
-const addBot = () => {
+const addRoles = () => {
     // validate form
 
     _.set(cardLoading.value, 'add', true)
 
-    axios.post(API_BOTS_INDEX, form.value)
+    axios.post(API_ROLES_INDEX, form.value.data)
         .then((response: any) => {
-            bots.push(response.data)
-
-            toast.success(trans('Bot :name has been successfully attached to your account.', {
+            toast.success(trans('Roles have been successfully added to your account.', {
                 name: response.data.name
             }))
 
@@ -334,34 +298,32 @@ const addBot = () => {
         .finally(() => _.set(cardLoading.value, 'add', false))
 }
 
-const updateBot = (id: number) => {
-    _.set(cardLoading.value, id, true)
+const updateRoles = (items: Role[], category: string) => {
+    _.set(cardLoading.value, category, true)
 
-    axios.put(API_BOTS_BOT.replace(':id', String(id)), form.value)
-        .then((response: any) => {
-            bots.push(response.data)
+    axios.put(API_ROLES_INDEX, items)
+        .then(() => {
+            toast.success(trans('Roles updated successfully.'))
 
-            toast.success(trans('Bot :name has been successfully attached to your account.', {
-                name: response.data.name
-            }))
-
-            _.set(cardEdit.value, id, false)
+            _.set(cardEdit.value, category, false)
         })
-        .finally(() => _.set(cardLoading.value, id, false))
+        .finally(() => _.set(cardLoading.value, category, false))
 }
 
-const deleteBot = (id: number) => {
-    _.set(cardLoading.value, id, true)
+const deleteRoles = (items: Role[], category: string) => {
+    _.set(cardLoading.value, category, true)
 
-    axios.delete(API_BOTS_BOT.replace(':id', String(id)))
+    const ids: number[] = _.map(items, (item: Role) => item.id)
+
+    axios.delete(API_ROLES_INDEX, { params: { roles: ids } })
         .then(() => {
-            _.reject(bots, (bot: any) => bot.id === id)
+            _.reject(roles, (val, key) => key === category)
 
-            toast.success(trans('Bot has been successfully removed from your account.'))
+            toast.success(trans('Roles have been removed from your account and unlinked from all bots.'))
 
-            _.set(cardDelete.value, id, false)
+            _.set(cardDelete.value, category, false)
         })
-        .finally(() => _.set(cardLoading.value, id, false))
+        .finally(() => _.set(cardLoading.value, category, false))
 }
 </script>
 
