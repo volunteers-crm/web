@@ -1,16 +1,31 @@
 <template>
     <v-row
-        v-for="(value, key) in items"
+        v-for="(value, index) in items"
     >
-        <v-col cols="12">
+        <v-col :cols="canStorage ? 11 : 12">
             <v-text-field
-                v-model="items[key]"
+                v-model="value.title"
                 :density="density"
-                :label="$t(`${label} :id`, { id: key + 1 })"
-                :required="hasRequired(key)"
+                :label="$t(`${label} :id`, { id: index + 1 })"
+                :required="hasRequired(index)"
                 hide-details
                 prepend-icon="mdi-format-list-checks"
             />
+        </v-col>
+
+        <v-col v-if="canStorage" cols="1">
+            <v-checkbox
+                v-model="value.is_storage"
+                color="primary"
+                hide-details
+            >
+                <v-tooltip
+                    activator="parent"
+                    location="top"
+                >
+                    {{ $t('Is storage') }}
+                </v-tooltip>
+            </v-checkbox>
         </v-col>
     </v-row>
 
@@ -33,13 +48,15 @@ const props = withDefaults(
         label?: string,
         hint?: string
         density?: string,
-        required?: boolean
+        required?: boolean,
+        canStorage?: boolean
     }>(),
     {
         label: 'Todo',
         hint: '',
         density: 'elevated',
-        required: false
+        required: false,
+        canStorage: false
     }
 )
 
@@ -49,14 +66,25 @@ const items = computed({
 })
 
 const createNewItem = (values: string[]) => {
-    if (_.every(values, value => !! value)) {
-        items.value.push('')
+    if (_.every(values, (value: RoleListItem) => !! value.title)) {
+        items.value.push({
+            title: '',
+            is_storage: false
+        })
     }
 }
 
 const hasRequired = (index: number): boolean => props.required && (index + 1) < items.value.length
 
 watch(props.modelValue, (values: string[]) => createNewItem(values))
+
+watch(
+    () => props.canStorage,
+    (value: boolean) => {
+        if (! value) {
+            _.map(items.value, (item: RoleListItem) => item.is_storage = false)
+        }
+    })
 
 onMounted(() => createNewItem(items.value))
 </script>
