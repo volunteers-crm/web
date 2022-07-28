@@ -49,6 +49,7 @@ const props = withDefaults(
         hint?: string
         density?: string,
         required?: boolean,
+        disabled?: boolean,
         canStorage?: boolean
     }>(),
     {
@@ -56,6 +57,7 @@ const props = withDefaults(
         hint: '',
         density: 'elevated',
         required: false,
+        disabled: false,
         canStorage: false
     }
 )
