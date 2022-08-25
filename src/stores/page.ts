@@ -16,6 +16,10 @@ interface PageStore
 export const usePageStore = defineStore({
     id: 'page',
 
+    persist: {
+        storage: sessionStorage
+    },
+
     state: (): PageStore => ({
         items: {}
     }),
