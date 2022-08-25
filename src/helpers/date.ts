@@ -1,15 +1,17 @@
 import dayjs from 'dayjs'
 
-export const dateFormat = (date: string) => dayjs(date).format('LLL')
+const parse = (date: any, timezone?: string) => dayjs(date).tz(timezone)
 
-export const dateFormatRows = (date: string) => dayjs(date).format('YYYY-MM-DD[<br>]HH:mm')
+export const now = (timezone?: string) => parse(null, timezone)
 
-export const dateFormatFull = (date: string) => dayjs(date).format('YYYY-MM-DD, HH:mm')
+export const dateFormat = (date: string, timezone?: string) => parse(date, timezone).format('LLL')
 
-export const dateFormatTime = (date: string) => dayjs(date).format('HH:mm')
+export const dateFormatRows = (date: string, timezone?: string) => parse(date, timezone).format('YYYY-MM-DD[<br>]HH:mm')
 
-export const now = () => dayjs()
+export const dateFormatFull = (date: string, timezone?: string) => parse(date, timezone).format('YYYY-MM-DD, HH:mm')
 
-export const isToday = (date: string) => dayjs(date).startOf('day').isSame(now().startOf('day'))
+export const dateFormatTime = (date: string, timezone?: string) => parse(date, timezone).format('HH:mm')
 
-export const timezones = () => dayjs.tz.names()
+export const isToday = (date: string, timezone?: string) => parse(date, timezone).startOf('day').isSame(now().startOf('day'))
+
+export const timezones = () => [dayjs.tz.guess()]
