@@ -46,6 +46,13 @@
                                     >
                                         {{ $t("Add") }}
                                     </v-btn>
+
+                                    <v-btn
+                                        :disabled="dialogs.add.loading"
+                                        @click="dialogs.add.show = false"
+                                    >
+                                        {{ $t("Cancel") }}
+                                    </v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-form>
