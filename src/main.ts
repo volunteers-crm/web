@@ -10,7 +10,7 @@ import ToastOptions from '@/utils/toast'
 import routes from '@/routes'
 
 import pinia from '@/utils/pinia'
-import i18nOptions from '@/utils/lang'
+import { langOptions } from '@/utils/lang'
 import { loadFonts } from '@/utils/webfontloader'
 import { initAxios } from '@/utils/axios'
 import { initDate } from '@/utils/date'
@@ -19,8 +19,8 @@ import OpenLayersMap from '@/utils/maps'
 import App from '@/app.vue'
 
 loadFonts()
-initAxios(pinia)
-initDate(pinia)
+initAxios()
+initDate()
 
 createApp(App)
     .use(pinia)
@@ -29,6 +29,6 @@ createApp(App)
     .use(OpenLayersMap)
     .use(VueApexCharts)
     .use(Toast, ToastOptions)
-    .use(i18nVue, i18nOptions(pinia))
+    .use(i18nVue, langOptions(pinia))
     .component('TelegramLogin', telegramLoginTemp)
     .mount('#app')
