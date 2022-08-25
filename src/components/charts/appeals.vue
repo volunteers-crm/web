@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            {{ $t('Appeals') }}
+            {{ $t("Appeals") }}
         </v-card-title>
 
         <v-card-text>
@@ -23,7 +23,7 @@ import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
 import { ref } from 'vue'
 import { trans } from 'laravel-vue-i18n'
 
-import moment from 'moment'
+import { now } from "@/helpers/date";
 
 // TODO: remove fake generator
 const count = 5
@@ -47,7 +47,7 @@ const randomDates = () => {
     let values = []
 
     for (let i = count; i > 0; i--) {
-        const date = moment().day(i * -1).format('MMMM, Do')
+        const date = now().subtract(i, 'day').format('MMMM, Do')
 
         values.push(date)
     }
