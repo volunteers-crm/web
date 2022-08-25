@@ -11,7 +11,7 @@
             <v-card elevation="0">
                 <v-card-text class="mx-0 px-0">
                     <p class="mb-2">
-                        {{ $t('Specify a link to the bot you want to become the coordinator of:') }}
+                        {{ $t("Specify a link to the bot you want to become the coordinator of:") }}
                     </p>
 
                     <v-text-field
@@ -35,7 +35,7 @@
                         type="submit"
                         variant="elevated"
                     >
-                        {{ $t('Find a team') }}
+                        {{ $t("Find a team") }}
                     </v-btn>
 
                     <v-btn
@@ -44,7 +44,7 @@
                         class="px-10"
                         variant="elevated"
                     >
-                        {{ $t('Find new team') }}
+                        {{ $t("Find new team") }}
 
                         <v-dialog
                             v-model="resetDialog"
@@ -52,11 +52,11 @@
                         >
                             <v-card>
                                 <v-card-title>
-                                    {{ $t('Confirmation') }}
+                                    {{ $t("Confirmation") }}
                                 </v-card-title>
 
                                 <v-card-text>
-                                    {{ $t('Are you sure you want to delete all the data entered in the form and find a new team?') }}
+                                    {{ $t("Are you sure you want to delete all the data entered in the form and find a new team?") }}
                                 </v-card-text>
 
                                 <v-card-actions>
@@ -136,33 +136,26 @@
                                         </v-list-subheader>
 
                                         <v-list-item v-else @click="selectRole(item)">
-                                            <template v-slot:default>
-                                                <v-list-item-avatar start>
-                                                    <v-checkbox-btn
-                                                        :model-value="hasSelectedRole(item)"
-                                                        color="primary"
-                                                        hide-details
-                                                    />
-                                                </v-list-item-avatar>
+                                            <template v-slot:prepend>
+                                                <v-checkbox-btn
+                                                    :model-value="hasSelectedRole(item)"
+                                                    color="primary"
+                                                    hide-details
+                                                />
+                                            </template>
 
-                                                <v-list-item-header>
-                                                    <v-list-item-title>
-                                                        {{ item.title }}
-                                                    </v-list-item-title>
-                                                </v-list-item-header>
+                                            <v-list-item-title v-text="item.title" />
 
-                                                <v-list-item-avatar v-if="item.raw.is_storage" end>
-                                                    <v-list-item-icon>
-                                                        mdi-package-variant
-                                                    </v-list-item-icon>
+                                            <template v-if="item.raw.is_storage" v-slot:append>
+                                                <v-tooltip location="top">
+                                                    <template v-slot:activator="{ props }">
+                                                        <v-icon v-bind="props">
+                                                            mdi-package-variant
+                                                        </v-icon>
+                                                    </template>
 
-                                                    <v-tooltip
-                                                        activator="parent"
-                                                        location="top"
-                                                    >
-                                                        {{ $t('Storage') }}
-                                                    </v-tooltip>
-                                                </v-list-item-avatar>
+                                                    {{ $t("Storage") }}
+                                                </v-tooltip>
                                             </template>
                                         </v-list-item>
                                     </template>
@@ -237,7 +230,7 @@
                             type="submit"
                             variant="elevated"
                         >
-                            {{ $t('Sent') }}
+                            {{ $t("Sent") }}
                         </v-btn>
                     </v-card-actions>
                 </v-card>

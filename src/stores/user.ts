@@ -11,6 +11,10 @@ interface UserStore
 export const useUserStore = defineStore({
     id: 'user',
 
+    persist: {
+        storage: sessionStorage
+    },
+
     state: (): UserStore => ({
         id: null,
         username: null,

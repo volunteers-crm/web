@@ -28,11 +28,11 @@
                     {{ sentAt }}
 
                     <v-tooltip activator="parent" location="top">
-                        <span>{{ $t('Created At') }}: {{ dateFormat(message.created_at) }}</span>
+                        <span>{{ $t("Created At") }}: {{ dateFormat(message.created_at) }}</span>
 
                         <span v-if="isEdited" class="pr-2">
                             <br>
-                            {{ $t('Updated At') }}: {{ dateFormat(message.updated_at) }}
+                            {{ $t("Updated At") }}: {{ dateFormat(message.updated_at) }}
                         </span>
                     </v-tooltip>
                 </p>
@@ -42,9 +42,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineAsyncComponent } from 'vue'
+import { computed } from 'vue'
+
 import { dateFormat, dateFormatFull, dateFormatTime, isToday } from '@/helpers/date'
 import { useUserStore } from '@/stores/user'
+import { contentType } from '@/helpers/contentType'
 
 const props = defineProps<{
     message: object
@@ -52,7 +54,7 @@ const props = defineProps<{
 
 const userStore = useUserStore()
 
-const template = computed(() => defineAsyncComponent(() => import(`../content-types/${ props.message.type }.vue`)))
+const template = computed(() => contentType(props.message.type))
 
 const sentAt = computed(() => {
     const date = props.message.created_at

@@ -1,13 +1,15 @@
-import moment from 'moment-timezone'
+import dayjs from 'dayjs'
 
-export const dateFormat = (date: string) => moment(date).format('LLL')
+export const dateFormat = (date: string) => dayjs(date).format('LLL')
 
-export const dateFormatRows = (date: string) => moment(date).format('YYYY-MM-DD[<br>]HH:mm')
+export const dateFormatRows = (date: string) => dayjs(date).format('YYYY-MM-DD[<br>]HH:mm')
 
-export const dateFormatFull = (date: string) => moment(date).format('YYYY-MM-DD, HH:mm')
+export const dateFormatFull = (date: string) => dayjs(date).format('YYYY-MM-DD, HH:mm')
 
-export const dateFormatTime = (date: string) => moment(date).format('HH:mm')
+export const dateFormatTime = (date: string) => dayjs(date).format('HH:mm')
 
-export const isToday = (date: string) => moment(date).isSame(new Date(), 'day')
+export const now = () => dayjs()
 
-export const timezones = () => moment.tz.names()
+export const isToday = (date: string) => dayjs(date).startOf('day').isSame(now().startOf('day'))
+
+export const timezones = () => dayjs.tz.names()

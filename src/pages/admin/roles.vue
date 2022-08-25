@@ -3,9 +3,9 @@
         <v-row>
             <v-col cols="12">
                 <v-btn color="primary">
-                    {{ $t('Add roles') }}
+                    {{ $t("Add roles") }}
 
-                    <v-dialog activator="parent" persistent v-model="dialogs.add.show">
+                    <v-dialog v-model="dialogs.add.show" activator="parent" persistent>
                         <v-form
                             :ref="dialogs.add.ref"
                             :disabled="dialogs.add.loading"
@@ -13,7 +13,7 @@
                         >
                             <v-card>
                                 <v-card-title>
-                                    {{ $t('Add role') }}
+                                    {{ $t("Add role") }}
                                 </v-card-title>
 
                                 <v-card-text>
@@ -28,8 +28,8 @@
                                         <v-col cols="12">
                                             <v-roles
                                                 v-model="dialogs.add.form.roles"
-                                                :label="$t('Role')"
                                                 :disabled="dialogs.add.loading"
+                                                :label="$t('Role')"
                                             />
                                         </v-col>
                                     </v-row>
@@ -39,11 +39,11 @@
                                     <v-spacer />
 
                                     <v-btn
+                                        :loading="dialogs.add.loading"
                                         color="primary"
                                         type="submit"
-                                        :loading="dialogs.add.loading"
                                     >
-                                        {{ $t('Add') }}
+                                        {{ $t("Add") }}
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>

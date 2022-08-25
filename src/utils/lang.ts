@@ -1,8 +1,8 @@
 import { Pinia } from 'pinia'
 import { useSettingsStore } from '@/stores/settings'
 
-export default (pinia: Pinia) => {
-    const lang = useSettingsStore(pinia).locale
+export const langOptions = (store: Pinia) => {
+    const lang = useSettingsStore(store).locale
 
     const resolve = (lang: string) => import(`../../lang/${ lang }.json`)
 

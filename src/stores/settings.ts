@@ -31,7 +31,10 @@ interface SettingsStore
 export const useSettingsStore = defineStore({
     id: 'settings',
 
-    persist: true,
+    persist: {
+        storage: localStorage,
+        paths: ['locale', 'menu']
+    },
 
     state: (): SettingsStore => ({
         locale: 'en',
