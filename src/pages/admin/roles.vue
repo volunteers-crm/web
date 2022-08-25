@@ -88,7 +88,51 @@
 
                 <td>
                     edit
-                    delete
+
+                    <v-dialog
+                        v-model="dialogs.delete.show[role.id]"
+                        persistent
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                color="red darken-2"
+                                icon="mdi-delete"
+                                v-bind="props"
+                                variant="text"
+                            />
+                        </template>
+
+                        <v-card>
+                            <v-card-title>
+                                {{ $t("Confirm") }}
+                            </v-card-title>
+
+                            <v-card-text>
+                                <p
+                                    v-html="$t('Are you sure you want to delete <strong>:title</strong> role?', role)"
+                                />
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-spacer />
+
+                                <v-btn
+                                    :disabled="dialogs.delete.loading"
+                                    :loading="dialogs.delete.loading"
+                                    color="red darken-2"
+                                    @click="deleteRole(role.id)"
+                                >
+                                    {{ $t("Agree") }}
+                                </v-btn>
+
+                                <v-btn
+                                    :disabled="dialogs.delete.loading"
+                                    @click="dialogs.delete.show[role.id] = false"
+                                    v-text="$t('Cancel')"
+                                />
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
                 </td>
             </tr>
             </tbody>
@@ -100,12 +144,13 @@
 import VRoleCategory from '@/components/lists/role-category.vue'
 import VRoles from '@/components/lists/roles.vue'
 
-import { API_ROLES_INDEX } from '@/constants/api_routes'
+import { API_ROLES_INDEX, API_ROLES_SHOW } from '@/constants/api_routes'
 
 import { roles } from '@/_fakes/roles'
 
 import { computed, ref } from 'vue'
 import axios from 'axios'
+import _ from 'lodash'
 
 const dialogs = ref({
     add: {
@@ -117,6 +162,11 @@ const dialogs = ref({
             category: null,
             roles: []
         }
+    },
+    delete: {
+        show: [],
+
+        loading: false
     }
 })
 
@@ -134,5 +184,17 @@ const addRoles = () => {
             dialogs.value.add.show = false
         })
         .finally(() => dialogs.value.add.loading = false)
+}
+
+const deleteRole = (id: number) => {
+    dialogs.value.delete.loading = true
+
+    axios.delete(API_ROLES_SHOW.replace(':id', String(id)))
+        .then(() => _.reject(roles, (role: any) => role.id === id))
+        .finally(() => {
+            dialogs.value.delete.loading = false;
+
+            _.reject(dialogs.value.delete.show, (dialogId: number) => dialogId === id)
+        })
 }
 </script>
