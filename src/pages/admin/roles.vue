@@ -28,6 +28,7 @@
                                         <v-col cols="12">
                                             <v-roles
                                                 v-model="dialogs.add.form.roles"
+                                                :can-storage="canStorageRoles"
                                                 :disabled="dialogs.add.loading"
                                                 :label="$t('Role')"
                                             />
@@ -96,7 +97,7 @@ import { API_ROLES_INDEX } from '@/constants/api_routes'
 
 import { roles } from '@/_fakes/roles'
 
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import axios from 'axios'
 
 const dialogs = ref({
@@ -106,16 +107,21 @@ const dialogs = ref({
         loading: false,
 
         form: {
-            category: {},
+            category: null,
             roles: []
         }
     }
 })
 
+const canStorageRoles = computed(() => dialogs.value.add.form.category?.can_storage || false)
+
 const addRoles = () => {
     dialogs.value.add.loading = true
 
-    axios.post(API_ROLES_INDEX, dialogs.value.add.form)
+    axios.post(API_ROLES_INDEX, {
+        category_id: dialogs.value.add.form.category?.id,
+        roles: dialogs.value.add.form.roles.filter(role => !!role?.title)
+    })
         .then((response: any) => {
 
             dialogs.value.add.show = false

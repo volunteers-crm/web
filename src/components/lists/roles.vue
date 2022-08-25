@@ -2,7 +2,7 @@
     <v-row
         v-for="(value, index) in items"
     >
-        <v-col :cols="canStorage ? 11 : 12">
+        <v-col cols="12">
             <v-text-field
                 v-model="value.title"
                 :density="density"
@@ -10,22 +10,22 @@
                 :required="hasRequired(index)"
                 hide-details
                 prepend-icon="mdi-format-list-checks"
-            />
-        </v-col>
-
-        <v-col v-if="canStorage" cols="1">
-            <v-checkbox
-                v-model="value.is_storage"
-                color="primary"
-                hide-details
             >
-                <v-tooltip
-                    activator="parent"
-                    location="top"
-                >
-                    {{ $t('Is storage') }}
-                </v-tooltip>
-            </v-checkbox>
+                <template v-if="canStorage" v-slot:append>
+                    <v-checkbox
+                        v-model="value.is_storage"
+                        color="primary"
+                        hide-details
+                    >
+                        <v-tooltip
+                            activator="parent"
+                            location="top"
+                        >
+                            {{ $t("Is storage") }}
+                        </v-tooltip>
+                    </v-checkbox>
+                </template>
+            </v-text-field>
         </v-col>
     </v-row>
 
@@ -68,7 +68,7 @@ const items = computed({
 })
 
 const createNewItem = (values: string[]) => {
-    if (_.every(values, (value: RoleListItem) => !! value.title)) {
+    if (_.every(values, (value: RoleListItem) => !!value.title)) {
         items.value.push({
             title: '',
             is_storage: false
@@ -83,7 +83,7 @@ watch(props.modelValue, (values: string[]) => createNewItem(values))
 watch(
     () => props.canStorage,
     (value: boolean) => {
-        if (! value) {
+        if (!value) {
             _.map(items.value, (item: RoleListItem) => item.is_storage = false)
         }
     })
