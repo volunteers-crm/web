@@ -1,6 +1,3 @@
-import '@mdi/font/css/materialdesignicons.css'
-import '@/assets/styles/app.scss'
-
 import { createApp } from 'vue'
 import vuetify from '@/utils/vuetify'
 import { i18nVue } from 'laravel-vue-i18n'

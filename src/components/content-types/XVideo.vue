@@ -1,7 +1,5 @@
 <template>
-    <vue3-video-player
-        :src="content.src"
-    />
+   {{ content.src }}
 </template>
 
 <script lang="ts" setup>
