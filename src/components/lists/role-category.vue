@@ -3,11 +3,10 @@
         v-model="item"
         :items="items"
         :label="$t('Role Category')"
-        :variant="variant"
         :required="required"
-        return-object
-        item-value="id"
         item-title="title"
+        item-value="id"
+        return-object
     />
 </template>
 
