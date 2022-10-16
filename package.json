@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vue-tsc --noEmit && vite build",
-        "preview": "vue-tsc --noEmit && vite build && vite preview"
+        "preview": "npm run build && vite preview"
     },
     "dependencies": {
         "@mdi/font": "^7.0.96",
