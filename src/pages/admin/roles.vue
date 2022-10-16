@@ -3,7 +3,7 @@
         <v-row>
             <v-col cols="12">
                 <v-btn color="primary">
-                    {{ $t("Add roles") }}
+                    {{ $t('Add roles') }}
 
                     <v-dialog v-model="dialogs.add.show" activator="parent" persistent>
                         <v-form
@@ -13,7 +13,7 @@
                         >
                             <v-card>
                                 <v-card-title>
-                                    {{ $t("Add role") }}
+                                    {{ $t('Add role') }}
                                 </v-card-title>
 
                                 <v-card-text>
@@ -24,7 +24,9 @@
                                                 required
                                             />
                                         </v-col>
+                                    </v-row>
 
+                                    <v-row class="card__box">
                                         <v-col cols="12">
                                             <v-roles
                                                 v-model="dialogs.add.form.roles"
@@ -44,14 +46,14 @@
                                         color="primary"
                                         type="submit"
                                     >
-                                        {{ $t("Add") }}
+                                        {{ $t('Add') }}
                                     </v-btn>
 
                                     <v-btn
                                         :disabled="dialogs.add.loading"
                                         @click="dialogs.add.show = false"
                                     >
-                                        {{ $t("Cancel") }}
+                                        {{ $t('Cancel') }}
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>
@@ -104,7 +106,7 @@
 
                         <v-card>
                             <v-card-title>
-                                {{ $t("Confirm") }}
+                                {{ $t('Confirm') }}
                             </v-card-title>
 
                             <v-card-text>
@@ -122,7 +124,7 @@
                                     color="red darken-2"
                                     @click="deleteRole(role.id)"
                                 >
-                                    {{ $t("Agree") }}
+                                    {{ $t('Agree') }}
                                 </v-btn>
 
                                 <v-btn
@@ -177,7 +179,7 @@ const addRoles = () => {
 
     axios.post(API_ROLES_INDEX, {
         category_id: dialogs.value.add.form.category?.id,
-        roles: dialogs.value.add.form.roles.filter(role => !!role?.title)
+        roles: dialogs.value.add.form.roles.filter(role => !! role?.title)
     })
         .then((response: any) => {
 
@@ -192,9 +194,16 @@ const deleteRole = (id: number) => {
     axios.delete(API_ROLES_SHOW.replace(':id', String(id)))
         .then(() => _.reject(roles, (role: any) => role.id === id))
         .finally(() => {
-            dialogs.value.delete.loading = false;
+            dialogs.value.delete.loading = false
 
             _.reject(dialogs.value.delete.show, (dialogId: number) => dialogId === id)
         })
 }
 </script>
+
+<style lang="scss" scoped>
+.card__box {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+</style>
