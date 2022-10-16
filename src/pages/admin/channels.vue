@@ -65,8 +65,8 @@
                                                 <v-spacer />
 
                                                 <v-btn
-                                                    :disabled="dialogs.loading"
-                                                    :loading="dialogs.loading"
+                                                    :disabled="dialogs.loading[channel.id]"
+                                                    :loading="dialogs.loading[channel.id]"
                                                     color="red darken-2"
                                                     @click="disableChannel(channel.id)"
                                                 >
@@ -74,7 +74,7 @@
                                                 </v-btn>
 
                                                 <v-btn
-                                                    :disabled="dialogs.loading"
+                                                    :disabled="dialogs.loading[channel.id]"
                                                     @click="dialogs.show[channel.id] = false"
                                                     v-text="$t('Cancel')"
                                                 />
@@ -169,10 +169,13 @@ const disableChannel = (id: number) => {
     _.set(dialogs.value.loading, id, true)
 
     axios.delete(API_CHANNELS_CHANNEL.replace(':id', String(id)))
-        .then(() => _.reject(channels, (channel: any) => channel.id === id))
+        .then(() => {
+            _.reject(channels, (channel: any) => channel.id === id)
+
+            _.set(dialogs.value.show, id, false)
+        })
         .finally(() => {
             _.set(dialogs.value.loading, id, false)
-            _.set(dialogs.value.show, id, false)
         })
 }
 
