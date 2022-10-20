@@ -38,7 +38,7 @@ axios.interceptors.response.use(
                 break
 
             default:
-                toast.error(trans(error?.data?.message || 'Whoops! Something went wrong.'))
+                toast.error(trans(error?.response?.data?.message || error?.data?.message || 'Whoops! Something went wrong.'))
         }
 
         throw error
