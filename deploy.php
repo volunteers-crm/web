@@ -17,8 +17,8 @@ declare(strict_types=1);
 
 namespace Deployer;
 
-require 'recipe/npm.php';
-require 'recipe/telegram.php';
+require 'contrib/npm.php';
+require 'contrib/telegram.php';
 
 // Config
 
