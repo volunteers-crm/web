@@ -23,6 +23,8 @@ jobs:
             -   name: Deploy
                 uses: deployphp/action@v1
                 env:
+                    DEPLOY_IP: ${{ secrets.DEPLOY_IP }}
+                    DEPLOY_HOSTNAME: ${{ secrets.DEPLOY_HOSTNAME }}
                     TELEGRAM_DEPLOY_TOKEN: ${{ secrets.TELEGRAM_DEPLOY_TOKEN }}
                     TELEGRAM_DEPLOY_CHAT_ID: ${{ secrets.TELEGRAM_DEPLOY_CHAT_ID }}
                 with:
