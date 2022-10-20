@@ -1,0 +1,31 @@
+name: deploy
+
+on:
+    release:
+        types:
+            - released
+
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v3
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+
+            -   name: Deploy
+                uses: deployphp/action@v1
+                env:
+                    TELEGRAM_DEPLOY_TOKEN: ${{ secrets.TELEGRAM_DEPLOY_TOKEN }}
+                    TELEGRAM_DEPLOY_CHAT_ID: ${{ secrets.TELEGRAM_DEPLOY_CHAT_ID }}
+                with:
+                    private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+                    known-hosts: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+                    dep: deploy production --revision=${{ github.sha }}
