@@ -22,7 +22,7 @@
             </div>
 
             <div v-if="errorMessage" class="mt-4 align-center">
-                <v-alert class="text-left text-no-wrap" type="error">
+                <v-alert class="text-left" type="error">
                     {{ $t(errorMessage) }}
                 </v-alert>
 
