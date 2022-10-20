@@ -16,7 +16,10 @@ const authStore = useAuthStore(pinia)
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.common['X-Locale'] = settingsStore.locale
-axios.defaults.headers.common['Authorization'] = authStore.token || 'undefined'
+
+if (authStore.token !== undefined) {
+    axios.defaults.headers.common['Authorization'] = authStore.token
+}
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
