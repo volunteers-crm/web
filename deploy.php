@@ -53,7 +53,8 @@ task('deploy', [
 
 task('npm:run:prod', function () {
     cd('{{release_path}}');
-    run('npm run build');
+    //run('npm run build');
+    run('vite build');
 });
 
 before('deploy', 'telegram:notify');
