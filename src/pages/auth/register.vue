@@ -61,8 +61,8 @@ onMounted(() => {
     axios
         .post(API_URL_AUTH, url.getParams())
         .then((response: any) => {
-            authStore.setToken(response.data.token)
-            userStore.set(response.data.user)
+            authStore.setToken(response.token)
+            userStore.set(response.data)
 
             router.push({ name: ROUTE_ADMIN_DASHBOARD })
         })
