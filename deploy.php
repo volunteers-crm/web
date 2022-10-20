@@ -19,6 +19,7 @@ namespace Deployer;
 
 require 'contrib/npm.php';
 require 'contrib/telegram.php';
+require 'recipe/laravel.php';
 
 // Config
 
@@ -27,8 +28,8 @@ set('repository', 'git@github.com:volunteers-crm/web.git');
 
 // Notification
 
-set('telegram_token', $_SERVER['TELEGRAM_DEPLOY_TOKEN']);
-set('telegram_chat_id', $_SERVER['TELEGRAM_DEPLOY_CHAT_ID']);
+set('telegram_token', getenv('TELEGRAM_DEPLOY_TOKEN'));
+set('telegram_chat_id', getenv('TELEGRAM_DEPLOY_CHAT_ID'));
 
 set('telegram_text', 'Deploying `{{branch}}` to *{{target}}*' . PHP_EOL . PHP_EOL . '*Application*: {{application}}');
 set('telegram_success_text', 'Deployed some fresh code to *{{target}}*' . PHP_EOL . PHP_EOL . '*Application*: {{application}}');
@@ -37,9 +38,9 @@ set('telegram_failure_text', 'Something went wrong during deployment to *{{targe
 // Hosts
 
 host('production')
-    ->setHostname($_SERVER['DEPLOY_IP'])
+    ->setHostname(getenv('DEPLOY_IP'))
     ->setRemoteUser('forge')
-    ->setDeployPath('~/domains/' . $_SERVER['DEPLOY_HOSTNAME']);
+    ->setDeployPath('~/domains/' . getenv('DEPLOY_HOSTNAME'));
 
 // Tasks
 
