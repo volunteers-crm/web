@@ -59,9 +59,7 @@ const errorMessage = ref()
 
 onMounted(() => {
     axios
-        .get(API_URL_AUTH, {
-            params: url.getParams()
-        })
+        .post(API_URL_AUTH, url.getParams())
         .then((response: any) => {
             authStore.setToken(response.data.token)
             userStore.set(response.data.user)
@@ -69,7 +67,7 @@ onMounted(() => {
             router.push({ name: ROUTE_ADMIN_DASHBOARD })
         })
         .catch((error: any) => {
-            errorMessage.value = error?.message
+            errorMessage.value = error?.response?.data?.message || error?.message
         })
         .finally(() => loading.value = false)
 })
