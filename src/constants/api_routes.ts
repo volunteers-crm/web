@@ -1,4 +1,6 @@
-export const API_URL_AUTH = '/auth/telegram/confirm'
+export const API_AUTH_CONFIRM = '/auth/telegram/confirm'
+
+export const API_USER = '/user'
 
 export const API_URL_PAGE = '/pages/:slug'
 

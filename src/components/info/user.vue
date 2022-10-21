@@ -18,9 +18,9 @@ const props = defineProps<{
     allowMe?: boolean
 }>()
 
-const userStore = useUserStore()
+const userStore = useUserStore()?.user
 
 const title = computed(() => props.allowMe && isMe(props.user.id) ? trans('You') : props.user.name)
 
-const isMe = (id: number) => id === userStore.id
+const isMe = (id: number) => id === userStore?.id
 </script>

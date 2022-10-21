@@ -24,9 +24,7 @@ router.beforeEach(async (to: any, from: any, next: any) => {
 })
 
 router.beforeResolve((to: any, from: any, next: any) => {
-    const metaStore = useMetaStore()
-
-    metaStore.setPageTitle(to?.meta?.title || APPLICATION_TITLE)
+    useMetaStore().setPageTitle(to?.meta?.title || APPLICATION_TITLE)
 
     next()
 })

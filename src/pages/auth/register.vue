@@ -36,7 +36,7 @@
 import VPage from '@/components/pages/info.vue'
 import TelegramSignInBtn from '@/components/buttons/telegram/sign-in.vue'
 
-import { API_URL_AUTH } from '@/constants/api_routes'
+import { API_AUTH_CONFIRM } from '@/constants/api_routes'
 import { ROUTE_ADMIN_DASHBOARD } from '@/routes/names'
 
 import axios from 'axios'
@@ -45,10 +45,8 @@ import { useRouter } from 'vue-router'
 
 import url from '@/helpers/url'
 import { useUserStore } from '@/stores/user'
-import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
-const authStore = useAuthStore()
 const userStore = useUserStore()
 
 const firstName = ref(url.getParam('first_name'))
@@ -59,10 +57,10 @@ const errorMessage = ref()
 
 onMounted(() => {
     axios
-        .post(API_URL_AUTH, url.getParams())
+        .post(API_AUTH_CONFIRM, url.getParams())
         .then((response: any) => {
-            authStore.setToken(response.token)
-            userStore.set(response.data)
+            userStore.setToken(response.token, url.getParam('hash'))
+            userStore.setUser(response.data)
 
             router.push({ name: ROUTE_ADMIN_DASHBOARD })
         })

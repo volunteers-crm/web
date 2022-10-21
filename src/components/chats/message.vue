@@ -52,7 +52,7 @@ const props = defineProps<{
     message: object
 }>()
 
-const userStore = useUserStore()
+const userStore = useUserStore()?.user
 
 const template = computed(() => contentType(props.message.type))
 
@@ -64,7 +64,7 @@ const sentAt = computed(() => {
 
 const isEdited = computed(() => props.message.created_at !== props.message.updated_at)
 
-const isMe = computed(() => props.message.sender.id === userStore.id)
+const isMe = computed(() => props.message.sender.id === userStore?.id)
 </script>
 
 <style lang="scss">

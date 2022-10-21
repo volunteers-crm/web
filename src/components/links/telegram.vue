@@ -16,7 +16,7 @@ import { useUserStore } from '@/stores/user'
 
 import { ref } from 'vue'
 
-const userStore = useUserStore()
+const userStore = useUserStore()?.user
 
 const props = withDefaults(
     defineProps<{
@@ -33,7 +33,7 @@ const props = withDefaults(
     }
 )
 
-const currentUserId = ref(userStore.id)
+const currentUserId = ref(userStore?.id)
 
 const itsMe = (): boolean => currentUserId.value === props.id
 </script>

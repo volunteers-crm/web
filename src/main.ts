@@ -1,11 +1,11 @@
 import { createApp } from 'vue'
-import vuetify from '@/utils/vuetify'
 import { i18nVue } from 'laravel-vue-i18n'
 import VueApexCharts from 'vue3-apexcharts'
 import { telegramLoginTemp } from 'vue3-telegram-login'
 
 import Toast from 'vue-toastification'
 import ToastOptions from '@/utils/toast'
+import vuetify from '@/utils/vuetify'
 
 import routes from '@/routes'
 

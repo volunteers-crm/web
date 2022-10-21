@@ -1,8 +1,8 @@
 interface User
 {
-    id: number,
+    id: number | null,
     username: string | null,
-    name: string,
-    avatar: string,
-    volunteer?: Volunteer
+    name: string | null,
+    avatar: string | null,
+    volunteer?: Volunteer | null
 }

@@ -2,34 +2,46 @@ import { defineStore } from 'pinia'
 
 interface UserStore
 {
-    id: number | null,
-    username: string | null,
-    name: string | null,
-    avatar: string | null
+    token: string | null,
+    telegramToken: string | null,
+    user: User
 }
 
 export const useUserStore = defineStore({
     id: 'user',
 
     persist: {
-        storage: sessionStorage
+        storage: localStorage,
+        paths: ['token', 'telegramToken']
     },
 
     state: (): UserStore => ({
-        id: null,
-        username: null,
-        name: null,
-        avatar: null
+        token: null,
+        telegramToken: null,
+
+        user: {
+            id: null,
+            username: null,
+            name: null,
+            avatar: null,
+            volunteer: null
+        }
     }),
 
     getters: {
-        hasLogged: (state: UserStore): boolean => !! state.id
+        hasLogged: (state: UserStore): boolean => !! state.user.id
     },
 
     actions: {
-        set(user: User)
+        setUser(user: User)
         {
-            this.$state = user
+            this.$state.user = user
+        },
+
+        setToken(token: string, telegramToken: string)
+        {
+            this.$state.token = token
+            this.$state.telegramToken = telegramToken
         },
 
         logout()
