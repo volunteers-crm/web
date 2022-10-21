@@ -148,11 +148,11 @@ import VRoles from '@/components/lists/roles.vue'
 
 import { API_ROLES_INDEX, API_ROLES_SHOW } from '@/constants/api_routes'
 
-import { roles } from '@/_fakes/roles'
-
-import { computed, ref } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import axios from 'axios'
 import _ from 'lodash'
+
+const roles = ref([])
 
 const dialogs = ref({
     add: {
@@ -169,8 +169,11 @@ const dialogs = ref({
         show: [],
 
         loading: false
-    }
+    },
+    roles: []
 })
+
+onBeforeMount(() => axios.get(API_ROLES_INDEX).then((response: any) => roles.value = response))
 
 const canStorageRoles = computed(() => dialogs.value.add.form.category?.can_storage || false)
 

@@ -29,9 +29,9 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(
-    response => response.data,
+    response => response.data?.data || response.data,
     error => {
-        switch (error?.status) {
+        switch (error?.status || error?.response?.status) {
             case 422:
                 let errors: string[] = []
 
@@ -41,6 +41,9 @@ axios.interceptors.response.use(
 
                 toast.error(errors.join('<br>'))
                 break
+
+            case 401:
+                useUserStore().logout()
 
             default:
                 toast.error(trans(error?.response?.data?.message || error?.data?.message || 'Whoops! Something went wrong.'))

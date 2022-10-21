@@ -19,5 +19,6 @@ export const API_BOTS_SEARCH = '/bots/search'
 
 export const API_ROLES_INDEX = '/roles'
 export const API_ROLES_SHOW = '/roles/:id'
+export const API_ROLES_CATEGORIES = '/roles/categories'
 
 export const API_VOLUNTEERS_INDEX = '/volunteers'
