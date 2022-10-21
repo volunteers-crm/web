@@ -2,7 +2,8 @@ name: deploy
 
 on:
     push:
-        - main
+        types:
+            - main
     release:
         types:
             - released
