@@ -33,10 +33,12 @@ axios.interceptors.response.use(
     error => {
         switch (error?.status || error?.response?.status) {
             case 422:
+                const messages = error?.response?.data?.errors || [error?.response?.data?.message] || []
+
                 let errors: string[] = []
 
-                _.each(error?.data?.data, messages => {
-                    errors.push(messages.join('<br>'))
+                _.each(messages, message => {
+                    errors.push(message.join('<br>'))
                 })
 
                 toast.error(errors.join('<br>'))
