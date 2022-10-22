@@ -29,7 +29,7 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(
-    response => response.data?.data || response.data,
+    response => response.data,
     error => {
         switch (error?.status || error?.response?.status) {
             case 422:

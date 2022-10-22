@@ -37,5 +37,5 @@ const item = computed({
     set: value => emit('update:modelValue', value)
 })
 
-onBeforeMount(() => axios.get(API_ROLES_CATEGORIES).then((response: any) => items.value = response))
+onBeforeMount(() => axios.get(API_ROLES_CATEGORIES).then((response: any) => items.value = response.data))
 </script>

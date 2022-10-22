@@ -59,6 +59,7 @@ onMounted(() => {
     axios
         .post(API_AUTH_CONFIRM, url.getParams())
         .then((response: any) => {
+            console.log('rrrrrrrr', response)
             userStore.setToken(response.token, url.getParam('hash'))
             userStore.setUser(response.data)
 

@@ -173,7 +173,7 @@ const dialogs = ref({
     roles: []
 })
 
-onBeforeMount(() => axios.get(API_ROLES_INDEX).then((response: any) => roles.value = response))
+onBeforeMount(() => axios.get(API_ROLES_INDEX).then((response: any) => roles.value = response.data))
 
 const canStorageRoles = computed(() => dialogs.value.add.form.category?.can_storage || false)
 
