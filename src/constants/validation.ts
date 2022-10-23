@@ -41,5 +41,5 @@ export const listRule = [
 
 export const textRequired = [
     (v: any) => !! v.trim() || trans('This field is required.'),
-    (v: string) => v.trim().length >= 3 || trans('This field must be at least 3 characters.')
+    (v: string) => v.trim().length >= 2 || trans('This field must be at least 2 characters.')
 ]
