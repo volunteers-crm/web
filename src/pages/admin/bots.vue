@@ -154,7 +154,6 @@
 
                         <v-card-text v-else>
                             <p v-text="$t('Channels for automatic publication of appeals are not selected.')" />
-                            <p v-text="$t('Coordinators will be asked to select channels for appeals publication.')" />
                         </v-card-text>
 
 
@@ -190,6 +189,7 @@
                                         :label="$t('Bot Token')"
                                         :rules="telegramTokenRule"
                                         variant="underlined"
+                                        readonly
                                     />
                                 </v-col>
 
