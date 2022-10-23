@@ -15,7 +15,7 @@
                 <v-col cols="12">
                     <component
                         :is="template(item.type)"
-                        :content="item"
+                        :content="item.content"
                     />
                 </v-col>
             </v-row>
@@ -28,10 +28,10 @@ import VLoaderPage from '@/components/pages/loader.vue'
 
 import { ref } from 'vue'
 
-import { contentType } from "@/helpers/contentType";
+import { contentType } from '@/helpers/contentType'
 
 defineProps<{
-    title: string,
+    title?: string,
     url: string,
     params?: object,
     fake?: Page

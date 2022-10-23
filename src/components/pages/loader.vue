@@ -101,7 +101,7 @@ onBeforeMount(async () => {
         .get(requestUrl.value)
         .then(response => content.value = response?.data)
         .catch(error => {
-            errorMessage.value = error?.response?.data || error?.message
+            errorMessage.value = error?.response?.data?.message || error?.message
 
             isError.value = true
         })
