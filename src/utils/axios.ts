@@ -29,7 +29,23 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(
-    response => response.data,
+    response => {
+        switch (response?.config?.method) {
+            case 'post':
+                toast.success(trans('Successfully created.'))
+                break
+
+            case 'put':
+                toast.success(trans('Successfully updated.'))
+                break
+
+            case 'delete':
+                toast.success(trans('Successfully deleted.'))
+                break
+        }
+
+        return response.data
+    },
     error => {
         switch (error?.status || error?.response?.status) {
             case 422:
