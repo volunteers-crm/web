@@ -1,4 +1,4 @@
-import { rolesGroupByCategory } from '@/_fakes/roles'
+import { roles } from '@/_fakes/roles'
 
 export const bots: Bot[] = [
     {
@@ -30,5 +30,5 @@ export const botSearch: Bot = {
     name: 'Example 1 Bot',
     timezone: 'UTC',
     locale: 'en',
-    roles: rolesGroupByCategory
+    roles
 }

@@ -1,18 +1,3 @@
-import _ from 'lodash'
-
-export const roleCategories: RoleCategory[] = [
-    {
-        id: 1,
-        title: 'IT',
-        can_storage: true
-    },
-    {
-        id: 2,
-        title: 'Veterinary',
-        can_storage: false
-    }
-]
-
 export const roles: Role[] = [
     {
         id: 1,
@@ -45,5 +30,3 @@ export const roles: Role[] = [
         }
     }
 ]
-
-export const rolesGroupByCategory: RoleGroupByCategory = _.groupBy(roles, (role: Role) => role.category.title)
