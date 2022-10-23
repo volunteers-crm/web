@@ -31,17 +31,7 @@
 
                                     <v-card-text>
                                         <v-row>
-                                            <v-col cols="12" sm="4">
-                                                <v-text-field
-                                                    v-model="form.username"
-                                                    :label="$t('Bot Username')"
-                                                    :rules="telegramBotUsernameRule"
-                                                    autofocus
-                                                    variant="underlined"
-                                                />
-                                            </v-col>
-
-                                            <v-col cols="11" sm="7">
+                                            <v-col cols="11">
                                                 <v-text-field
                                                     v-model="form.token"
                                                     :label="$t('Bot Token')"
@@ -50,7 +40,7 @@
                                                 />
                                             </v-col>
 
-                                            <v-col cols="1" sm="1">
+                                            <v-col cols="1">
                                                 <v-btn
                                                     flat
                                                     icon="mdi-information"
@@ -330,7 +320,7 @@ import axios from 'axios'
 
 import { timezones } from '@/helpers/date'
 import locales from '@/constants/locales'
-import { telegramBotUsernameRule, telegramTokenRule, timezoneRule } from '@/constants/validation'
+import { telegramTokenRule, timezoneRule } from '@/constants/validation'
 import { channels } from '@/_fakes/channels'
 
 const cardCreate = ref(false)
@@ -353,7 +343,6 @@ const form = ref({
         add: false
     },
 
-    username: '',
     token: '',
     channels: [],
     timezone: '',
@@ -394,7 +383,6 @@ watch(
 )
 
 const resetForm = () => {
-    form.value.username = ''
     form.value.token = ''
     form.value.channels = []
     form.value.timezone = ''
@@ -415,11 +403,12 @@ const addBot = () => {
         .then((response: any) => {
             bots.value.push(response.data)
 
+            cardCreate.value = false
+
             toast.success(trans('Bot :name has been successfully attached to your account.', {
                 name: response.data.name
             }))
 
-            cardCreate.value = false
         })
         .finally(() => _.set(cardLoading.value, 'add', false))
 }
