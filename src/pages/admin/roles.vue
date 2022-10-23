@@ -163,6 +163,7 @@
                 </td>
                 <td>
                     <v-btn
+                        color="primary"
                         @click="addRole"
                     >
                         {{ $t('Create') }}
