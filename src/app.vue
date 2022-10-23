@@ -12,7 +12,7 @@ import { useRoute } from 'vue-router'
 import axios from 'axios'
 
 import { LAYOUT_ADMIN, LAYOUT_DEFAULT } from '@/constants/layouts'
-import { API_USER } from '@/constants/api_routes'
+import { API_AUTH_ME } from '@/constants/api_routes'
 
 import { useUserStore } from '@/stores/user'
 
@@ -31,7 +31,7 @@ onBeforeMount(() => {
 
     if (! userStore.hasLogged && !! userStore.token) {
         axios
-            .get(API_USER)
+            .get(API_AUTH_ME)
             .then(response => userStore.setUser(response.data))
     }
 })

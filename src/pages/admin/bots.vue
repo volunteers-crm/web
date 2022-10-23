@@ -321,7 +321,7 @@
 <script lang="ts" setup>
 import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
 
-import { computed, ref, watch } from 'vue'
+import { computed, onBeforeMount, ref, watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
 import { useToast } from 'vue-toastification'
 
@@ -331,7 +331,6 @@ import axios from 'axios'
 import { timezones } from '@/helpers/date'
 import locales from '@/constants/locales'
 import { telegramBotUsernameRule, telegramTokenRule, timezoneRule } from '@/constants/validation'
-import { bots } from '@/_fakes/bots'
 import { channels } from '@/_fakes/channels'
 
 const cardCreate = ref(false)
@@ -342,6 +341,8 @@ const cardLoading = ref({})
 const dialogs = ref({
     registerBot: false
 })
+
+const bots = ref([])
 
 const form = ref({
     ref: {
@@ -360,7 +361,7 @@ const form = ref({
 })
 
 const colSize = computed(() => {
-    const size = bots.length + 1
+    const size = bots.value.length + 1
 
     const sizes = {
         1: 3,
@@ -400,6 +401,11 @@ const resetForm = () => {
     form.value.locale = 'en'
 }
 
+onBeforeMount(() => {
+    axios.get(API_BOTS_INDEX)
+        .then((response: any) => bots.value = response.data)
+})
+
 const addBot = () => {
     // validate form
 
@@ -407,7 +413,7 @@ const addBot = () => {
 
     axios.post(API_BOTS_INDEX, form.value)
         .then((response: any) => {
-            bots.push(response.data)
+            bots.value.push(response.data)
 
             toast.success(trans('Bot :name has been successfully attached to your account.', {
                 name: response.data.name
@@ -423,7 +429,7 @@ const updateBot = (id: number) => {
 
     axios.put(API_BOTS_BOT.replace(':id', String(id)), form.value)
         .then((response: any) => {
-            bots.push(response.data)
+            bots.value.push(response.data)
 
             toast.success(trans('Bot :name has been successfully attached to your account.', {
                 name: response.data.name
@@ -459,12 +465,6 @@ const deleteBot = (id: number) => {
             color: #9E9E9E !important;
             font-size: calc(var(--v-icon-size-multiplier) * 5em);
         }
-    }
-}
-
-.card {
-    &__reveal {
-
     }
 }
 

@@ -1,5 +1,5 @@
 import { ROUTE_SIGN_IN } from '@/routes/names'
-import { API_USER } from '@/constants/api_routes'
+import { API_AUTH_ME } from '@/constants/api_routes'
 
 import { useUserStore } from '@/stores/user'
 
@@ -14,7 +14,7 @@ const auth = async (to: any, from: any, next: any) => {
 
     if (userStore.token) {
         return await axios
-            .get(API_USER)
+            .get(API_AUTH_ME)
             .then(response => {
                 userStore.setUser(response.data)
 

@@ -60,6 +60,10 @@ axios.interceptors.response.use(
                 toast.error(errors.join('<br>'))
                 break
 
+            case 404:
+                toast.error(trans('Not Found'))
+                break
+
             case 401:
                 useUserStore().logout()
 
