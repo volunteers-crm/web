@@ -10,7 +10,7 @@ export const API_APPEALS_PUBLISH = '/appeals/:id/publish'
 
 export const API_CHANNELS_INDEX = '/channels'
 export const API_CHANNELS_CHANNEL = '/channels/:id'
-export const API_CHANNELS_AVAILABLE = '/channels/available'
+export const API_CHANNELS_COMMAND = '/channels/command'
 
 export const API_BOTS_INDEX = '/bots'
 export const API_BOTS_BOT = '/bots/:id'

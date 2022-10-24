@@ -61,9 +61,6 @@
                                                     multiple
                                                     variant="underlined"
                                                 />
-
-                                                <p class="hint" v-text="$t('When you select channels, appeals will be published only in them.')" />
-                                                <p class="hint" v-text="$t('Otherwise, coordinators will be asked to select channels for appeals publication.')" />
                                             </v-col>
                                         </v-row>
 
@@ -309,7 +306,7 @@
 </template>
 
 <script lang="ts" setup>
-import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
+import { API_BOTS_BOT, API_BOTS_INDEX, API_CHANNELS_INDEX } from '@/constants/api_routes'
 
 import { computed, onBeforeMount, ref, watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
@@ -321,9 +318,8 @@ import axios from 'axios'
 import { timezones } from '@/helpers/date'
 import locales from '@/constants/locales'
 import { telegramTokenRule, timezoneRule } from '@/constants/validation'
-import { channels } from '@/_fakes/channels'
 
-const cardCreate = ref(false)
+const cardCreate = ref(true)
 const cardEdit = ref({})
 const cardDelete = ref({})
 const cardLoading = ref({})
@@ -333,6 +329,8 @@ const dialogs = ref({
 })
 
 const bots = ref([])
+
+const channels = ref([])
 
 const form = ref({
     ref: {
@@ -392,6 +390,9 @@ const resetForm = () => {
 onBeforeMount(() => {
     axios.get(API_BOTS_INDEX)
         .then((response: any) => bots.value = response.data)
+
+    axios.get(API_CHANNELS_INDEX)
+        .then((response: any) => channels.value = response.data)
 })
 
 const addBot = () => {
