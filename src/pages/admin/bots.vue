@@ -50,21 +50,6 @@
                                         </v-row>
 
                                         <v-row>
-                                            <v-col cols="12">
-                                                <v-select
-                                                    v-model="form.channels"
-                                                    :items="channels"
-                                                    :label="$t('Channels')"
-                                                    chips
-                                                    item-title="name"
-                                                    item-value="id"
-                                                    multiple
-                                                    variant="underlined"
-                                                />
-                                            </v-col>
-                                        </v-row>
-
-                                        <v-row>
                                             <v-col cols="12" md="6" sm="12">
                                                 <v-autocomplete
                                                     v-model="form.timezone"
@@ -129,16 +114,16 @@
                         class="fill-height d-flex flex-column"
                         v-bind="props"
                     >
-                        <v-card-title v-text="bot.username" />
+                        <v-card-title v-text="bot.name" />
 
                         <v-card-subtitle>
                             {{ locales[bot.locale] }} |
                             {{ bot.timezone }}
                         </v-card-subtitle>
 
-                        <v-card-text v-if="bot.channels">
+                        <v-card-text v-if="bot?.channels?.length">
                             <p class="pb-4">
-                                {{ $t('Appeals will be automatically published to the following channels:') }}
+                                {{ $t('Appeals will be published to the following channels:') }}
                             </p>
 
                             <p
@@ -150,7 +135,7 @@
                         </v-card-text>
 
                         <v-card-text v-else>
-                            <p v-text="$t('Channels for automatic publication of appeals are not selected.')" />
+                            <p v-text="$t('The bot is not tied to any channel.')" />
                         </v-card-text>
 
 
@@ -306,7 +291,7 @@
 </template>
 
 <script lang="ts" setup>
-import { API_BOTS_BOT, API_BOTS_INDEX, API_CHANNELS_INDEX } from '@/constants/api_routes'
+import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
 
 import { computed, onBeforeMount, ref, watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
@@ -319,7 +304,7 @@ import { timezones } from '@/helpers/date'
 import locales from '@/constants/locales'
 import { telegramTokenRule, timezoneRule } from '@/constants/validation'
 
-const cardCreate = ref(true)
+const cardCreate = ref(false)
 const cardEdit = ref({})
 const cardDelete = ref({})
 const cardLoading = ref({})
@@ -329,8 +314,6 @@ const dialogs = ref({
 })
 
 const bots = ref([])
-
-const channels = ref([])
 
 const form = ref({
     ref: {
@@ -342,7 +325,6 @@ const form = ref({
     },
 
     token: '',
-    channels: [],
     timezone: '',
     locale: 'en'
 })
@@ -382,7 +364,6 @@ watch(
 
 const resetForm = () => {
     form.value.token = ''
-    form.value.channels = []
     form.value.timezone = ''
     form.value.locale = 'en'
 }
@@ -390,9 +371,6 @@ const resetForm = () => {
 onBeforeMount(() => {
     axios.get(API_BOTS_INDEX)
         .then((response: any) => bots.value = response.data)
-
-    axios.get(API_CHANNELS_INDEX)
-        .then((response: any) => channels.value = response.data)
 })
 
 const addBot = () => {
