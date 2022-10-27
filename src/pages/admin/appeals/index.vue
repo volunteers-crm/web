@@ -25,7 +25,7 @@
                 <v-telegram-link
                     :id="item.bot.id"
                     :name="item.bot.name"
-                    :username="item.bot.username"
+                    :username="item.bot.name"
                     text
                 />
             </td>
@@ -70,22 +70,29 @@ import VTelegramLink from '@/components/links/telegram.vue'
 import VStatusBtn from '@/components/buttons/status.vue'
 
 import { ROUTE_ADMIN_APPEALS_SHOW } from '@/routes/names'
+import { API_APPEALS_INDEX } from '@/constants/api_routes'
 
 import { dateFormatRows } from '@/helpers/date'
-import { appeals } from '@/_fakes/appeals'
 
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
+import axios from 'axios'
 
 const router = useRouter()
 
-const items = ref(appeals)
+const items = ref([])
 
 const dateFormat = (date: string) => dateFormatRows(date)
 
 const goTo = (id: number) => router.push({
     name: ROUTE_ADMIN_APPEALS_SHOW,
     params: { id }
+})
+
+onBeforeMount(() => {
+    axios
+        .get(API_APPEALS_INDEX)
+        .then((response: any) => items.value = response.data)
 })
 </script>
 

@@ -1,4 +1,4 @@
-export const STATUS_NEW = 'new'
-export const STATUS_IN_PROGRESS = 'in_progress'
-export const STATUS_CANCELLED = 'cancelled'
-export const STATUS_DONE = 'done'
+export const STATUS_NEW = 0
+export const STATUS_IN_PROGRESS = 1
+export const STATUS_DONE = 2
+export const STATUS_CANCELLED = 3

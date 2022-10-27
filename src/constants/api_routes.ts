@@ -3,6 +3,7 @@ export const API_AUTH_ME = '/auth/me'
 
 export const API_URL_PAGE = '/pages/:slug'
 
+export const API_APPEALS_INDEX = '/appeals'
 export const API_APPEALS_SHOW = '/appeals/:id'
 export const API_APPEALS_START_WORK = '/appeals/:id/work'
 export const API_APPEALS_MESSAGE = '/appeals/:id/message'
