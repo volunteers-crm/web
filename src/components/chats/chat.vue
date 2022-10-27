@@ -2,7 +2,7 @@
     <div class="chat fill-height d-flex flex-column">
         <div class="chat__messages pa-5 overflow-y-auto">
             <v-message
-                v-for="message in messages()"
+                v-for="message in messages"
                 :message="message"
             />
         </div>
@@ -41,10 +41,9 @@
 import VMessage from '@/components/chats/message.vue'
 
 import { STATUS_CANCELLED, STATUS_DONE } from '@/constants/statuses'
-import { API_APPEALS_MESSAGE } from '@/constants/api_routes'
+import { API_APPEALS_MESSAGES } from '@/constants/api_routes'
 
-import { computed, ref } from 'vue'
-import { findMessages } from '@/_fakes/chat'
+import { computed, onMounted, ref } from 'vue'
 import axios from 'axios'
 
 const props = defineProps<{
@@ -56,7 +55,7 @@ const message = ref('')
 
 const hasSendingMessage = ref(false)
 
-const messages = ref(() => findMessages(props.appealId))
+const messages = ref([])
 
 const isClosed = computed(() => [STATUS_DONE, STATUS_CANCELLED].includes(props.status))
 
@@ -67,14 +66,18 @@ const sendMessage = () => {
 
     hasSendingMessage.value = true
 
-    axios.post(API_APPEALS_MESSAGE, { message })
-        .then(response => {
+    axios.post(API_APPEALS_MESSAGES.replace(':id', String(props.appealId)), { message: message.value })
+        .then((response: any) => {
             messages.value.push(response?.data)
-
             message.value = ''
         })
         .finally(() => hasSendingMessage.value = false)
 }
+
+onMounted(() => {
+    axios.get(API_APPEALS_MESSAGES.replace(':id', String(props.appealId)))
+        .then((response: any) => messages.value = response.data)
+})
 </script>
 
 <style lang="scss" scoped>

@@ -51,7 +51,7 @@
                     </v-card>
 
                     <v-card v-else class="scrollable" elevation="0">
-                        <v-form :disabled="hasDisabledForm || publishing">
+                        <v-form :disabled="hasDisabledForm(props)">
                             <v-card-text>
                                 <v-row>
                                     <v-col cols="12">
@@ -107,8 +107,7 @@
                                     <v-col cols="12">
                                         <v-select
                                             v-model="form.channels"
-                                            :disabled="disallowChannelSelect"
-                                            :items="channelsList"
+                                            :items="props.bot?.channels"
                                             :label="$t('Channels')"
                                             hide-details
                                             item-title="name"
@@ -120,7 +119,7 @@
                                 </v-row>
                             </v-card-text>
 
-                            <v-card-actions v-if="!hasDisabledForm">
+                            <v-card-actions v-if="!hasDisabledForm(props)">
                                 <v-spacer />
 
                                 <v-btn
@@ -134,15 +133,15 @@
                             </v-card-actions>
                         </v-form>
 
-                        <v-dialog v-model="preview">
+                        <v-dialog v-model="preview" persistent>
                             <v-card>
                                 <v-card-text>
                                     <p class="font-weight-bold mb-4">
-                                        #{{ $t('Appeal #:id', { id: appeal.id }) }}
+                                        {{ $t('Appeal #:id', { id: props.id }) }}
                                     </p>
 
                                     <p v-if="form.date" class="mb-4">
-                                        📅 {{ formatDate(form.date) }}
+                                        📅 {{ formatDate(form.date) }}, {{ props.bot.timezone }}
                                     </p>
 
                                     <p v-if="form.address" class="mb-4">
@@ -168,7 +167,7 @@
                                     </p>
 
                                     <p>
-                                        👤 @{{ appeal.curator.username }}
+                                        👤 @{{ props.curator.username }}
                                     </p>
                                 </v-card-text>
 
@@ -242,8 +241,8 @@
                         </v-card-title>
 
                         <v-card-text>
-                            <p v-text="props.bot.name" />
-                            <p class="text-grey" v-text="`@${props.bot.username}`" />
+                            <p v-text="props.bot.title" />
+                            <p class="text-grey" v-text="`@${props.bot.name}`" />
                         </v-card-text>
                     </v-card>
 
@@ -284,8 +283,6 @@ import { API_APPEALS_PUBLISH, API_APPEALS_SHOW, API_APPEALS_START_WORK } from '@
 
 import { useUserStore } from '@/stores/user'
 import { dateFormatFull } from '@/helpers/date'
-import { findAppeal } from '@/_fakes/appeals'
-import { channels } from '@/_fakes/channels'
 
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -299,37 +296,33 @@ const { meta, params } = useRoute()
 const userStore = useUserStore()
 const toast = useToast()
 
-const url = ref(API_APPEALS_SHOW)
+const url = ref(API_APPEALS_SHOW.replace(':id', params.id))
 
-const appeal = computed(() => findAppeal(Number(params.id)))
+const appeal = ref(null)
 
 const form = ref({
     address: null,
     date: null,
-    persons: null,
+    persons: 0,
     todo: [''],
     comment: null,
-    channels: appeal.value?.bot?.channels || []
+    channels: []
 })
 
 const preview = ref(false)
 const publishing = ref(false)
 
-const channelsList = computed(() => channels)
-
-const disallowChannelSelect = computed(() => !! appeal.value?.bot?.channels || false)
-
 const formatDate = (date: string) => dateFormatFull(date)
 
-const hasDisabledForm = computed(() => appeal.value?.curator?.id !== userStore?.user?.id)
+const hasDisabledForm = (data: any) => data?.curator?.id !== userStore?.user?.id || !! publishing.value
 
 const hasTakeToWork = ref(false)
 
 const takeToWork = () => {
     hasTakeToWork.value = true
 
-    axios.post(API_APPEALS_START_WORK)
-        .then(response => console.log('success started!'))
+    axios.post(API_APPEALS_START_WORK.replace(':id', params.id))
+        .then((response: any) => appeal.value = response.data)
         .finally(() => hasTakeToWork.value = false)
 }
 
@@ -351,7 +344,7 @@ const allowToPublish = computed(() => {
 const publish = () => {
     publishing.value = true
 
-    axios.post(API_APPEALS_PUBLISH.replace(':id', appeal.value.id), form.value)
+    axios.post(API_APPEALS_PUBLISH.replace(':id', params.id), form.value)
         .then(() => {
             toast.success(trans('The appeal was successfully submitted to the queue for publication.'))
 

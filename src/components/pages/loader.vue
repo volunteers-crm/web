@@ -24,7 +24,7 @@
 import VErrorPage from '@/components/pages/error.vue'
 import VInfoPage from '@/components/pages/info.vue'
 
-import { computed, onBeforeMount, ref } from 'vue'
+import { computed, onBeforeMount, ref, watch } from 'vue'
 
 import _ from 'lodash'
 import axios from 'axios'
@@ -75,6 +75,8 @@ const requestUrl = computed(() => {
 const setPageTitle = () => {
     metaStore.setPageTitle(props.title, props?.params)
 }
+
+watch(props.fake, (value) => content.value = value)
 
 onBeforeMount(async () => {
     if (!! props.fake) {
