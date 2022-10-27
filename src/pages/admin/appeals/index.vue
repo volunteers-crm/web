@@ -24,7 +24,7 @@
             <td>
                 <v-telegram-link
                     :id="item.bot.id"
-                    :name="item.bot.name"
+                    :name="item.bot.title"
                     :username="item.bot.name"
                     text
                 />

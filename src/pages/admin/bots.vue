@@ -114,7 +114,7 @@
                         class="fill-height d-flex flex-column"
                         v-bind="props"
                     >
-                        <v-card-title v-text="bot.name" />
+                        <v-card-title v-text="bot.title" />
 
                         <v-card-subtitle>
                             {{ locales[bot.locale] }} |
