@@ -88,13 +88,13 @@
                                     </v-col>
 
                                     <v-col cols="12">
-                                        <v-todo v-model="form.todo" />
+                                        <v-todo v-model="form.todo" density="compact" />
                                     </v-col>
 
                                     <v-col cols="12">
                                         <v-textarea
                                             v-model="form.comment"
-                                            :label="$t('Comment')"
+                                            :label="$t('Comment') + ' *'"
                                             :placeholder="$t('Write a comment about appeal...')"
                                             auto-grow
                                             hide-details
@@ -108,7 +108,7 @@
                                         <v-select
                                             v-model="form.channels"
                                             :items="props.bot?.channels"
-                                            :label="$t('Channels')"
+                                            :label="$t('Channels') + ' *'"
                                             hide-details
                                             item-title="name"
                                             item-value="id"
@@ -123,6 +123,7 @@
                                 <v-spacer />
 
                                 <v-btn
+                                    :disabled="hasDisabledPreview"
                                     block
                                     color="primary"
                                     variant="elevated"
@@ -319,6 +320,8 @@ const publishing = ref(false)
 const formatDate = (date: string) => dateFormatFull(date)
 
 const hasDisabledForm = (data: any) => data?.curator?.id !== userStore?.user?.id || !! publishing.value
+
+const hasDisabledPreview = computed(() => ! form.value.channels.length || ! form.value.comment)
 
 const hasTakeToWork = ref(false)
 
