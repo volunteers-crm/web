@@ -1,6 +1,9 @@
 <template>
     <div class="chat fill-height d-flex flex-column">
-        <div class="chat__messages pa-5 overflow-y-auto">
+        <div
+            class="chat__messages pa-5 overflow-y-auto"
+            ref="messagesList"
+        >
             <v-message
                 v-for="message in messages"
                 :message="message"
@@ -13,9 +16,10 @@
                     v-model="message"
                     :disabled="hasSendingMessage"
                     :placeholder="$t('Write a message...')"
+                    ref="messageBox"
                     auto-grow
                     autofocus
-                    class="chat__action__message-box"
+                    class="chat__action__message-box px-2"
                     density="comfortable"
                     hide-details
                     rows="2"
@@ -51,11 +55,14 @@ const props = defineProps<{
     status: string
 }>()
 
+const messagesList = ref()
+const messageBox = ref()
+
 const message = ref('')
 
-const hasSendingMessage = ref(false)
-
 const messages = ref([])
+
+const hasSendingMessage = ref(false)
 
 const isClosed = computed(() => [STATUS_DONE, STATUS_CANCELLED].includes(props.status))
 
@@ -68,10 +75,13 @@ const sendMessage = () => {
 
     axios.post(API_APPEALS_MESSAGES.replace(':id', String(props.appealId)), { message: message.value })
         .then((response: any) => {
-            messages.value.push(response?.data)
             message.value = ''
+            messages.value.push(response?.data)
         })
-        .finally(() => hasSendingMessage.value = false)
+        .finally(() => {
+            hasSendingMessage.value = false
+            messagesList.value.scrollTop = messagesList.value.scrollHeight
+        })
 }
 
 onMounted(() => {
