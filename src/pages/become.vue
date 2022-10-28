@@ -48,6 +48,7 @@
 
                         <v-dialog
                             v-model="resetDialog"
+                            max-width="800"
                             activator="parent"
                         >
                             <v-card>

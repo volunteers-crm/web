@@ -23,6 +23,7 @@
                 <td>
                     <v-dialog
                         v-model="dialogs[channel.id]"
+                        max-width="800"
                         persistent
                     >
                         <template v-slot:activator="{ props }">

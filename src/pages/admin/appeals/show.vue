@@ -133,7 +133,11 @@
                             </v-card-actions>
                         </v-form>
 
-                        <v-dialog v-model="preview" persistent>
+                        <v-dialog
+                            v-model="preview"
+                            max-width="800"
+                            persistent
+                        >
                             <v-card>
                                 <v-card-text>
                                     <p class="font-weight-bold mb-4">

@@ -19,6 +19,7 @@
                             v-model="cardCreate"
                             activator="parent"
                             persistent
+                            max-width="800"
                         >
                             <v-form
                                 :ref="form.ref.add"
@@ -245,7 +246,10 @@
         </v-row>
     </v-container>
 
-    <v-dialog v-model="dialogs.registerBot">
+    <v-dialog
+        v-model="dialogs.registerBot"
+        max-width="800"
+    >
         <v-card>
             <v-card-title>
                 {{ $t('Bot Information') }}

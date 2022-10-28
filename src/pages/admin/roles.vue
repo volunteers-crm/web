@@ -26,6 +26,7 @@
                 <td>
                     <v-dialog
                         v-model="dialogs.edit.show[role.id]"
+                        max-width="800"
                         persistent
                     >
                         <template v-slot:activator="{ props }">
@@ -91,6 +92,7 @@
 
                     <v-dialog
                         v-model="dialogs.delete.show[role.id]"
+                        max-width="800"
                         persistent
                     >
                         <template v-slot:activator="{ props }">
