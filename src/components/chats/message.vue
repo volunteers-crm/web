@@ -67,7 +67,7 @@ const isEdited = computed(() => props.message.created_at !== props.message.updat
 const isMe = computed(() => props.message.sender.id === userStore?.id)
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/assets/styles/_variables";
 @import "@/assets/styles/_mixin";
 

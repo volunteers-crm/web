@@ -38,7 +38,7 @@ const currentUserId = ref(userStore?.id)
 const itsMe = (): boolean => currentUserId.value === props.id
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .telegram__link {
     color: darkgrey;
     display: inline;

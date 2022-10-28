@@ -19,7 +19,7 @@ const metaStore = useMetaStore()
 onBeforeMount(() => metaStore.setPageTitle(props.title))
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .box__info {
     max-width: 480px;
     width: 100%;
