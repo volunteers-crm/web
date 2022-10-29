@@ -309,7 +309,7 @@ const form = ref({
     address: null,
     date: null,
     persons: 0,
-    todo: [''],
+    todo: [],
     comment: null,
     channels: []
 })
