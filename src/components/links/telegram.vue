@@ -1,12 +1,14 @@
 <template>
     <span v-if="me && itsMe()" class="text-green" v-text="$t('You')" />
-    <span v-else v-text="name" />
+    <div v-else>
+        <span v-text="name" />
 
-    <div class="telegram__link">
-        (
-        <span v-if="text" v-text="`@${username}`" />
-        <span v-else v-html="telegram(username)" />
-        )
+        <div class="telegram__link">
+            (
+            <span v-if="text" v-text="`@${username}`" />
+            <span v-else v-html="telegram(username)" />
+            )
+        </div>
     </div>
 </template>
 
