@@ -369,9 +369,10 @@ const publish = () => {
     publishing.value = true
 
     axios.post(API_APPEALS_PUBLISH.replace(':id', params.id), form.value)
-        .then(() => {
+        .then((response: any) => {
             toast.success(trans('The appeal was successfully submitted to the queue for publication.'))
 
+            appeal.value = response.data
             preview.value = false
         })
         .finally(() => publishing.value = false)
