@@ -65,7 +65,7 @@
 
                                     <v-col cols="12">
                                         <v-text-field
-                                            v-model="form.date"
+                                            v-model="formDate"
                                             :label="$t('Date and Time')"
                                             hide-details
                                             prepend-icon="mdi-calendar"
@@ -287,7 +287,7 @@ import VTodo from '@/components/lists/todo.vue'
 import { API_APPEALS_PUBLISH, API_APPEALS_SHOW, API_APPEALS_START_WORK } from '@/constants/api_routes'
 
 import { useUserStore } from '@/stores/user'
-import { dateFormatFull } from '@/helpers/date'
+import { dateCustomFormat, dateFormatFull } from '@/helpers/date'
 
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -323,6 +323,11 @@ watch(
 )
 
 const formatDate = (date: string) => dateFormatFull(date)
+
+const formDate = computed({
+    get: () => dateCustomFormat(form.value.date, 'YYYY-MM-DDTHH:mm'),
+    set: (val: any) => form.value.date = val
+})
 
 const hasDisabledForm = () => appeal.value?.curator?.id !== userStore?.user?.id || !! publishing.value
 
