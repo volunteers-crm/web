@@ -1,7 +1,6 @@
 <template>
     <v-loader-page
         v-slot="{ props }"
-        :fake="fake"
         :params="params"
         :title="title"
         :url="url"
@@ -33,8 +32,7 @@ import { contentType } from '@/helpers/contentType'
 defineProps<{
     title?: string,
     url: string,
-    params?: object,
-    fake?: Page
+    params?: object
 }>()
 
 const data = ref({

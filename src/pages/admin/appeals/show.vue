@@ -1,7 +1,6 @@
 <template>
     <v-loader-page
-        v-slot="{ props }"
-        :fake="appeal"
+        v-model="appeal"
         :params="params"
         :title="meta.title"
         :url="url"
@@ -10,14 +9,14 @@
         <v-container class="fill-height py-0" fluid>
             <v-row class="fill-height" no-gutters>
                 <v-col cols="3">
-                    <v-user :user="props.client" />
+                    <v-user :user="appeal.client" />
 
                     <v-divider />
 
                     <v-card elevation="0">
                         <v-card-text>
                             <v-status-btn
-                                :status="props.status"
+                                :status="appeal.status"
                                 class="d-flex justify-center align-center"
                             />
                         </v-card-text>
@@ -25,7 +24,7 @@
 
                     <v-divider />
 
-                    <v-card v-if="!props.curator" elevation="0">
+                    <v-card v-if="!appeal.curator" elevation="0">
                         <v-card-title>
                             {{ $t('Curator') }}
                         </v-card-title>
@@ -51,7 +50,7 @@
                     </v-card>
 
                     <v-card v-else class="scrollable" elevation="0">
-                        <v-form :disabled="hasDisabledForm(props)">
+                        <v-form :disabled="hasDisabledForm()">
                             <v-card-text>
                                 <v-row>
                                     <v-col cols="12">
@@ -107,7 +106,7 @@
                                     <v-col cols="12">
                                         <v-select
                                             v-model="form.channels"
-                                            :items="props.bot?.channels"
+                                            :items="appeal.bot?.channels"
                                             :label="$t('Channels') + ' *'"
                                             hide-details
                                             item-title="name"
@@ -119,7 +118,7 @@
                                 </v-row>
                             </v-card-text>
 
-                            <v-card-actions v-if="!hasDisabledForm(props)">
+                            <v-card-actions v-if="!hasDisabledForm()">
                                 <v-spacer />
 
                                 <v-btn
@@ -142,11 +141,11 @@
                             <v-card>
                                 <v-card-text>
                                     <p class="font-weight-bold mb-4">
-                                        {{ $t('Appeal #:id', { id: props.id }) }}
+                                        {{ $t('Appeal #:id', { id: appeal.id }) }}
                                     </p>
 
                                     <p v-if="form.date" class="mb-4">
-                                        📅 {{ formatDate(form.date) }}, {{ props.bot.timezone }}
+                                        📅 {{ formatDate(form.date) }}, {{ appeal.bot.timezone }}
                                     </p>
 
                                     <p v-if="form.address" class="mb-4">
@@ -172,7 +171,7 @@
                                     </p>
 
                                     <p>
-                                        👤 {{ props.curator.name }}
+                                        👤 {{ appeal.curator.name }}
                                     </p>
                                 </v-card-text>
 
@@ -200,8 +199,8 @@
 
                 <v-col cols="7">
                     <v-chat
-                        :appeal-id="props.id"
-                        :status="props.status"
+                        :appeal-id="appeal.id"
+                        :status="appeal.status"
                     />
                 </v-col>
 
@@ -211,9 +210,9 @@
                             {{ $t('Curator') }}
                         </v-card-title>
 
-                        <v-card-text v-if="!!props.curator" class="pa-0">
+                        <v-card-text v-if="!!appeal.curator" class="pa-0">
                             <v-user
-                                :user="props.curator"
+                                :user="appeal.curator"
                                 allow-me
                             />
                         </v-card-text>
@@ -246,8 +245,8 @@
                         </v-card-title>
 
                         <v-card-text>
-                            <p v-text="props.bot.title" />
-                            <p class="text-grey" v-text="`@${props.bot.name}`" />
+                            <p v-text="appeal.bot.title" />
+                            <p class="text-grey" v-text="`@${appeal.bot.name}`" />
                         </v-card-text>
                     </v-card>
 
@@ -257,17 +256,17 @@
                         <v-card-text>
                             <p class="date__info">
                                 <span>{{ $t('Created At') }}:</span>
-                                {{ formatDate(props.created_at) }}
+                                {{ formatDate(appeal.created_at) }}
                             </p>
 
                             <p class="date__info">
                                 <span>{{ $t('Updated At') }}:</span>
-                                {{ formatDate(props.updated_at) }}
+                                {{ formatDate(appeal.updated_at) }}
                             </p>
 
                             <p class="date__info">
                                 <span>{{ $t('Timezone') }}:</span>
-                                {{ props.bot.timezone }}
+                                {{ appeal.bot.timezone }}
                             </p>
                         </v-card-text>
                     </v-card>
@@ -289,7 +288,7 @@ import { API_APPEALS_PUBLISH, API_APPEALS_SHOW, API_APPEALS_START_WORK } from '@
 import { useUserStore } from '@/stores/user'
 import { dateFormatFull } from '@/helpers/date'
 
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import _ from 'lodash'
@@ -303,7 +302,7 @@ const toast = useToast()
 
 const url = ref(API_APPEALS_SHOW.replace(':id', params.id))
 
-const appeal = ref(null)
+const appeal = ref({})
 
 const form = ref({
     address: null,
@@ -317,9 +316,14 @@ const form = ref({
 const preview = ref(false)
 const publishing = ref(false)
 
+watch(
+    () => appeal.value,
+    (val: any) => form.value = val?.info || {}
+)
+
 const formatDate = (date: string) => dateFormatFull(date)
 
-const hasDisabledForm = (data: any) => data?.curator?.id !== userStore?.user?.id || !! publishing.value
+const hasDisabledForm = () => appeal.value?.curator?.id !== userStore?.user?.id || !! publishing.value
 
 const hasDisabledPreview = computed(() => ! form.value.channels.length || ! form.value.comment)
 

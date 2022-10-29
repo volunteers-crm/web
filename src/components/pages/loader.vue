@@ -24,7 +24,7 @@
 import VErrorPage from '@/components/pages/error.vue'
 import VInfoPage from '@/components/pages/info.vue'
 
-import { computed, onBeforeMount, ref, watch } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 
 import _ from 'lodash'
 import axios from 'axios'
@@ -40,10 +40,11 @@ const isError = ref(false)
 
 const errorMessage = ref('')
 
-const content = ref({})
+const emit = defineEmits(['update:modelValue'])
 
 const props = withDefaults(
     defineProps<{
+        modelValue: any,
         title: string
         url: string,
         params?: object,
@@ -51,16 +52,17 @@ const props = withDefaults(
         btnGoMain?: boolean,
         btnReload?: boolean,
         noCache?: boolean,
-        fake?: any,
-        fakeTimeout?: number
     }>(), {
         btnGoBack: false,
         btnGoMain: false,
         btnReload: false,
-        noCache: false,
-        fake: null,
-        fakeTimeout: 1500
+        noCache: false
     })
+
+const content = computed({
+    get: () => props.modelValue,
+    set: value => emit('update:modelValue', value)
+})
 
 const requestUrl = computed(() => {
     let url = props.url
@@ -76,21 +78,7 @@ const setPageTitle = () => {
     metaStore.setPageTitle(props.title, props?.params)
 }
 
-watch(props.fake, (value) => content.value = value)
-
 onBeforeMount(async () => {
-    if (!! props.fake) {
-        await setTimeout(() => {
-            content.value = props.fake
-
-            isLoading.value = false
-
-            setPageTitle()
-        }, props.fakeTimeout)
-
-        return
-    }
-
     if (! props.noCache && pageStore.has(requestUrl.value)) {
         content.value = pageStore.get(requestUrl.value)
 
@@ -107,10 +95,7 @@ onBeforeMount(async () => {
 
             isError.value = true
         })
-        .finally(() => {
-            setPageTitle()
-
-            isLoading.value = false
-        })
+        .finally(() => setPageTitle())
+        .finally(() => isLoading.value = false)
 })
 </script>
