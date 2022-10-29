@@ -87,6 +87,7 @@ const sendMessage = () => {
 onMounted(() => {
     axios.get(API_APPEALS_MESSAGES.replace(':id', String(props.appealId)))
         .then((response: any) => messages.value = response.data)
+        .finally(() => setTimeout(() => messagesList.value.scrollTop = messagesList.value.scrollHeight, 100))
 })
 </script>
 
