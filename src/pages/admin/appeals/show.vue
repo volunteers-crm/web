@@ -153,13 +153,13 @@
                                         🌍 <span v-text="form.address" />
                                     </p>
 
-                                    <p v-if="form.persons" class="mb-4">
+                                    <p v-if="form.persons > 0" class="mb-4">
                                         👨‍👨‍👧‍👧 {{ $t('Number of persons') }}: {{ form.persons }}
                                     </p>
 
                                     <div v-if="previewTodo.length" class="mb-4">
                                         <p>
-                                            {{ $t('Need') }}:
+                                            {{ $t('Todo:') }}
                                         </p>
 
                                         <p v-for="todo in previewTodo">
@@ -172,7 +172,7 @@
                                     </p>
 
                                     <p>
-                                        👤 @{{ props.curator.username }}
+                                        👤 {{ props.curator.name }}
                                     </p>
                                 </v-card-text>
 
