@@ -60,6 +60,7 @@
                                             hide-details
                                             prepend-icon="mdi-map-marker"
                                             variant="underlined"
+                                            density="compact"
                                         />
                                     </v-col>
 
@@ -71,6 +72,7 @@
                                             prepend-icon="mdi-calendar"
                                             type="datetime-local"
                                             variant="underlined"
+                                            density="compact"
                                         />
                                     </v-col>
 
@@ -83,6 +85,7 @@
                                             prepend-icon="mdi-account-group"
                                             type="number"
                                             variant="underlined"
+                                            density="compact"
                                         />
                                     </v-col>
 
@@ -100,6 +103,7 @@
                                             persistent-placeholder
                                             rows="2"
                                             variant="underlined"
+                                            density="compact"
                                         />
                                     </v-col>
 
@@ -114,6 +118,7 @@
                                             item-value="id"
                                             multiple
                                             variant="underlined"
+                                            density="compact"
                                         />
                                     </v-col>
                                 </v-row>
