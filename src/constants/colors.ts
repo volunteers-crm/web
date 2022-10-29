@@ -3,8 +3,8 @@ import { STATUS_CANCELLED, STATUS_DONE, STATUS_IN_PROGRESS, STATUS_NEW } from '@
 export const defaultColor = 'white'
 
 export const colors = {
-    [STATUS_NEW]: 'info',
-    [STATUS_IN_PROGRESS]: 'green',
+    [STATUS_NEW]: 'orange',
+    [STATUS_IN_PROGRESS]: 'blue',
     [STATUS_CANCELLED]: 'pink',
-    [STATUS_DONE]: 'grey'
+    [STATUS_DONE]: 'green'
 }
