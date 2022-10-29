@@ -108,6 +108,7 @@
                                             v-model="form.channels"
                                             :items="appeal.bot?.channels"
                                             :label="$t('Channels') + ' *'"
+                                            :disabled="hasDisabledChannelsChoice"
                                             hide-details
                                             item-title="name"
                                             item-value="id"
@@ -326,6 +327,8 @@ const formatDate = (date: string) => dateFormatFull(date)
 const hasDisabledForm = () => appeal.value?.curator?.id !== userStore?.user?.id || !! publishing.value
 
 const hasDisabledPreview = computed(() => ! form.value.channels.length || ! form.value.comment)
+
+const hasDisabledChannelsChoice = computed(() => appeal.value?.is_published === true)
 
 const hasTakeToWork = ref(false)
 
