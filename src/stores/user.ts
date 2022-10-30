@@ -23,8 +23,7 @@ export const useUserStore = defineStore({
             id: null,
             username: null,
             name: null,
-            avatar: null,
-            volunteer: null
+            avatar: null
         }
     }),
 

@@ -16,10 +16,11 @@ export const API_CHANNELS_CHANNEL = '/channels/:id'
 
 export const API_BOTS_INDEX = '/bots'
 export const API_BOTS_BOT = '/bots/:id'
-export const API_BOTS_SEARCH = '/bots/search'
 
 export const API_ROLES_INDEX = '/roles'
 export const API_ROLES_SHOW = '/roles/:id'
-export const API_ROLES_CATEGORIES = '/roles/categories'
 
-export const API_VOLUNTEERS_INDEX = '/volunteers'
+export const API_BECOMES_INDEX = '/becomes'
+export const API_BECOMES_SEARCH = '/becomes/:id'
+export const API_BECOMES_STORE = '/becomes/:id'
+export const API_BECOMES_CANCEL = '/becomes/:id'

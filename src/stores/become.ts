@@ -3,7 +3,6 @@ import { defineStore } from 'pinia'
 interface BecomeForm
 {
     bot: string,
-    name: string,
     city: string,
     about: string,
     source: string,
@@ -22,13 +21,20 @@ interface BecomeStore
 export const useBecomeStore = defineStore({
     id: 'become',
 
-    persist: true,
+    persist: {
+        paths: [
+            'form',
+            'bot.id',
+            'bot.name',
+            'bot.roles'
+        ]
+    },
 
     state: (): BecomeStore => ({
         bot: {
             id: 0,
-            username: '',
             name: '',
+            title: '',
             timezone: '',
             locale: '',
             channels: [],
@@ -37,7 +43,6 @@ export const useBecomeStore = defineStore({
 
         form: {
             bot: '',
-            name: '',
             city: '',
             about: '',
             source: '',

@@ -33,18 +33,6 @@ export class Collection
     {
         return this.items
     }
-
-    getFromGrouped(): any
-    {
-        let list: object[] = []
-
-        _.forEach(this.get(), (items: any, header: any) => {
-            list.push({ header })
-            list.push(...items)
-        })
-
-        return list
-    }
 }
 
 export function collect(items: any)

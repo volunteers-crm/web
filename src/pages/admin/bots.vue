@@ -350,6 +350,7 @@ import axios from 'axios'
 
 import { timezones } from '@/helpers/date'
 import locales from '@/constants/locales'
+import { collect } from '@/helpers/collection'
 import { telegramTokenRule, timezoneRule } from '@/constants/validation'
 
 const cardCreate = ref(false)
@@ -431,7 +432,7 @@ onBeforeMount(() => {
 const cardEditEvent = (bot: Bot) => {
     form.value.timezone = bot.timezone
     form.value.locale = bot.locale
-    form.value.roles = _.map(bot?.roles || [], item => item.id)
+    form.value.roles = collect(bot?.roles).pluck('id')
 
     cardEdit.value[bot.id] = true
 }

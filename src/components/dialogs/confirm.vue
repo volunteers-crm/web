@@ -6,9 +6,20 @@
     >
         <template v-slot:activator="{ props }">
             <v-btn
+                v-if="buttonIcon.length"
                 v-bind="props"
-                :variant="variant"
                 :color="color"
+                :icon="buttonIcon"
+                :variant="variant"
+            >
+            </v-btn>
+
+            <v-btn
+                v-else
+                v-bind="props"
+                :color="color"
+                :icon="buttonIcon"
+                :variant="variant"
             >
                 {{ buttonText }}
             </v-btn>
@@ -19,9 +30,7 @@
                 {{ $t('Confirmation') }}
             </v-card-title>
 
-            <v-card-text>
-                {{ confirmText }}
-            </v-card-text>
+            <v-card-text v-html="confirmText" />
 
             <v-card-actions>
                 <v-spacer />
@@ -55,18 +64,23 @@ const emit = defineEmits(['update:modelValue'])
 const props = withDefaults(
     defineProps<{
         modelValue?: any,
-        buttonText: string,
+        buttonText?: string,
+        buttonIcon?: string,
         confirmText: string,
         url: string,
         method?: string,
         variant?: string,
-        color?: string
+        color?: string,
+        success?: any,
+        failed?: any
     }>(),
     {
         modelValue: null,
-        method: 'put',
+        method: 'post',
         variant: 'elevated',
-        color: 'black'
+        color: 'black',
+        success: () => true,
+        failed: () => true
     }
 )
 
@@ -83,7 +97,9 @@ const confirm = () => {
 
     axios[props.method](props.url)
         .then((response: any) => content.value = response.data)
+        .then(props.success)
         .then(() => dialog.value = false)
+        .finally(props.failed)
         .finally(() => loading.value = false)
 }
 </script>
