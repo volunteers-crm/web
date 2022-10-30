@@ -308,9 +308,9 @@
                         </v-expansion-panel-title>
 
                         <v-expansion-panel-text>
-                            <p class="mb-2" v-html="$t('To register a new bot, you need to go to the messages to the main @BotFather bot.')" />
-                            <p class="mb-2" v-html="$t('Then send him the command /newbot and follow the instructions.')" />
-                            <p class="mb-2" v-html="$t('When finished, @BotFather will provide you with your bot\'s token.')" />
+                            <p class="mb-2" v-html="$t('To register a new bot, you need to go to the messages to the main :father bot.', { father: botFatherLink() })" />
+                            <p class="mb-2" v-html="$t('Then send him the command :command and follow the instructions.', { command: codeBlock('/newbot') })" />
+                            <p class="mb-2" v-html="$t('When finished, :father will provide you with your bot\'s token.', { father: botFatherLink() })" />
                         </v-expansion-panel-text>
                     </v-expansion-panel>
 
@@ -320,8 +320,10 @@
                         </v-expansion-panel-title>
 
                         <v-expansion-panel-text>
-                            <p class="mb-2" v-html="$t('To connect a previously created bot, you need to send the /mybots command to the @BotFather bot.')" />
-                            <p API Token class="mb-2" v-html="$t('Then select the desired bot in the list and click the `API Token` button.')" />
+                            <p
+                                class="mb-2"
+                                v-html="$t('To connect a previously created bot, you need to send the :command command to the :father bot.', { father: botFatherLink(), command: codeBlock('/mybots') })" />
+                            <p API Token class="mb-2" v-html="$t('Then select the desired bot in the list and click the :token button.', { token: codeBlock('API Token')})" />
                         </v-expansion-panel-text>
                     </v-expansion-panel>
                 </v-expansion-panels>
@@ -485,6 +487,14 @@ const deleteBot = (id: number) => {
             _.set(cardDelete.value, id, false)
         })
         .finally(() => _.set(cardLoading.value, id, false))
+}
+
+const botFatherLink = () => {
+    return '<a href="https://t.me/BotFather" target="_blank">@BotFather</a>'
+}
+
+const codeBlock = (name: string) => {
+    return `<code class="text-red">${ name }</code>`
 }
 </script>
 
