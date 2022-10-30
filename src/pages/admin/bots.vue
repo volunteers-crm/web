@@ -75,6 +75,21 @@
                                                 />
                                             </v-col>
                                         </v-row>
+
+                                        <v-row>
+                                            <v-col cols="12">
+                                                <v-select
+                                                    v-model="form.roles"
+                                                    :items="roles"
+                                                    :label="$t('Roles')"
+                                                    item-title="title"
+                                                    item-value="id"
+                                                    multiple
+                                                    required
+                                                    variant="underlined"
+                                                />
+                                            </v-col>
+                                        </v-row>
                                     </v-card-text>
 
                                     <v-card-actions>
@@ -102,7 +117,7 @@
             </v-col>
 
             <v-col
-                v-for="bot in bots"
+                v-for="(bot, index) in bots"
                 :key="bot.id"
                 :md="colSize"
                 cols="12"
@@ -123,16 +138,38 @@
                         </v-card-subtitle>
 
                         <v-card-text v-if="bot?.channels?.length">
-                            <p class="pb-4">
-                                {{ $t('Allows publication of appeals in the following channels:') }}
-                            </p>
+                            <div>
+                                <p class="pb-1">
+                                    {{ $t('Channels:') }}
+                                </p>
 
-                            <p
-                                v-for="channel in bot.channels"
-                                :key="channel.id"
-                            >
-                                - {{ channel.name }}
-                            </p>
+                                <ul class="mx-6">
+                                    <li
+                                        v-for="channel in bot.channels"
+                                        :key="channel.id"
+                                        v-text="channel.name"
+                                    />
+                                </ul>
+                            </div>
+
+                            <div class="pt-4">
+                                <p class="pb-1">
+                                    {{ $t('Roles:') }}
+                                </p>
+
+                                <ul class="mx-6">
+                                    <li
+                                        v-if="! bot.roles || ! bot.roles.length"
+                                        v-text="$t('Missing')"
+                                    />
+                                    <li
+                                        v-else
+                                        v-for="role in bot.roles"
+                                        :key="role.id"
+                                        v-text="role.title"
+                                    />
+                                </ul>
+                            </div>
                         </v-card-text>
 
                         <v-card-text v-else>
@@ -144,7 +181,7 @@
                             <v-spacer />
 
                             <v-btn
-                                @click="cardEdit[bot.id] = true"
+                                @click="cardEditEvent(bot)"
                             >
                                 {{ $t('Edit') }}
                             </v-btn>
@@ -166,32 +203,39 @@
 
                         <v-card-text>
                             <v-row>
-                                <v-col cols="10">
-                                    <v-text-field
-                                        v-model="form.token"
-                                        :label="$t('Bot Token')"
-                                        :rules="telegramTokenRule"
+                                <v-col cols="12" md="6" sm="12">
+                                    <v-autocomplete
+                                        v-model="form.timezone"
+                                        :items="timezonesList"
+                                        :label="$t('Timezone')"
+                                        :rules="timezoneRule"
+                                        class="mb-0 pb-0"
+                                        required
                                         variant="underlined"
-                                        readonly
                                     />
                                 </v-col>
 
-                                <v-col cols="2">
-                                    <v-btn
-                                        flat
-                                        icon="mdi-information"
-                                        @click="dialogs.registerBot = true"
-                                    />
-                                </v-col>
-
-                                <v-col cols="12">
+                                <v-col cols="12" md="6" sm="12">
                                     <v-select
-                                        v-model="form.channels"
-                                        :items="channels"
-                                        :label="$t('Channels')"
-                                        item-title="name"
+                                        v-model="form.locale"
+                                        :items="localesList"
+                                        :label="$t('Localization')"
+                                        item-title="value"
+                                        item-value="key"
+                                        required
+                                        variant="underlined"
+                                    />
+                                </v-col>
+
+                                <v-col cols="12" md="12" sm="12">
+                                    <v-select
+                                        v-model="form.roles"
+                                        :items="roles"
+                                        :label="$t('Roles')"
+                                        item-title="title"
                                         item-value="id"
                                         multiple
+                                        required
                                         variant="underlined"
                                     />
                                 </v-col>
@@ -201,7 +245,7 @@
                         <v-card-actions>
                             <v-spacer />
 
-                            <v-btn @click="updateBot(bot.id)">
+                            <v-btn @click="updateBot(bot.id, index)">
                                 {{ $t('Save') }}
                             </v-btn>
 
@@ -295,7 +339,7 @@
 </template>
 
 <script lang="ts" setup>
-import { API_BOTS_BOT, API_BOTS_INDEX } from '@/constants/api_routes'
+import { API_BOTS_BOT, API_BOTS_INDEX, API_ROLES_INDEX } from '@/constants/api_routes'
 
 import { computed, onBeforeMount, ref, watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
@@ -330,7 +374,8 @@ const form = ref({
 
     token: '',
     timezone: '',
-    locale: 'en'
+    locale: 'en',
+    roles: []
 })
 
 const colSize = computed(() => {
@@ -348,6 +393,8 @@ const colSize = computed(() => {
 const timezonesList = ref(timezones())
 
 const localesList = computed(() => _.map(locales, (value, key) => Object.create({ value, key })))
+
+const roles = ref([])
 
 const toast = useToast()
 
@@ -370,12 +417,24 @@ const resetForm = () => {
     form.value.token = ''
     form.value.timezone = ''
     form.value.locale = 'en'
+    form.value.roles = []
 }
 
 onBeforeMount(() => {
     axios.get(API_BOTS_INDEX)
         .then((response: any) => bots.value = response.data)
+
+    axios.get(API_ROLES_INDEX)
+        .then((response: any) => roles.value = response.data)
 })
+
+const cardEditEvent = (bot: Bot) => {
+    form.value.timezone = bot.timezone
+    form.value.locale = bot.locale
+    form.value.roles = _.map(bot?.roles || [], item => item.id)
+
+    cardEdit.value[bot.id] = true
+}
 
 const addBot = () => {
     // validate form
@@ -396,15 +455,15 @@ const addBot = () => {
         .finally(() => _.set(cardLoading.value, 'add', false))
 }
 
-const updateBot = (id: number) => {
+const updateBot = (id: number, index: number) => {
     _.set(cardLoading.value, id, true)
 
     axios.put(API_BOTS_BOT.replace(':id', String(id)), form.value)
         .then((response: any) => {
-            bots.value.push(response.data)
+            bots.value[index] = response.data
 
-            toast.success(trans('Bot :name has been successfully attached to your account.', {
-                name: response.data.name
+            toast.success(trans(':name has been successfully updated.', {
+                name: response.data.title
             }))
 
             _.set(cardEdit.value, id, false)
