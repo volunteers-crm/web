@@ -264,7 +264,8 @@
                         </v-card-title>
 
                         <v-card-text>
-                            Some text
+                            <p v-text="$t('Are you sure you want to delete this bot?')" />
+                            <p v-text="$t('We must warn you that deleting the bot will also permanently delete all appeals linked to it.')" />
                         </v-card-text>
 
                         <v-card-actions>
@@ -432,7 +433,7 @@ onBeforeMount(() => {
 const cardEditEvent = (bot: Bot) => {
     form.value.timezone = bot.timezone
     form.value.locale = bot.locale
-    form.value.roles = collect(bot?.roles).pluck('id')
+    form.value.roles = collect(bot?.roles).pluck('id').get()
 
     cardEdit.value[bot.id] = true
 }
