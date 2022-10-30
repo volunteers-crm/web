@@ -1,6 +1,6 @@
 <template>
     <v-loader-page
-        v-slot="{ props }"
+        v-model="page"
         :params="params"
         :title="title"
         :url="url"
@@ -8,9 +8,9 @@
         btn-reload
     >
         <v-container>
-            <h1 class="text-h5 mb-4" v-text="$t(props.title)" />
+            <h1 class="text-h5 mb-4" v-text="$t(page.title)" />
 
-            <v-row v-for="item in props.content">
+            <v-row v-for="item in page.content">
                 <v-col cols="12">
                     <component
                         :is="template(item.type)"
@@ -35,7 +35,7 @@ defineProps<{
     params?: object
 }>()
 
-const data = ref({
+const page = ref({
     title: '',
     content: []
 })

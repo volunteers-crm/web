@@ -44,7 +44,7 @@ const emit = defineEmits(['update:modelValue'])
 
 const props = withDefaults(
     defineProps<{
-        modelValue: any,
+        modelValue?: any,
         title: string
         url: string,
         params?: object,

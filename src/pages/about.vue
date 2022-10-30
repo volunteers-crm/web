@@ -14,5 +14,5 @@ import { ref } from 'vue'
 
 const url = ref(API_URL_PAGE)
 
-const params = ref({ slug: 'about' })
+const params = ref({ slug: 'about-us' })
 </script>
