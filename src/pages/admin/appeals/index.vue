@@ -7,6 +7,7 @@
             <th>{{ $t('Client') }}</th>
             <th>{{ $t('Curator') }}</th>
             <th class="text-center">{{ $t('Status') }}</th>
+            <th class="text-center">{{ $t('Published') }}</th>
             <th class="text-center">{{ $t('Timezone') }}</th>
             <th class="text-center">{{ $t('Created At') }}</th>
             <th class="text-center">{{ $t('Updated At') }}</th>
@@ -55,6 +56,11 @@
 
             <td class="text-center text-lowercase">
                 <v-status-btn :status="item.status" />
+            </td>
+
+            <td class="text-center">
+                <span v-if="item.is_closed" v-text="$t('Yes')" />
+                <span v-else v-text="$t('No')" />
             </td>
 
             <td class="text-center">{{ item.bot.timezone }}</td>
