@@ -6,7 +6,7 @@
     >
         <template v-slot:activator="{ props }">
             <v-btn
-                v-if="buttonIcon.length"
+                v-if="hasIcon"
                 v-bind="props"
                 :color="color"
                 :icon="buttonIcon"
@@ -18,7 +18,6 @@
                 v-else
                 v-bind="props"
                 :color="color"
-                :icon="buttonIcon"
                 :variant="variant"
             >
                 {{ buttonText }}
@@ -61,7 +60,7 @@ import axios from 'axios'
 
 const emit = defineEmits(['update:modelValue'])
 
-const props = withDefaults(
+const initProps = withDefaults(
     defineProps<{
         modelValue?: any,
         buttonText?: string,
@@ -76,6 +75,7 @@ const props = withDefaults(
     }>(),
     {
         modelValue: null,
+        buttonText: '',
         method: 'post',
         variant: 'elevated',
         color: 'black',
@@ -88,18 +88,20 @@ const dialog = ref(false)
 const loading = ref(false)
 
 const content = computed({
-    get: () => props.modelValue,
+    get: () => initProps.modelValue,
     set: value => emit('update:modelValue', value)
 })
+
+const hasIcon = computed(() => !! initProps.buttonIcon?.length)
 
 const confirm = () => {
     loading.value = true
 
-    axios[props.method](props.url)
+    axios[initProps.method](initProps.url)
         .then((response: any) => content.value = response.data)
-        .then(props.success)
+        .then(initProps.success)
         .then(() => dialog.value = false)
-        .finally(props.failed)
+        .finally(initProps.failed)
         .finally(() => loading.value = false)
 }
 </script>

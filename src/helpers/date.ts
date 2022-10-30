@@ -10,6 +10,8 @@ export const dateFormatRows = (date: string, timezone?: string) => parse(date, t
 
 export const dateFormatFull = (date: string, timezone?: string) => parse(date, timezone).format('YYYY-MM-DD, HH:mm')
 
+export const dateFormatFullWithTz = (date: string, timezone?: string) => parse(date, timezone).format('YYYY-MM-DD, HH:mm[<br>]Z')
+
 export const dateCustomFormat = (date: string, format: string, timezone?: string) => parse(date, timezone).format(format)
 
 export const dateFormatTime = (date: string, timezone?: string) => parse(date, timezone).format('HH:mm')

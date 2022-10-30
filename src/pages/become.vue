@@ -269,7 +269,7 @@
 import VTodo from '@/components/lists/todo.vue'
 import VConfirm from '@/components/dialogs/confirm.vue'
 
-import { API_BECOMES_CANCEL, API_BECOMES_INDEX, API_BECOMES_SEARCH, API_BECOMES_STORE } from '@/constants/api_routes'
+import { API_BECOME_CANCEL, API_BECOME_INDEX, API_BECOME_SEARCH, API_BECOME_STORE } from '@/constants/api_routes'
 
 import { listRule, nameRule, rolesRule, telegramBotUsernameRule, textRequired } from '@/constants/validation'
 
@@ -325,7 +325,7 @@ const hasDisabledFindBot = computed(() => becomeStore.hasBot)
 const buttonColor = (has_disable: boolean, color: string = 'primary') => has_disable ? 'default' : color
 
 onBeforeMount(() => {
-    axios.get(API_BECOMES_INDEX)
+    axios.get(API_BECOME_INDEX)
         .then((response: any) => becomes.value = response.data)
 })
 
@@ -333,7 +333,7 @@ const findBot = () => {
     validator(findForm, () => {
         finding.value = true
 
-        axios.get(API_BECOMES_SEARCH.replace(':id', cleanedBotName.value))
+        axios.get(API_BECOME_SEARCH.replace(':id', cleanedBotName.value))
             .then((response: any) => becomeStore.setBot(response.data))
             .finally(() => finding.value = false)
     })
@@ -343,7 +343,7 @@ const submit = () => {
     validator(sendForm, () => {
         sending.value = true
 
-        axios.post(API_BECOMES_STORE.replace(':id', cleanedBotName.value), becomeStore.form)
+        axios.post(API_BECOME_STORE.replace(':id', cleanedBotName.value), becomeStore.form)
             .then((response: any) => {
                 becomes.value.push(response.data)
 
@@ -382,7 +382,7 @@ const hasSelectedRole = (item: object): boolean => {
 }
 
 const cancelBecomeUrl = (name: string) => {
-    return API_BECOMES_CANCEL.replace(':id', name)
+    return API_BECOME_CANCEL.replace(':id', name)
 }
 
 const onSuccessCancel = (id: number) => {

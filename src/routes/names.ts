@@ -11,5 +11,6 @@ export const ROUTE_ADMIN_APPEALS_SHOW = 'admin.appeals.show'
 export const ROUTE_ADMIN_CHANNELS = 'admin.channels'
 export const ROUTE_ADMIN_BOTS = 'admin.bots'
 export const ROUTE_ADMIN_ROLES = 'admin.roles'
+export const ROUTE_ADMIN_BECOMES = 'admin.becomes'
 
 export const ROUTE_404 = 'error.404'

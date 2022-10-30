@@ -1,4 +1,12 @@
-import { ROUTE_ADMIN_APPEALS_INDEX, ROUTE_ADMIN_APPEALS_SHOW, ROUTE_ADMIN_BOTS, ROUTE_ADMIN_CHANNELS, ROUTE_ADMIN_DASHBOARD, ROUTE_ADMIN_ROLES } from '@/routes/names'
+import {
+    ROUTE_ADMIN_APPEALS_INDEX,
+    ROUTE_ADMIN_APPEALS_SHOW,
+    ROUTE_ADMIN_BECOMES,
+    ROUTE_ADMIN_BOTS,
+    ROUTE_ADMIN_CHANNELS,
+    ROUTE_ADMIN_DASHBOARD,
+    ROUTE_ADMIN_ROLES
+} from '@/routes/names'
 
 import { LAYOUT_ADMIN } from '@/constants/layouts'
 
@@ -84,6 +92,17 @@ export default [
                     layout: LAYOUT_ADMIN,
                     title: 'Roles',
                     icon: 'mdi-account-details',
+                    requiresAuth: true
+                }
+            },
+            {
+                path: 'becomes',
+                name: ROUTE_ADMIN_BECOMES,
+                component: () => import('@/pages/admin/becomes.vue'),
+                meta: {
+                    layout: LAYOUT_ADMIN,
+                    title: 'Becomes',
+                    icon: 'mdi-account-plus',
                     requiresAuth: true
                 }
             }
