@@ -124,7 +124,7 @@
 
                         <v-card-text v-if="bot?.channels?.length">
                             <p class="pb-4">
-                                {{ $t('Appeals will be published to the following channels:') }}
+                                {{ $t('Allows publication of appeals in the following channels:') }}
                             </p>
 
                             <p
