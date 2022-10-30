@@ -7,6 +7,8 @@ export const API_APPEALS_INDEX = '/appeals'
 export const API_APPEALS_SHOW = '/appeals/:id'
 export const API_APPEALS_START_WORK = '/appeals/:id/work'
 export const API_APPEALS_PUBLISH = '/appeals/:id/publish'
+export const API_APPEALS_DONE = '/appeals/:id/done'
+export const API_APPEALS_CANCEL = '/appeals/:id/cancel'
 export const API_APPEALS_MESSAGES = '/appeals/:id/messages'
 
 export const API_CHANNELS_INDEX = '/channels'

@@ -14,11 +14,35 @@
                     <v-divider />
 
                     <v-card elevation="0">
-                        <v-card-text>
+                        <v-card-text class="d-flex justify-space-between align-center">
                             <v-status-btn
                                 :status="appeal.status"
-                                class="d-flex justify-center align-center"
+                                class="d-flex justify-center align-center status__fill-width"
                             />
+
+                            <div
+                                v-if="!appeal.is_closed"
+                                class="status__actions"
+                            >
+                                <v-confirm
+                                    v-model="appeal"
+                                    :button-text="$t('Done')"
+                                    :confirm-text="$t('Are you sure you want to mark the appeal as completed?')"
+                                    :url="resolveAppealUrl(API_APPEALS_DONE)"
+                                    variant="text"
+                                    color="green"
+                                />
+
+                                <v-confirm
+                                    v-model="appeal"
+                                    :button-text="$t('Cancel')"
+                                    :confirm-text="$t('Are you sure you want to cancel the appeal?')"
+                                    :url="resolveAppealUrl(API_APPEALS_CANCEL)"
+                                    method="delete"
+                                    variant="text"
+                                    color="red"
+                                />
+                            </div>
                         </v-card-text>
                     </v-card>
 
@@ -288,8 +312,9 @@ import VStatusBtn from '@/components/buttons/status.vue'
 import VChat from '@/components/chats/chat.vue'
 import VUser from '@/components/info/user.vue'
 import VTodo from '@/components/lists/todo.vue'
+import VConfirm from '@/components/dialogs/confirm.vue'
 
-import { API_APPEALS_PUBLISH, API_APPEALS_SHOW, API_APPEALS_START_WORK } from '@/constants/api_routes'
+import { API_APPEALS_CANCEL, API_APPEALS_DONE, API_APPEALS_PUBLISH, API_APPEALS_SHOW, API_APPEALS_START_WORK } from '@/constants/api_routes'
 
 import { useUserStore } from '@/stores/user'
 import { dateCustomFormat, dateFormatFull } from '@/helpers/date'
@@ -334,7 +359,7 @@ const formDate = computed({
     set: (val: any) => form.value.date = val
 })
 
-const hasDisabledForm = () => appeal.value?.curator?.id !== userStore?.user?.id || !! publishing.value
+const hasDisabledForm = () => appeal.value?.curator?.id !== userStore?.user?.id || !! publishing.value || !! appeal.value.is_closed
 
 const hasDisabledPreview = computed(() => ! form.value.channels.length || ! form.value.comment)
 
@@ -342,10 +367,14 @@ const hasDisabledChannelsChoice = computed(() => appeal.value?.is_published === 
 
 const hasTakeToWork = ref(false)
 
+const resolveAppealUrl = (url: string) => {
+    return url.replace(':id', params.id)
+}
+
 const takeToWork = () => {
     hasTakeToWork.value = true
 
-    axios.post(API_APPEALS_START_WORK.replace(':id', params.id))
+    axios.post(resolveAppealUrl(API_APPEALS_START_WORK))
         .then((response: any) => appeal.value = response.data)
         .finally(() => hasTakeToWork.value = false)
 }
@@ -368,7 +397,7 @@ const allowToPublish = computed(() => {
 const publish = () => {
     publishing.value = true
 
-    axios.post(API_APPEALS_PUBLISH.replace(':id', params.id), form.value)
+    axios.post(resolveAppealUrl(API_APPEALS_PUBLISH), form.value)
         .then((response: any) => {
             toast.success(trans('The appeal was successfully submitted to the queue for publication.'))
 
@@ -385,6 +414,16 @@ const publish = () => {
         span {
             color: #949494;
         }
+    }
+}
+
+.status {
+    &__fill-width {
+        width: 100%;
+    }
+
+    &__actions {
+        flex: none;
     }
 }
 
