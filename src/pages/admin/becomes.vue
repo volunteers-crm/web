@@ -15,15 +15,15 @@
             <v-card-text>
                 <v-window v-model="tab">
                     <v-window-item value="new">
-                        <v-becomes :url="API_BECOMES_NEW" />
+                        <v-becomes :url="API_BECOMES_NEW" accept decline />
                     </v-window-item>
 
                     <v-window-item value="accepted">
-                        <v-becomes :url="API_BECOMES_ACCEPTED" updated />
+                        <v-becomes :url="API_BECOMES_ACCEPTED" updated decline />
                     </v-window-item>
 
                     <v-window-item value="declined">
-                        <v-becomes :url="API_BECOMES_DECLINED" updated />
+                        <v-becomes :url="API_BECOMES_DECLINED" updated accept />
                     </v-window-item>
                 </v-window>
             </v-card-text>
