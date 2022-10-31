@@ -68,6 +68,14 @@
                     >
                         mdi-package-variant
                     </v-icon>
+
+                    <v-tooltip
+                        v-if="role.is_storage"
+                        activator="parent"
+                        location="top"
+                    >
+                        {{ $t('Is storage') }}
+                    </v-tooltip>
                 </v-chip>
             </td>
             <td v-else>{{ $t('No') }}</td>

@@ -45,6 +45,7 @@
                         <v-spacer />
 
                         <v-confirm
+                            v-if="accept"
                             :button-text="$t('Accept')"
                             :confirm-text="$t('Are you sure you want to <span class=\'text-red\'>allow</span> <b>:name</b> to access all appeals sended from the <b>:bot</b> bot?', { name: item.user.name, bot: item.bot.title})"
                             :url="confirmUrl(item.id)"
@@ -53,6 +54,7 @@
                         />
 
                         <v-confirm
+                            v-if="decline"
                             :button-text="$t('Decline')"
                             :confirm-text="$t('Are you sure you want to <span class=\'text-red\'>decline</span> <b>:name</b>\'s offer to volunteer and see appeals from the <b>:bot</b> bot?', { name: item.user.name, bot: item.bot.title})"
                             :url="confirmUrl(item.id)"
@@ -89,10 +91,14 @@ const loading = ref(false)
 const props = withDefaults(
     defineProps<{
         url: string,
-        updated?: boolean
+        updated?: boolean,
+        accept?: boolean,
+        decline?: boolean
     }>(),
     {
-        updated: false
+        updated: false,
+        accept: false,
+        decline: false
     }
 )
 
