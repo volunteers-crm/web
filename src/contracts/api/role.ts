@@ -1,16 +1,8 @@
-interface RoleCategory
-{
-    id: number,
-    title: string,
-    can_storage: boolean
-}
-
 interface Role
 {
     id: number,
     title: string,
-    is_storage: boolean,
-    category: RoleCategory
+    is_storage: boolean
 }
 
 interface RoleGroupByCategory

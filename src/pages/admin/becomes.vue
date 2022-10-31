@@ -4,12 +4,10 @@
             <v-tabs
                 v-model="tab"
                 bg-color="primary"
-                align-tabs="title"
-                density="comfortable"
             >
-                <v-tab value="new" v-text="$t('New')" />
-                <v-tab value="accepted" v-text="$t('Accepted')" />
-                <v-tab value="declined" v-text="$t('Declined')" />
+                <v-tab value="new">{{ $t('New') }}</v-tab>
+                <v-tab value="accepted">{{ $t('Accepted') }}</v-tab>
+                <v-tab value="declined">{{ $t('Declined') }}</v-tab>
             </v-tabs>
 
             <v-card-text>

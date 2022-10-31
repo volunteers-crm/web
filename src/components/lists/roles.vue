@@ -21,7 +21,7 @@
                             activator="parent"
                             location="top"
                         >
-                            {{ $t("Is storage") }}
+                            {{ $t('Is storage') }}
                         </v-tooltip>
                     </v-checkbox>
                 </template>
@@ -68,7 +68,7 @@ const items = computed({
 })
 
 const createNewItem = (values: string[]) => {
-    if (_.every(values, (value: RoleListItem) => !!value.title)) {
+    if (_.every(values, (value: RoleListItem) => !! value.title)) {
         items.value.push({
             title: '',
             is_storage: false
@@ -83,7 +83,7 @@ watch(props.modelValue, (values: string[]) => createNewItem(values))
 watch(
     () => props.canStorage,
     (value: boolean) => {
-        if (!value) {
+        if (! value) {
             _.map(items.value, (item: RoleListItem) => item.is_storage = false)
         }
     })

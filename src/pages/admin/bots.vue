@@ -157,18 +157,7 @@
                                     {{ $t('Roles:') }}
                                 </p>
 
-                                <ul class="mx-6">
-                                    <li
-                                        v-if="! bot.roles || ! bot.roles.length"
-                                        v-text="$t('Missing')"
-                                    />
-                                    <li
-                                        v-else
-                                        v-for="role in bot.roles"
-                                        :key="role.id"
-                                        v-text="role.title"
-                                    />
-                                </ul>
+                                <v-roles-chip :roles="bot.roles" />
                             </div>
                         </v-card-text>
 
@@ -342,7 +331,10 @@
 </template>
 
 <script lang="ts" setup>
+import VRolesChip from '@/components/labels/roles.vue'
+
 import { API_BOTS_BOT, API_BOTS_INDEX, API_ROLES_INDEX } from '@/constants/api_routes'
+import { telegramTokenRule, timezoneRule } from '@/constants/validation'
 
 import { computed, onBeforeMount, ref, watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
@@ -354,7 +346,6 @@ import axios from 'axios'
 import { timezones } from '@/helpers/date'
 import locales from '@/constants/locales'
 import { collect } from '@/helpers/collection'
-import { telegramTokenRule, timezoneRule } from '@/constants/validation'
 
 const cardCreate = ref(false)
 const cardEdit = ref({})

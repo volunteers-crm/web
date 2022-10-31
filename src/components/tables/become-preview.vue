@@ -55,28 +55,7 @@
         <tr>
             <td>{{ $t('Roles:') }}</td>
             <td v-if="item.roles.length">
-                <v-chip
-                    v-for="role in item.roles"
-                    class="ma-1"
-                    color="primary"
-                >
-                    {{ role.title }}
-
-                    <v-icon
-                        v-if="role.is_storage"
-                        class="ml-2 text-grey-darken-3"
-                    >
-                        mdi-package-variant
-                    </v-icon>
-
-                    <v-tooltip
-                        v-if="role.is_storage"
-                        activator="parent"
-                        location="top"
-                    >
-                        {{ $t('Is storage') }}
-                    </v-tooltip>
-                </v-chip>
+                <v-roles-chip :roles="item.roles" />
             </td>
             <td v-else>{{ $t('No') }}</td>
         </tr>
@@ -85,6 +64,8 @@
 </template>
 
 <script lang="ts" setup>
+import VRolesChip from '@/components/labels/roles.vue'
+
 defineProps<{
     item: object
 }>()
