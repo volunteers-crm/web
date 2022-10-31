@@ -1,5 +1,5 @@
 <template>
-    <v-table>
+    <v-table fixed-header hover>
         <thead>
         <tr>
             <th v-text="$t('Name')" />
@@ -10,10 +10,15 @@
         </tr>
         </thead>
         <tbody>
+        <tr v-if="! items.length">
+            <td colspan="5" class="text-center">
+                {{ $t('No data') }}
+            </td>
+        </tr>
         <tr
             v-for="(item, index) in items"
             :key="item.id"
-            class="link-cursor colorized"
+            class="link-cursor"
         >
             <v-dialog
                 v-model="dialogs[index]"
@@ -118,10 +123,11 @@ const removeItem = (index: number) => {
     cursor: pointer;
 }
 
-.colorized {
-    &:hover {
-        transition: background-color .3s;
-        background-color: rgba(225, 218, 239, 0.98);
+.v-table--hover {
+    tr {
+        &:hover {
+            transition: background-color .3s;
+        }
     }
 }
 </style>
