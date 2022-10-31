@@ -58,6 +58,7 @@
                 <v-chip
                     v-for="role in item.roles"
                     class="ma-1"
+                    color="primary"
                 >
                     {{ role.title }}
 
