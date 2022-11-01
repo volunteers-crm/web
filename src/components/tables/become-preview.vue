@@ -4,8 +4,7 @@
         <tr>
             <td>{{ $t('Coordinate:') }}</td>
             <td>
-                <span v-if="item.is_coordinator" class="text-green" v-text="$t('Yes')" />
-                <span v-else class="red-text" v-text="$t('No')" />
+                <v-yes-no :is="item.is_coordinator" />
             </td>
         </tr>
         <tr>
@@ -65,6 +64,7 @@
 
 <script lang="ts" setup>
 import VRolesChip from '@/components/labels/roles.vue'
+import VYesNo from '@/components/labels/yes-no.vue'
 
 defineProps<{
     item: object

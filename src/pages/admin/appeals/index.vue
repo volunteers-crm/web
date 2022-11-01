@@ -64,8 +64,7 @@
             </td>
 
             <td class="text-center">
-                <span v-if="item.is_published" v-text="$t('Yes')" />
-                <span v-else v-text="$t('No')" />
+                <v-yes-no :is="item.is_published" />
             </td>
 
             <td class="text-center">{{ item.bot.timezone }}</td>
@@ -79,6 +78,7 @@
 <script lang="ts" setup>
 import VTelegramLink from '@/components/links/telegram.vue'
 import VStatusBtn from '@/components/buttons/status.vue'
+import VYesNo from '@/components/labels/yes-no.vue'
 
 import { ROUTE_ADMIN_APPEALS_SHOW } from '@/routes/names'
 import { API_APPEALS_INDEX } from '@/constants/api_routes'
