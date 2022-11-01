@@ -20,49 +20,54 @@
 <script lang="ts" setup>
 import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
 
-import { ref } from 'vue'
+import { API_DASHBOARD_ROLES } from '@/constants/api_routes'
 
-// TODO: remove fake generator
-const count = 7
+import { computed, onBeforeMount, ref } from 'vue'
+import { collect } from '@/helpers/collection'
+import axios from 'axios'
+import _ from 'lodash'
 
-const randomData = () => {
-    const min = 0
-    const max = 10
+const items = ref([])
 
-    let values = []
+const pluck = (key: string) => collect(items.value).pluck(key).get()
 
-    for (let i = 0; i < count; i++) {
-        const value = Math.floor(Math.random() * (max - min + 1) + min)
+const pluckUsers = () => {
+    let users: any[] = []
 
-        values.push(value)
-    }
+    _.each(items.value, (item: any) => {
+        _.each(item.users, (user: any) => {
+            if (! _.includes(users, user.name)) {
+                _.set(users, user.name, {
+                    name: user.name,
+                    data: []
+                })
+            }
 
-    return values
+            users[user.name].data.push(user.count)
+        })
+    })
+
+    return _.values(users)
 }
 
-const roles = ref({
-    options: {
-        chart: {
-            id: 'chart-roles',
-            stacked: true
+const roles = computed(() => {
+    return {
+        options: {
+            chart: {
+                id: 'chart-roles',
+                stacked: true
+            },
+            xaxis: {
+                categories: pluck('name')
+            }
         },
-        xaxis: {
-            categories: [
-                'curators',
-                'housing',
-                'cars',
-                'clothes',
-                'excursions',
-                'medics',
-                'psychologists'
-            ]
-        }
-    },
 
-    series: [
-        {
-            data: randomData()
-        }
-    ]
+        series: pluckUsers()
+    }
 })
+
+onBeforeMount(() => axios
+    .get(API_DASHBOARD_ROLES)
+    .then(response => items.value = response.data)
+)
 </script>

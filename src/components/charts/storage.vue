@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            {{ $t('Storage') }}
+            {{ $t('Storages') }}
         </v-card-title>
 
         <v-card-text>
