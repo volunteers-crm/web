@@ -21,7 +21,7 @@
                             />
 
                             <div
-                                v-if="!appeal.is_closed"
+                                v-if="!appeal.is_closed && appeal.status !== STATUS_NEW"
                                 class="status__actions"
                             >
                                 <v-confirm
@@ -315,6 +315,7 @@ import VTodo from '@/components/lists/todo.vue'
 import VConfirm from '@/components/dialogs/confirm.vue'
 
 import { API_APPEALS_CANCEL, API_APPEALS_DONE, API_APPEALS_PUBLISH, API_APPEALS_SHOW, API_APPEALS_START_WORK } from '@/constants/api_routes'
+import { STATUS_NEW } from '@/constants/statuses'
 
 import { useUserStore } from '@/stores/user'
 import { dateCustomFormat, dateFormatFull } from '@/helpers/date'
