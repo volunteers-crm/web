@@ -11,6 +11,11 @@
             </tr>
             </thead>
             <tbody>
+            <tr v-if="! channels.length">
+                <td colspan="5" class="text-center">
+                    {{ $t('No data') }}
+                </td>
+            </tr>
             <tr
                 v-for="channel in channels"
                 :key="channel.id"
