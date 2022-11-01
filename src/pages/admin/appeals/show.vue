@@ -9,10 +9,6 @@
         <v-container class="fill-height py-0" fluid>
             <v-row class="fill-height" no-gutters>
                 <v-col cols="3">
-                    <v-user :user="appeal.client" />
-
-                    <v-divider />
-
                     <v-card elevation="0">
                         <v-card-text class="d-flex justify-space-between align-center">
                             <v-status-btn
@@ -235,6 +231,18 @@
                 </v-col>
 
                 <v-col cols="2">
+                    <v-card elevation="0">
+                        <v-card-title>
+                            {{ $t('Client') }}
+                        </v-card-title>
+
+                        <v-card-text class="pa-0">
+                            <v-user :user="appeal.client" />
+                        </v-card-text>
+                    </v-card>
+
+                    <v-divider />
+
                     <v-card elevation="0">
                         <v-card-title>
                             {{ $t('Curator') }}
