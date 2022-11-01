@@ -55,6 +55,7 @@
                             :confirm-text="$t('Are you sure you want to <span class=\'text-red\'>allow</span> <b>:name</b> to access all appeals sended from the <b>:bot</b> bot?', { name: item.user.name, bot: item.bot.title})"
                             :url="confirmUrl(item.id)"
                             :success="() => removeItem(index)"
+                            method="put"
                             color="green"
                         />
 
@@ -64,6 +65,7 @@
                             :confirm-text="$t('Are you sure you want to <span class=\'text-red\'>decline</span> <b>:name</b>\'s offer to volunteer and see appeals from the <b>:bot</b> bot?', { name: item.user.name, bot: item.bot.title})"
                             :url="confirmUrl(item.id)"
                             :success="() => removeItem(index)"
+                            method="delete"
                             color="red"
                         />
 
