@@ -20,60 +20,48 @@
 <script lang="ts" setup>
 import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
 
-import { ref } from 'vue'
+import { API_DASHBOARD_COORDINATORS } from '@/constants/api_routes'
+
+import { computed, onBeforeMount, ref } from 'vue'
 import { trans } from 'laravel-vue-i18n'
+import { collect } from '@/helpers/collection'
+import axios from 'axios'
 
-// TODO: remove fake generator
-const count = 8
+const items = ref([])
 
-const randomData = () => {
-    const min = 10
-    const max = 90
+const pluck = (key: string) => collect(items.value).pluck(key).get()
 
-    let values = []
+const appeals = computed(() => {
+    return {
+        options: {
+            chart: {
+                id: 'chart-coordinators',
+                stacked: true
+            },
+            xaxis: {
+                categories: pluck('name')
+            }
+        },
 
-    for (let i = 0; i < count; i++) {
-        const value = Math.floor(Math.random() * (max - min + 1) + min)
-
-        values.push(value)
+        series: [
+            {
+                name: trans('opened'),
+                data: pluck('statuses.opened')
+            },
+            {
+                name: trans('solved'),
+                data: pluck('statuses.solved')
+            },
+            {
+                name: trans('cancelled'),
+                data: pluck('statuses.cancelled')
+            }
+        ]
     }
-
-    return values
-}
-
-const appeals = ref({
-    options: {
-        chart: {
-            id: 'chart-coordinators',
-            stacked: true
-        },
-        xaxis: {
-            categories: [
-                '@emma',
-                '@liam',
-                '@charlotte',
-                '@oliver',
-                '@amelia',
-                '@noah',
-                '@olivia',
-                '@elijah'
-            ]
-        }
-    },
-
-    series: [
-        {
-            name: trans('opened'),
-            data: randomData()
-        },
-        {
-            name: trans('solved'),
-            data: randomData()
-        },
-        {
-            name: trans('cancelled'),
-            data: randomData()
-        }
-    ]
 })
+
+onBeforeMount(() => axios
+    .get(API_DASHBOARD_COORDINATORS)
+    .then(response => items.value = response.data)
+)
 </script>

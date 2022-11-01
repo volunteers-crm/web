@@ -20,56 +20,54 @@
 <script lang="ts" setup>
 import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
 
-import { ref } from 'vue'
+import { API_DASHBOARD_STORAGES } from '@/constants/api_routes'
 
-// TODO: remove fake generator
-const count = 5
+import { computed, onBeforeMount, ref } from 'vue'
+import { collect } from '@/helpers/collection'
+import axios from 'axios'
+import _ from 'lodash'
 
-const randomData = () => {
-    const min = 0
-    const max = 10
+const items = ref([])
 
-    let values = []
+const pluck = (key: string) => collect(items.value).pluck(key).get()
 
-    for (let i = 0; i < count; i++) {
-        const value = Math.floor(Math.random() * (max - min + 1) + min)
+const pluckUsers = () => {
+    let users: any[] = []
 
-        values.push(value)
-    }
+    _.each(items.value, (item: any) => {
+        _.each(item.users, (user: any) => {
+            if (! _.includes(users, user.name)) {
+                _.set(users, user.name, {
+                    name: user.name,
+                    data: []
+                })
+            }
 
-    return values
+            users[user.name].data.push(user.count)
+        })
+    })
+
+    return _.values(users)
 }
 
-const storage = ref({
-    options: {
-        chart: {
-            id: 'chart-storage',
-            stacked: true
+const storage = computed(() => {
+    return {
+        options: {
+            chart: {
+                id: 'chart-storage',
+                stacked: true
+            },
+            xaxis: {
+                categories: pluck('name')
+            }
         },
-        xaxis: {
-            categories: [
-                'suitcases',
-                'men\'s clothing',
-                'women\'s clothing',
-                'kid\'s clothing',
-                'food to go'
-            ]
-        }
-    },
 
-    series: [
-        {
-            name: '@emma',
-            data: randomData()
-        },
-        {
-            name: '@liam',
-            data: randomData()
-        },
-        {
-            name: '@charlotte',
-            data: randomData()
-        }
-    ]
+        series: pluckUsers()
+    }
 })
+
+onBeforeMount(() => axios
+    .get(API_DASHBOARD_STORAGES)
+    .then(response => items.value = response.data)
+)
 </script>

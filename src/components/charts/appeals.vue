@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            {{ $t("Appeals") }}
+            {{ $t('Appeals') }}
         </v-card-title>
 
         <v-card-text>
@@ -20,68 +20,51 @@
 <script lang="ts" setup>
 import VUpdatedInfo from '@/components/info/data-updated-every-n-minutes.vue'
 
-import { ref } from 'vue'
+import { API_DASHBOARD_APPEALS } from '@/constants/api_routes'
+
+import { computed, onBeforeMount, ref } from 'vue'
 import { trans } from 'laravel-vue-i18n'
+import axios from 'axios'
+import { collect } from '@/helpers/collection'
 
-import { now } from "@/helpers/date";
+const items = ref([])
 
-// TODO: remove fake generator
-const count = 5
+const pluck = (key: string) => collect(items.value).pluck(key).get()
 
-const randomData = () => {
-    const min = 10
-    const max = 90
+const appeals = computed(() => {
+    return {
+        options: {
+            chart: {
+                id: 'chart-appeals'
+            },
+            xaxis: {
+                categories: pluck('date')
+            }
+        },
 
-    let values = []
-
-    for (let i = 0; i < count; i++) {
-        const value = Math.floor(Math.random() * (max - min + 1) + min)
-
-        values.push(value)
+        series: [
+            {
+                name: trans('opened'),
+                data: pluck('statuses.opened')
+            },
+            {
+                name: trans('solved'),
+                data: pluck('statuses.solved')
+            },
+            {
+                name: trans('cancelled'),
+                data: pluck('statuses.cancelled')
+            },
+            {
+                name: trans('unassigned'),
+                data: pluck('statuses.unassigned')
+            }
+        ]
     }
-
-    return values
-}
-
-const randomDates = () => {
-    let values = []
-
-    for (let i = count; i > 0; i--) {
-        const date = now().subtract(i, 'day').format('MMMM, Do')
-
-        values.push(date)
-    }
-
-    return values
-}
-
-const appeals = ref({
-    options: {
-        chart: {
-            id: 'chart-appeals'
-        },
-        xaxis: {
-            categories: randomDates()
-        }
-    },
-
-    series: [
-        {
-            name: trans('opened'),
-            data: randomData()
-        },
-        {
-            name: trans('solved'),
-            data: randomData()
-        },
-        {
-            name: trans('cancelled'),
-            data: randomData()
-        },
-        {
-            name: trans('unassigned'),
-            data: randomData()
-        }
-    ]
 })
+
+onBeforeMount(() => axios
+    .get(API_DASHBOARD_APPEALS)
+    .then(response => items.value = response.data)
+)
 </script>

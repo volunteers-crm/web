@@ -3,6 +3,11 @@ export const API_AUTH_ME = '/auth/me'
 
 export const API_URL_PAGE = '/pages/:slug'
 
+export const API_DASHBOARD_APPEALS = 'dashboard/appeals'
+export const API_DASHBOARD_COORDINATORS = 'dashboard/coordinators'
+export const API_DASHBOARD_STORAGES = 'dashboard/storages'
+export const API_DASHBOARD_ROLES = 'dashboard/roles'
+
 export const API_APPEALS_INDEX = '/appeals'
 export const API_APPEALS_SHOW = '/appeals/:id'
 export const API_APPEALS_START_WORK = '/appeals/:id/work'
