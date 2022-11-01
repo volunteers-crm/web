@@ -1,9 +1,15 @@
 <template>
     <v-list>
         <v-list-item
+            v-if="isMe"
+            :prepend-avatar="user.avatar"
+            :title="$t('You')"
+        />
+        <v-list-item
+            v-else
             :prepend-avatar="user.avatar"
             :subtitle="`@${user.username}`"
-            :title="title"
+            :title="user.name"
         />
     </v-list>
 </template>
@@ -11,7 +17,6 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/user'
 import { computed } from 'vue'
-import { trans } from 'laravel-vue-i18n'
 
 const props = defineProps<{
     user: User,
@@ -20,7 +25,5 @@ const props = defineProps<{
 
 const userStore = useUserStore()?.user
 
-const title = computed(() => props.allowMe && isMe(props.user.id) ? trans('You') : props.user.name)
-
-const isMe = (id: number) => id === userStore?.id
+const isMe = computed(() => props.allowMe && props.user.id === props.user.id)
 </script>
