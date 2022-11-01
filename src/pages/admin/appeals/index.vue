@@ -14,6 +14,11 @@
         </tr>
         </thead>
         <tbody>
+        <tr v-if="! items.length">
+            <td colspan="9" class="text-center">
+                {{ $t('No data') }}
+            </td>
+        </tr>
         <tr
             v-for="item in items"
             :key="item.id"
