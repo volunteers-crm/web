@@ -64,7 +64,7 @@
             </td>
 
             <td class="text-center">
-                <span v-if="item.is_closed" v-text="$t('Yes')" />
+                <span v-if="item.is_published" v-text="$t('Yes')" />
                 <span v-else v-text="$t('No')" />
             </td>
 
