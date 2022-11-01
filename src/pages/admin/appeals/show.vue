@@ -293,6 +293,27 @@
 
                     <v-divider />
 
+                    <v-card elevation="0" v-if="appeal.links.length">
+                        <v-card-title>
+                            {{ $t('Links') }}
+                        </v-card-title>
+
+                        <v-card-text>
+                            <ul class="pl-5">
+                                <li
+                                    v-for="link in appeal.links"
+                                >
+                                    <v-link
+                                        :href="link.url"
+                                        :title="link.title"
+                                    />
+                                </li>
+                            </ul>
+                        </v-card-text>
+                    </v-card>
+
+                    <v-divider />
+
                     <v-card elevation="0">
                         <v-card-text>
                             <p class="date__info">
@@ -303,6 +324,11 @@
                             <p class="date__info">
                                 <span>{{ $t('Updated At') }}:</span>
                                 {{ formatDate(appeal.updated_at) }}
+                            </p>
+
+                            <p class="date__info" v-if="appeal.is_published">
+                                <span>{{ $t('Published At') }}:</span>
+                                {{ formatDate(appeal.published_at) }}
                             </p>
 
                             <p class="date__info">
@@ -324,6 +350,7 @@ import VChat from '@/components/chats/chat.vue'
 import VUser from '@/components/info/user.vue'
 import VTodo from '@/components/lists/todo.vue'
 import VConfirm from '@/components/dialogs/confirm.vue'
+import VLink from '@/components/links/url.vue'
 
 import { API_APPEALS_CANCEL, API_APPEALS_DONE, API_APPEALS_PUBLISH, API_APPEALS_SHOW, API_APPEALS_START_WORK } from '@/constants/api_routes'
 import { STATUS_NEW } from '@/constants/statuses'
