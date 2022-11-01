@@ -237,7 +237,10 @@
                         </v-card-title>
 
                         <v-card-text class="pa-0">
-                            <v-user :user="appeal.client" />
+                            <v-user
+                                :user="appeal.client"
+                                allow-me
+                            />
                         </v-card-text>
                     </v-card>
 
