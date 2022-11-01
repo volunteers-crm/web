@@ -137,8 +137,8 @@
                             {{ bot.timezone }}
                         </v-card-subtitle>
 
-                        <v-card-text v-if="bot?.channels?.length">
-                            <div>
+                        <v-card-text>
+                            <div v-if="bot?.channels?.length">
                                 <p class="pb-1">
                                     {{ $t('Channels:') }}
                                 </p>
@@ -151,6 +151,7 @@
                                     />
                                 </ul>
                             </div>
+                            <p v-else v-text="$t('The bot is not tied to any channel.')" />
 
                             <div class="pt-4">
                                 <p class="pb-1">
@@ -159,10 +160,6 @@
 
                                 <v-roles-chip :roles="bot.roles" />
                             </div>
-                        </v-card-text>
-
-                        <v-card-text v-else>
-                            <p v-text="$t('The bot is not tied to any channel.')" />
                         </v-card-text>
 
 
