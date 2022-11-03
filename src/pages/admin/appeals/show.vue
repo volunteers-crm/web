@@ -5,6 +5,7 @@
         :title="meta.title"
         :url="url"
         no-cache
+        btn-go-back
     >
         <v-container class="fill-height py-0" fluid>
             <v-row class="fill-height" no-gutters>
