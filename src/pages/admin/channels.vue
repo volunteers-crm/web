@@ -22,7 +22,7 @@
             >
                 <td v-text="channel.name" />
                 <td v-text="channel.bot.name" />
-                <td v-text="channel.appeals.open" />
+                <td v-text="channel.appeals.opened" />
                 <td v-text="channel.appeals.closed" />
 
                 <td>
@@ -51,7 +51,7 @@
                                 />
 
                                 <p
-                                    v-if="!!channel.appeals.open"
+                                    v-if="!!channel.appeals.opened"
                                     class="mt-2"
                                     v-text="$t('All non-closed appeals will be automatically cancelled, and we will notify the applicants.')"
                                 />
