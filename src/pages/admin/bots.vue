@@ -138,27 +138,39 @@
                         </v-card-subtitle>
 
                         <v-card-text>
-                            <div v-if="bot?.channels?.length">
+                            <div>
                                 <p class="pb-1">
                                     {{ $t('Channels:') }}
                                 </p>
 
                                 <ul class="mx-6">
+                                    <li v-if="! bot?.channels?.length">
+                                        {{ $t('No channels') }}
+                                    </li>
                                     <li
+                                        v-else
                                         v-for="channel in bot.channels"
                                         :key="channel.id"
                                         v-text="channel.name"
                                     />
                                 </ul>
                             </div>
-                            <p v-else v-text="$t('The bot is not tied to any channel.')" />
 
                             <div class="pt-4">
                                 <p class="pb-1">
                                     {{ $t('Roles:') }}
                                 </p>
 
-                                <v-roles-chip :roles="bot.roles" />
+                                <ul v-if="! bot?.roles?.length" class="mx-6">
+                                    <li>
+                                        {{ $t('No roles') }}
+                                    </li>
+                                </ul>
+
+                                <v-roles-chip
+                                    v-else
+                                    :roles="bot.roles"
+                                />
                             </div>
                         </v-card-text>
 
