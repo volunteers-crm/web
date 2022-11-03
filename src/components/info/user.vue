@@ -25,5 +25,5 @@ const props = defineProps<{
 
 const userStore = useUserStore()?.user
 
-const isMe = computed(() => props.allowMe && props.user.id === props.user.id)
+const isMe = computed(() => props.allowMe && userStore?.id === props.user.id)
 </script>
