@@ -37,6 +37,7 @@
                                 icon="mdi-delete"
                                 v-bind="props"
                                 variant="text"
+                                :disabled="channel.can_delete"
                             />
                         </template>
 
