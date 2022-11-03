@@ -480,7 +480,7 @@ const deleteBot = (id: number) => {
 
     axios.delete(API_BOTS_BOT.replace(':id', String(id)))
         .then(() => {
-            _.reject(bots, (bot: any) => bot.id === id)
+            bots.value= _.reject(bots.value, (bot: any) => bot.id === id)
 
             toast.success(trans('Bot has been successfully removed from your account.'))
 
@@ -489,13 +489,9 @@ const deleteBot = (id: number) => {
         .finally(() => _.set(cardLoading.value, id, false))
 }
 
-const botFatherLink = () => {
-    return '<a href="https://t.me/BotFather" target="_blank">@BotFather</a>'
-}
+const botFatherLink = () => '<a href="https://t.me/BotFather" target="_blank">@BotFather</a>'
 
-const codeBlock = (name: string) => {
-    return `<code class="text-red">${ name }</code>`
-}
+const codeBlock = (name: string) => `<code class="text-red">${ name }</code>`
 </script>
 
 <style lang="scss" scoped>
