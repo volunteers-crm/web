@@ -130,7 +130,23 @@
                         class="fill-height d-flex flex-column"
                         v-bind="props"
                     >
-                        <v-card-title v-text="bot.title" />
+                        <v-card-title class="d-flex justify-space-between flex-column flex-sm-row">
+                            <div>
+                                {{ bot.title }}
+                            </div>
+
+                            <div>
+                                <v-chip color="blue" class="mr-2">
+                                    {{ $t('Opened Appeals:') }}
+                                    {{ bot.appeals.opened }}
+                                </v-chip>
+
+                                <v-chip color="green">
+                                    {{ $t('Closed Appeals:') }}
+                                    {{ bot.appeals.closed }}
+                                </v-chip>
+                            </div>
+                        </v-card-title>
 
                         <v-card-subtitle>
                             {{ locales[bot.locale] }} |
@@ -480,7 +496,7 @@ const deleteBot = (id: number) => {
 
     axios.delete(API_BOTS_BOT.replace(':id', String(id)))
         .then(() => {
-            bots.value= _.reject(bots.value, (bot: any) => bot.id === id)
+            bots.value = _.reject(bots.value, (bot: any) => bot.id === id)
 
             toast.success(trans('Bot has been successfully removed from your account.'))
 
