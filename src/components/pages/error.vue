@@ -1,6 +1,6 @@
 <template>
     <v-container class="fill-height d-flex flex-column align-center justify-center" fluid>
-        <h1 class="text-h4 mb-6">
+        <h1 class="text-h4 mb-6 text-center">
             {{ $t(props.title) }}
         </h1>
 
