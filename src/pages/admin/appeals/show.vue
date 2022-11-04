@@ -26,6 +26,7 @@
                                     :button-text="$t('Done')"
                                     :confirm-text="$t('Are you sure you want to mark the appeal as completed?')"
                                     :url="resolveAppealUrl(API_APPEALS_DONE)"
+                                    method="put"
                                     variant="text"
                                     color="green"
                                 />
@@ -414,7 +415,7 @@ const resolveAppealUrl = (url: string) => {
 const takeToWork = () => {
     hasTakeToWork.value = true
 
-    axios.post(resolveAppealUrl(API_APPEALS_START_WORK))
+    axios.put(resolveAppealUrl(API_APPEALS_START_WORK))
         .then((response: any) => appeal.value = response.data)
         .finally(() => hasTakeToWork.value = false)
 }
@@ -437,7 +438,7 @@ const allowToPublish = computed(() => {
 const publish = () => {
     publishing.value = true
 
-    axios.post(resolveAppealUrl(API_APPEALS_PUBLISH), form.value)
+    axios.put(resolveAppealUrl(API_APPEALS_PUBLISH), form.value)
         .then((response: any) => {
             toast.success(trans('The appeal was successfully submitted to the queue for publication.'))
 
