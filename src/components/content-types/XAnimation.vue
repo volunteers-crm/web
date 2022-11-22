@@ -13,7 +13,7 @@
         </div>
         <div v-else>
             <v-icon>
-                mdi-download-circle
+                mdi-cloud-download
             </v-icon>
 
             <div class="file__size">
