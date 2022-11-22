@@ -19,9 +19,11 @@ axios.interceptors.request.use(config => {
     const settingsStore = useSettingsStore()
     const userStore = useUserStore()
 
+    // @ts-ignore
     config.headers['X-Locale'] = settingsStore.locale || 'en'
 
     if (!! userStore.token) {
+        // @ts-ignore
         config.headers.Authorization = userStore.token
     }
 
@@ -44,7 +46,7 @@ axios.interceptors.response.use(
                 break
         }
 
-        return response.data
+        return response?.headers?.['content-disposition'] ? response : response.data
     },
     error => {
         switch (error?.status || error?.response?.status) {
@@ -60,15 +62,11 @@ axios.interceptors.response.use(
                 toast.error(errors.join('<br>'))
                 break
 
-            case 404:
-                toast.error(trans('Not Found'))
-                break
-
             case 401:
                 useUserStore().logout()
 
             default:
-                toast.error(trans(error?.response?.data?.message || error?.data?.message || 'Whoops! Something went wrong.'))
+                toast.error(trans(error?.response?.data?.message || error?.data?.message || error?.response?.statusText || 'Whoops! Something went wrong.'))
         }
 
         throw error

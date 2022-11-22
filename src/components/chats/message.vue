@@ -23,16 +23,19 @@
 
             <div class="chat__message__info__actions d-flex justify-end">
                 <p>
+                    {{ message.type }} |
+                </p>
+                <p>
                     <span v-if="isEdited" class="pr-2" v-text="$t('edited')" />
 
                     {{ sentAt }}
 
                     <v-tooltip activator="parent" location="top">
-                        <span>{{ $t("Created At") }}: {{ dateFormat(message.created_at) }}</span>
+                        <span>{{ $t('Created At') }}: {{ dateFormat(message.created_at) }}</span>
 
                         <span v-if="isEdited" class="pr-2">
                             <br>
-                            {{ $t("Updated At") }}: {{ dateFormat(message.updated_at) }}
+                            {{ $t('Updated At') }}: {{ dateFormat(message.updated_at) }}
                         </span>
                     </v-tooltip>
                 </p>
