@@ -1,12 +1,9 @@
 <template>
-    <v-img
-        :lazy-src="content.preview"
-        :src="content.src"
-    />
+    {{ content.text }}
 </template>
 
 <script lang="ts" setup>
 defineProps<{
-    content: MediaMessageType
+    content: StickerMessageType
 }>()
 </script>

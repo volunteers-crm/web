@@ -1,11 +1,9 @@
-interface AnimationMessageType
+interface VideoNoteMessageType
 {
     text: string | null,
 
-    width: number,
-    height: number,
+    duration: string,
 
-    size: string,
     filename: string,
     mime_type: string,
 

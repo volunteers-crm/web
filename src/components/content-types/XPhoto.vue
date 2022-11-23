@@ -19,10 +19,6 @@
             <p>
                 {{ $t('Download') }}
             </p>
-
-            <p class="button__description">
-                {{ content.duration }}
-            </p>
         </div>
     </v-btn>
 
@@ -37,7 +33,7 @@ import { downloadFile } from '@/helpers/download'
 import { ref } from 'vue'
 
 const props = defineProps<{
-    content: AudioMessageType
+    content: PhotoMessageType
 }>()
 
 const loading = ref<boolean>(false)
@@ -57,7 +53,7 @@ const download = () => {
 }
 
 const fileExtension = () => {
-    return 'ogg'
+    return 'jpg'
 }
 </script>
 

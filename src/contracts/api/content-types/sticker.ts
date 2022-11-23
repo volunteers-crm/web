@@ -1,0 +1,4 @@
+interface StickerMessageType
+{
+    text: string
+}

@@ -1,5 +1,5 @@
 interface ContactMessageType
 {
     phone: string,
-    name: string
+    name: string | null,
 }

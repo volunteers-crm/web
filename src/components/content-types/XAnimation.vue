@@ -1,33 +1,38 @@
 <template>
-    <div
-        class="image d-flex align-center justify-center"
-        :class="{image__loading: loading}"
-        :style="{width: `${content.width}px`, height: `${content.height}px`}"
+    <v-btn
+        variant="flat"
+        size="x-large"
+        :loading="loading"
         @click="download"
     >
-        <div v-if="loading">
-            <v-progress-circular
-                indeterminate
-                color="grey-lighten-4"
+        <template v-slot:prepend>
+            <v-img
+                :src="getMaterialFileIcon(fileExtension())"
+                min-width="48"
+                max-width="64"
+                min-height="48"
+                max-height="64"
             />
-        </div>
-        <div v-else>
-            <v-icon>
-                mdi-cloud-download
-            </v-icon>
+        </template>
 
-            <div class="file__size">
+        <div>
+            <p>
+                {{ $t('Download') }}
+            </p>
+
+            <p class="button__description">
                 {{ content.size }}
-            </div>
+            </p>
         </div>
-    </div>
+    </v-btn>
 
-    <p v-if="!! content.text">
+    <p v-if="!! content.text" class="mt-2">
         {{ content.text }}
     </p>
 </template>
 
 <script lang="ts" setup>
+import { getMaterialFileIcon } from 'file-extension-icon-js'
 import { downloadFile } from '@/helpers/download'
 import { ref } from 'vue'
 
@@ -50,29 +55,20 @@ const download = () => {
         () => loading.value = false
     )
 }
+
+const fileExtension = () => {
+    const values = props.content.filename.split('/')
+
+    return values[values.length - 1]
+}
 </script>
 
 <style lang="scss" scoped>
-.image {
-    background: #E6E6E6 url("@/assets/images/preview-background.webp") no-repeat;
-    background-size: cover;
-    cursor: pointer;
-    opacity: .8;
-    transition: opacity .2s;
-
-    &:hover {
-        opacity: 1;
-    }
-
-    &__loading {
-        cursor: default;
-        opacity: 1;
-    }
-}
-
-.file {
-    &__size {
+.button {
+    &__description {
         color: darkgray;
+        font-weight: 300;
+        font-size: 9pt;
     }
 }
 </style>

@@ -1,5 +1,5 @@
 interface LocationMessageType
 {
     longitude: number,
-    latitude: number
+    latitude: number,
 }

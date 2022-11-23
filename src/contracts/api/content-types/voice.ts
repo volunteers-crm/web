@@ -1,11 +1,12 @@
-interface AnimationMessageType
+interface VoiceMessageType
 {
     text: string | null,
+
+    duration: string,
 
     width: number,
     height: number,
 
-    size: string,
     filename: string,
     mime_type: string,
 

@@ -1,0 +1,4 @@
+interface TextMessageType
+{
+    text: string
+}

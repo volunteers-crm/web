@@ -4,6 +4,6 @@
 
 <script lang="ts" setup>
 defineProps<{
-    content: TextMessageType
+    content: UnsupportedMessageType
 }>()
 </script>

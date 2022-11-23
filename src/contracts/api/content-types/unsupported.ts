@@ -1,0 +1,4 @@
+interface UnsupportedMessageType
+{
+    text: string
+}
